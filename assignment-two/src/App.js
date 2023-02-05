@@ -37,9 +37,7 @@ function App() {
   //   // setEditval("");
   //   setcheckChange(false);
   // };
-  let managechange = (i) => {
-    console.log(" At manage change value needs to be edited : ", text[i]);
-
+  let managechange = () => {
     setcheckChange(false);
   };
 
@@ -50,7 +48,9 @@ function App() {
     console.log("value recieved to edit : ", edit_val);
 
     let bring_change;
-    bring_change = text.map((x) => {return x.replace(current_text, edit_val)});
+    bring_change = text.map((x) => {
+      return x.replace(current_text, edit_val);
+    });
 
     console.log(bring_change);
     setText([...bring_change]);
@@ -80,11 +80,15 @@ function App() {
       {checkChange ? (
         <button onClick={Add}>Add Text</button>
       ) : (
-        text.map((x, i) => (
-          <div>
-            <button onClick={() => edit(i)}>Edit</button>
-          </div>
-        ))
+        <button
+          onClick={() => {
+            text.map((x, i) => {
+              return edit(i);
+            });
+          }}
+        >
+          Edit
+        </button>
       )}
       <table className="tb">
         <tr>
@@ -96,7 +100,7 @@ function App() {
               <td>{i} | </td>
               <td>
                 {x} | <button onClick={() => del(i)}>Delete</button> |{" "}
-                <button onClick={() => managechange(i)}>Edit</button>
+                <button onClick={managechange}>change todo</button>
               </td>
             </div>
           ))}
