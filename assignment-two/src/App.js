@@ -6,7 +6,8 @@ function App() {
   const [input, setInput] = useState("");
   let [edit_val, setEditval] = useState("");
   const [checkChange, setcheckChange] = useState(true);
-
+  // let [status, setStatus] = useState(["Pending", "completed", "not started"]);
+  let status = ["Pending", "completed", "not started"];
   const Add = () => {
     if (input.length >= 1) {
       text.push(input);
@@ -50,7 +51,9 @@ function App() {
     setEditval("");
     setcheckChange(true);
   };
-
+  // let managestatus = () => {
+  //   return status.forEach((s) => s);
+  // };
   return (
     <div className="App">
       {checkChange ? (
@@ -77,7 +80,7 @@ function App() {
       )}
       <table className="tb">
         <tr>
-          <th>Ids | Todos | Delete | Edit </th>
+          <th>Ids | Todos | Delete | Edit | Status</th>
         </tr>
         <tr>
           {text.map((x, i) => (
@@ -85,7 +88,13 @@ function App() {
               <td>{i} | </td>
               <td>
                 {x} | <button onClick={() => del(i)}>Delete</button> |{" "}
-                <button onClick={() => managechange(i)}>change todo</button>
+                <button onClick={() => managechange(i)}>change todo</button>|{" "}
+                <select onChange={(e) => e.target.value}>
+                  <option>Select status</option>
+                  {status.map((s, t) => {
+                    return <option key={t}>{s}</option>;
+                  })}
+                </select>
               </td>
             </div>
           ))}
