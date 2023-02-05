@@ -5,12 +5,15 @@ import { useState } from "react";
 function App() {
   const [count, setCount] = useState(0);
   // var  , function    dom(getElementByID) replacer called useState updates state through function saves result in variable in left.
-  let Add = () => {
+  let Add = (howmuch) => {
     if (count < 10) {
-      setCount(count + 1);
+      setCount(count + howmuch);
     } else {
       setCount("no more count accepted limit exceeded !");
     }
+  };
+  let dec = (howmuch) => {
+    setCount(count - howmuch);
   };
   const [arr, setArr] = useState([]);
   const done = () => {
@@ -30,9 +33,14 @@ function App() {
       <button onClick={done}>Push</button>
       <br />
       <br />
-      <p>increment count variable by 1</p>
+      <p>increment count </p>
       <p>{count}</p>
-      <button onClick={Add}>add</button>
+      <button onClick={()=>Add(1)}>increment by 1</button>
+      <button onClick={()=> Add(2)}>incrementby 2</button>
+      <p>decrement count </p>
+      <button onClick={()=>dec(1)}>decrementby 1</button>
+      <button onClick={()=>dec(2)}>decrementby 2</button>
+
     </div>
   );
 }
