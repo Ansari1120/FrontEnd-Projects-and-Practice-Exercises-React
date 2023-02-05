@@ -1,4 +1,3 @@
-// import logo from "./logo.svg";
 import "./App.css";
 import { useState } from "react";
 
@@ -7,7 +6,6 @@ function App() {
   const [input, setInput] = useState("");
   let [edit_val, setEditval] = useState("");
   const [checkChange, setcheckChange] = useState(true);
-  // let [current_text, setCurrentText] = useState("");
 
   const Add = () => {
     if (input.length >= 1) {
@@ -27,22 +25,17 @@ function App() {
     setText([...text]);
     setInput("");
   };
-  // let editpnChange = (i) => {
-  //   let current_text = text[i];
-  //   console.log(current_text);
-  //   console.log(edit_val);
-  //   // let bring_change = text.replace(current_text, edit_val);
-  //   // console.log(bring_change);
-  //   // setText([...bring_change]);
-  //   // setEditval("");
-  //   setcheckChange(false);
-  // };
-  let managechange = () => {
+  let [current_text, setCurrentText] = useState("");
+
+  let managechange = (i) => {
+    let rebackInput = text[i];
+    console.log(rebackInput);
+    setEditval(rebackInput);
+    setCurrentText(rebackInput);
     setcheckChange(false);
   };
 
-  let edit = (i) => {
-    let current_text = text[i];
+  let edit = () => {
     console.log("value needs to be edited : ", current_text);
 
     console.log("value recieved to edit : ", edit_val);
@@ -80,15 +73,7 @@ function App() {
       {checkChange ? (
         <button onClick={Add}>Add Text</button>
       ) : (
-        <button
-          onClick={() => {
-            text.map((x, i) => {
-              return edit(i);
-            });
-          }}
-        >
-          Edit
-        </button>
+        <button onClick={edit}>Edit</button>
       )}
       <table className="tb">
         <tr>
@@ -100,7 +85,7 @@ function App() {
               <td>{i} | </td>
               <td>
                 {x} | <button onClick={() => del(i)}>Delete</button> |{" "}
-                <button onClick={managechange}>change todo</button>
+                <button onClick={() => managechange(i)}>change todo</button>
               </td>
             </div>
           ))}
