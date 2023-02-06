@@ -6,7 +6,6 @@ function App() {
   const [input, setInput] = useState("");
   let [edit_val, setEditval] = useState("");
   const [checkChange, setcheckChange] = useState(true);
-  // let [status, setStatus] = useState(["Pending", "completed", "not started"]);
   let status = ["Pending", "completed", "not started"];
   const Add = () => {
     if (input.length >= 1) {
