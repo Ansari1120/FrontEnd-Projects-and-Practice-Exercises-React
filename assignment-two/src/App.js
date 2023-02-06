@@ -51,9 +51,9 @@ function App() {
     setEditval("");
     setcheckChange(true);
   };
-  // let managestatus = () => {
-  //   return status.forEach((s) => s);
-  // };
+  let removeall = () => {
+    setText([]);
+  };
   return (
     <div className="App">
       {checkChange ? (
@@ -78,6 +78,7 @@ function App() {
       ) : (
         <button onClick={edit}>Edit</button>
       )}
+      {<button onClick={removeall}>Remove All</button>}
       <table className="tb">
         <tr>
           <th>Ids | Todos | Delete | Edit | Status</th>
@@ -100,6 +101,9 @@ function App() {
           ))}
         </tr>
       </table>
+      <footer textalign="bottom ">
+        App Developed by Ahmed Ali Ansari of ID : KWOWWM8025{" "}
+      </footer>
     </div>
   );
 }
