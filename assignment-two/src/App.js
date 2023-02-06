@@ -101,9 +101,7 @@ function App() {
           ))}
         </tr>
       </table>
-      <footer textalign="bottom ">
-        App Developed by Ahmed Ali Ansari of ID : KWOWWM8025{" "}
-      </footer>
+      <footer>App Developed by Ahmed Ali Ansari of ID : KWOWWM8025 </footer>
     </div>
   );
 }
