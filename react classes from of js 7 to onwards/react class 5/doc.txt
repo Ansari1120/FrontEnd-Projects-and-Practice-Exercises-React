@@ -1,0 +1,29 @@
+state update bad practice : 
+
+setState(count + 1)
+
+state update good preactice : 
+
+setState((prev) => prev + 1)
+
+
+
+styling
+ 
+1) go  reactboostrap
+
+2) copy its package and paste in react app : npm install react-bootstrap bootstrap
+
+
+3) read react bootstrap doc : https://react-bootstrap.github.io/getting-started/introduction
+
+
+4) import package in app.js : import 'bootstrap/dist/css/bootstrap.min.css';
+
+
+
+5) material ui  npm install @mui/material @mui/styled-engine-sc styled-components
+
+6) npm install @mui/icons-material
+
+ 
