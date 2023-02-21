@@ -1,0 +1,32 @@
+body{
+    background-image: url("https://t3.ftcdn.net/jpg/02/53/98/62/360_F_253986268_I3wMfXKQvcjNVcRSLDTMfKtkvbmpAj1J.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: rgb(0, 0, 0);
+    font-family: Roboto;
+ 
+}
+
+
+.Main{
+    margin-top: 16px;
+    padding:20px;
+         border-radius: 20px;
+    box-shadow: 0 16px 24px 2px rgb(192, 191, 191), 0 6px 30px 5px rgb(255, 255, 255), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+background-color: #4f5a51;
+margin-left: 100px;
+margin-right: 100px;
+
+}
+.Header{
+    text-align: center;
+    font-weight: 900;
+    font-style:oblique;
+    font-size: larger;
+    
+}
+
+.QuestionDetails{
+    display: flex;
+    gap: 800px;
+}

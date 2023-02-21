@@ -5,8 +5,12 @@ import Options from "./components/options.js";
 import Buttons from "./components/commonbuttons.js";
 import { Box } from "@mui/system";
 import "./index.css";
+import ReviewAnswer from "./components/Status.js";
 import { Typography } from "@mui/material";
+
 function App() {
+  const timeoutRef = useRef(null);
+
   const questions = [
     {
       question:
@@ -41,8 +45,6 @@ function App() {
       options: ["While loop", "Infinite loop", "Recursive loop", "for loop"],
     },
   ];
-  const timeoutRef = useRef(null);
-
   const [Index, setIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [Result, setResult] = useState(false);
@@ -52,16 +54,21 @@ function App() {
   const [percentage, setPercentage] = useState(0);
   const [countdown, setcountdown] = useState(59);
   const [countdownMin, setcountdownMin] = useState(2);
-
-  let Timeout, countout;
+  const [userAnswers, setUserAnswers] = useState({}); // initialize user answers state
+  let Timeout;
+  let countout;
   let initial = 5;
   let total_marks = initial * questions.length;
 
   //Total Score and Result update arrow function
-  const checkAnswer = (UserAnswer, CorrectAnswer) => {
+  const checkAnswer = (UserAnswer, CorrectAnswer, Index) => {
     if (UserAnswer === CorrectAnswer) {
       setScore(score + initial);
     }
+    setUserAnswers((UserAnswer) => ({
+      ...UserAnswer,
+      [Index]: userAnswers,
+    }));
   };
 
   //go forward
@@ -96,7 +103,7 @@ function App() {
     if (countdown === 0) {
       setcountdownMin(countdownMin - 1);
     }
-    // needs to stop the timer when all questions completed !
+    // needs to stop the timer when all questions completed ! or when time ran out
     if (Index === 5 || (countdown === 0 && countdownMin === 0)) {
       clearInterval(Timeout);
     }
@@ -116,11 +123,11 @@ function App() {
     countdown,
     countdownMin,
     percentage,
-    Index,
-    Timeout,
-    countout,
-    total_marks,
     score,
+    total_marks,
+    Timeout,
+    Index,
+    countout,
   ]);
   //restart quiz
   function Try() {
@@ -134,6 +141,7 @@ function App() {
     setcountdown(59);
     setcountdownMin(2);
   }
+
   return (
     <Box className="Main">
       <Box className="Header">QUIZ-NAME : PROGRAMMING QUIZ</Box>
@@ -153,6 +161,10 @@ function App() {
           <Box>
             <Buttons func={Try} info="Try Again !" />
           </Box>
+          <Box>
+            this is status
+           
+          </Box>
         </>
       ) : (
         <>
@@ -171,13 +183,24 @@ function App() {
           <br />
           <br />
           <Box>
-            <Options check={checkAnswer} data={questions} ind={Index} />
+            <Options 
+            saveUser={userAnswers}
+            check={checkAnswer} data={questions} ind={Index} />
           </Box>
           <Box>
             <Buttons func={Next} info="Next Question >" />
           </Box>
           <Box>
             <Buttons func={Back} info="Go Back <" />
+          </Box>
+          <Box>
+             <ReviewAnswer
+              ques={questions[Index].question}
+              selectedOption={userAnswers[Index]}
+              correctOption={questions[Index].answer}
+              onBack={() => setIndex(Index - 1)}
+              onNext={() => setIndex(Index + 1)}
+            />
           </Box>
         </>
       )}

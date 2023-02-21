@@ -29,16 +29,21 @@ const BootstrapButton = styled(Button)({
 });
 
 export default function Options(props) {
-  const { data, ind, check } = props;
+  const { data, ind, check  } = props;
+  
   return (
     <>
       <div className="row">
         {data[ind].options.map((x, i) => {
           return (
-            <div key={i} className="col-md-5 d-flex justify-content-center ms-4">
+            <div
+              key={i}
+              className="col-md-5 d-flex justify-content-center ms-4"
+            >
               <BootstrapButton
                 variant="contained"
                 onClick={() => check(x, data[ind].answer)}
+                
               >
                 {i + ") "} {x}
               </BootstrapButton>
@@ -46,6 +51,8 @@ export default function Options(props) {
           );
         })}
       </div>
+      
+    
     </>
   );
 }
