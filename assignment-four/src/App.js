@@ -4,6 +4,7 @@ import image from "./assets/pngwing.com.png";
 import Options from "./components/options.js";
 import Buttons from "./components/commonbuttons.js";
 import { Box } from "@mui/system";
+import ReviewAnswer from "./components/Status.js";
 import "./index.css";
 import { Typography } from "@mui/material";
 function App() {
@@ -50,6 +51,7 @@ function App() {
   const [percentage, setPercentage] = useState(0);
   const [countdown, setcountdown] = useState(59);
   const [countdownMin, setcountdownMin] = useState(2);
+  const [arr, setArr] = useState([]);
 
   let Timeout, countout;
   let initial = 5;
@@ -60,6 +62,8 @@ function App() {
     if (UserAnswer === CorrectAnswer) {
       setScore(score + initial);
     }
+    arr.push(UserAnswer); // add new value in array
+    setArr([...arr]);
   };
 
   //go forward
@@ -120,6 +124,7 @@ function App() {
     setStatus("fail");
     setcountdown(59);
     setcountdownMin(2);
+    setArr([]);
   }
   return (
     <Box className="Main">
@@ -139,6 +144,15 @@ function App() {
           <Box>Status : {status}</Box>
           <Box>
             <Buttons func={Try} info="Try Again !" />
+          </Box>
+          <Box>
+            <ReviewAnswer
+              ques={questions[Index - 1].question}
+              correctOption={questions[Index - 1].answer}
+              selectedOption={arr[Index - 1]}
+              onBack={() => setIndex(Index - 1)}
+              onNext={() => setIndex(Index + 1)}
+            />
           </Box>
         </>
       ) : (
