@@ -1,5 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import image from "./assets/pngwing.com.png";
 import Options from "./components/options.js";
 import Buttons from "./components/commonbuttons.js";
@@ -41,8 +41,6 @@ function App() {
       options: ["While loop", "Infinite loop", "Recursive loop", "for loop"],
     },
   ];
-  const timeoutRef = useRef(null);
-
   const [Index, setIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [Result, setResult] = useState(false);
@@ -80,7 +78,7 @@ function App() {
   useEffect(() => {
     //timer
     if (Sec <= 59) {
-      timeoutRef.Timeout = setTimeout(() => setSec(Sec + 1), 1000);
+      Timeout = setTimeout(() => setSec(Sec + 1), 1000);
     } else {
       setSec(0);
     }
@@ -89,7 +87,7 @@ function App() {
     }
     //countdown
     if (countdown >= 0) {
-      timeoutRef.countout = setTimeout(() => setcountdown(countdown - 1), 1000);
+      countout = setTimeout(() => setcountdown(countdown - 1), 1000);
     } else {
       setcountdown(59);
     }
@@ -110,18 +108,7 @@ function App() {
     if (countdown === 0 && countdownMin === 0) {
       setResult(true);
     }
-  }, [
-    Sec,
-    Minutes,
-    countdown,
-    countdownMin,
-    percentage,
-    Index,
-    Timeout,
-    countout,
-    total_marks,
-    score,
-  ]);
+  }, [Sec]);
   //restart quiz
   function Try() {
     setIndex(0);
