@@ -1,0 +1,2 @@
+npm i axios  (http promise based client)
+npm i react-router-dom (used for page navigations)
