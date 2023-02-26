@@ -65,6 +65,7 @@ function App() {
     arr.push(UserAnswer); // add new value in array
     setArr([...arr]);
     setcheckUser(true);
+    console.log(Index);
   };
 
   //go forward
@@ -82,15 +83,16 @@ function App() {
     }
   };
   const RevNext = () => {
-    if (Index <= 4 || !checkUser) {
+    if (Index <= 4 || checkUser) {
       setIndex(Index + 1);
       clearInterval(countout);
       console.log(Index);
+      // setcheckUser(true);
     } else {
       alert("This is Last Question , Click Back to Review More Answers!");
       console.log("This is Last Question , Click Back to Review More Answers!");
     }
-    setcheckUser(true);
+    setcheckUser(false);
   };
   //go backward
   const Back = () => {
@@ -108,7 +110,7 @@ function App() {
       // setcheckUser(true);
     } else {
       setIndex(Index - 1);
-      setcheckUser(false);
+      setcheckUser(true);
       clearInterval(countout);
     }
   };
