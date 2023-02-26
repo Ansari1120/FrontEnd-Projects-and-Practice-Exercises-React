@@ -6,7 +6,7 @@ const BootstrapButton = styled(Button)({
   fontSize: 16,
   padding: "6px 12px",
   marginBottom: "10px",
-  marginLeft: "30px",
+  marginLeft: "120px",
   border: "1px solid",
 
   lineHeight: 1.5,

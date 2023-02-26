@@ -52,7 +52,7 @@ function App() {
   const [countdown, setcountdown] = useState(59);
   const [countdownMin, setcountdownMin] = useState(2);
   const [arr, setArr] = useState([]);
-
+  const [checkUser, setcheckUser] = useState(false);
   let Timeout, countout;
   let initial = 5;
   let total_marks = initial * questions.length;
@@ -64,6 +64,7 @@ function App() {
     }
     arr.push(UserAnswer); // add new value in array
     setArr([...arr]);
+    setcheckUser(true);
   };
 
   //go forward
@@ -72,11 +73,38 @@ function App() {
     if (Index + 1 === questions.length) {
       setResult(true);
     }
-    setIndex(Index + 1);
+    if (checkUser) {
+      setIndex(Index + 1);
+      setcheckUser(false);
+    } else {
+      alert("Please Choose An Option To proceed Further !");
+      console.log("Please Choose An Option To proceed Further !");
+    }
+  };
+  const RevNext = () => {
+    if (!checkUser) {
+      setIndex(Index + 1);
+    } else {
+      alert("This is Last Question , Click Back to Review More Answers!");
+      console.log("This is Last Question , Click Back to Review More Answers!");
+    }
   };
   //go backward
   const Back = () => {
-    setIndex(Index - 1);
+    if (Index === 0) {
+      alert("Please Choose an Option Then Click Next !");
+      console.log("Please Choose an Option Then Click Next !");
+    } else {
+      setIndex(Index - 1);
+    }
+  };
+  const RevBack = () => {
+    if (!(Index > 1)) {
+      alert("This is First Question , Click Next to Review More Answers");
+      console.log("This is First Question , Click Next to Review More Answers");
+    } else {
+      setIndex(Index - 1);
+    }
   };
   //Made simple Timer with minutes and seconds to update.
   useEffect(() => {
@@ -99,7 +127,7 @@ function App() {
       setcountdownMin(countdownMin - 1);
     }
     // needs to stop the timer when all questions completed !
-    if (Index === 5 || (countdown === 0 && countdownMin === 0)) {
+    if (Index === 5 || (countdown === 0 && countdownMin === 1)) {
       clearInterval(Timeout);
     }
     //precentage portion
@@ -109,10 +137,11 @@ function App() {
     if (percentage >= 40) {
       setStatus("pass");
     }
-    if (countdown === 0 && countdownMin === 0) {
+    if (countdownMin === 1 && countdown === 0) {
+      clearInterval(countout);
       setResult(true);
     }
-  }, [Sec]);
+  }, [Sec, countdown]);
   //restart quiz
   function Try() {
     setIndex(0);
@@ -125,6 +154,7 @@ function App() {
     setcountdown(59);
     setcountdownMin(2);
     setArr([]);
+    setcheckUser(false);
   }
   return (
     <Box className="Main">
@@ -150,8 +180,8 @@ function App() {
               ques={questions[Index - 1].question}
               correctOption={questions[Index - 1].answer}
               selectedOption={arr[Index - 1]}
-              onBack={() => setIndex(Index - 1)}
-              onNext={() => setIndex(Index + 1)}
+              onBack={RevBack}
+              onNext={RevNext}
             />
           </Box>
         </>
@@ -163,15 +193,15 @@ function App() {
           </label>
           <br />
           <Box className="QuestionDetails">
-            <Typography variant="h4">
+            <Typography variant="h4" className="QuestionDetail">
               Question # {Index + 1} of {questions.length}
             </Typography>
             <label>Marks 05</label>
           </Box>
-          <h1>{questions[Index].question}</h1>
+          <h1 className="QuestionDetails">{questions[Index].question}</h1>
           <br />
           <br />
-          <Box>
+          <Box className="Question">
             <Options check={checkAnswer} data={questions} ind={Index} />
           </Box>
           <Box>
