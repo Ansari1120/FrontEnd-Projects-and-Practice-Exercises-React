@@ -82,12 +82,15 @@ function App() {
     }
   };
   const RevNext = () => {
-    if (!checkUser) {
+    if (Index <= 4 || !checkUser) {
       setIndex(Index + 1);
+      clearInterval(countout);
+      console.log(Index);
     } else {
       alert("This is Last Question , Click Back to Review More Answers!");
       console.log("This is Last Question , Click Back to Review More Answers!");
     }
+    setcheckUser(true);
   };
   //go backward
   const Back = () => {
@@ -102,8 +105,11 @@ function App() {
     if (!(Index > 1)) {
       alert("This is First Question , Click Next to Review More Answers");
       console.log("This is First Question , Click Next to Review More Answers");
+      // setcheckUser(true);
     } else {
       setIndex(Index - 1);
+      setcheckUser(false);
+      clearInterval(countout);
     }
   };
   //Made simple Timer with minutes and seconds to update.
