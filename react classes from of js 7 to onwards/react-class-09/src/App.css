@@ -1,0 +1,19 @@
+.App{
+  padding: 10px;
+}
+.primary-button {
+  background-color: darkblue;
+  color: white;
+  padding: 10px;  
+}
+.danger-button {
+  background-color: red;
+  color: white;
+  padding: 10px;
+}
+.dark-button {
+  background-color: black;
+  color: white;
+  padding: 10px;
+}
+
