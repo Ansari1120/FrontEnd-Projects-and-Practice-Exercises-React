@@ -1,6 +1,7 @@
-import { Button } from "@mui/material";
+import { Button, Box, Container } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import SearchResults from "../components/SearchResults";
 import SMGrid from "../components/SMGrid";
 import { Get } from "../config/apibasemethods";
 
@@ -9,7 +10,7 @@ function Comments() {
   const [loader, setLoader] = useState(false);
 
   const navigation = useNavigate();
-
+  const [filterResults, setfilterResults] = useState([]);
   let openAddForm = (id) => {
     navigation(`/commentform/${id}`);
   };
@@ -28,14 +29,17 @@ function Comments() {
       displayName: "Email",
       key: "email",
       displayField: (e) => <a href={`mailto:${e.email}`}>{e.email}</a>,
+      label: "email",
     },
     {
       displayName: "Name",
       key: "name",
+      label: "name",
     },
     {
       displayName: "Message",
       key: "body",
+      label: "message",
     },
   ];
 
@@ -44,25 +48,42 @@ function Comments() {
     Get("comments")
       .then((res) => {
         setLoader(false);
-        setCommentsData([...res.data]);
+        console.log(res.data);
+        setCommentsData(...[res.data]);
+        setfilterResults(...[res.data]);
       })
+
       .catch((err) => {
         setLoader(false);
         console.log(err);
       });
   };
+
   useEffect(() => {
     getCommentsData();
+    //  MatchSearch();
   }, []);
-
   return (
     <>
-      <SMGrid
-        isLoading={loader}
-        title="Comments"
-        datasource={commentsData}
-        columns={columns}
-      />
+      <Box>
+        <Container>
+          <Box>
+            <SearchResults
+              commentsData={commentsData}
+              setfilterResults={setfilterResults}
+              columns={columns}
+            />
+          </Box>
+          <Box>
+            <SMGrid
+              isLoading={loader}
+              title="Comments"
+              datasource={filterResults}
+              columns={columns}
+            />
+          </Box>
+        </Container>
+      </Box>
     </>
   );
 }

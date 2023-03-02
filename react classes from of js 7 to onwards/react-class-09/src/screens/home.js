@@ -32,7 +32,7 @@ function Home() {
     axios
       .put(api + "/1", { body: "Custom Body" })
       .then((res) => {
-        console.log("Data send Successfully", res);
+        console.log("Data updated Successfully", res);
       })
       .catch((err) => {
         console.log(err);
@@ -54,7 +54,8 @@ function Home() {
         </Button>
         {data.map((e, i) => (
           <div>
-            <p>{e.title}</p>
+            <p>title : {e.title}</p>
+            <p>Body : {e.body}</p>
           </div>
         ))}
       </div>
