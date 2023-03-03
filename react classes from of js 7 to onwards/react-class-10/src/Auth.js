@@ -4,6 +4,18 @@ import React, { useState } from "react";
 
 const Auth = () => {
   const [isSignup, setSignup] = useState(false);
+  const [input, setInput] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+  const handleChange = () => {
+    setInput((prevState) => ({
+      ...prevState,
+      [e.target.value]: e.target.value,
+    }));
+    consle.log(input)
+  };
   return (
     <div>
       <form>
@@ -33,19 +45,28 @@ const Auth = () => {
               type={"text"}
               placeholder={"Name"}
               variant="outlined"
+              name="name"
+              value={input.name}
+              onChange={hangleChange}
             />
           )}
           <TextField
             margin="normal"
+            name="email"
             type={"email"}
             placeholder={"Email"}
             variant="outlined"
+            value={input.email}
+            onChange={hangleChange}
           />
           <TextField
             margin="normal"
+            name="password"
+            value={input.password}
             type={"password"}
             placeholder={"Password"}
             variant="outlined"
+            onChange={hangleChange}
           />
           <Button
             sx={{ maringTop: 3, borderRadius: 3 }}
