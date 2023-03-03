@@ -9,12 +9,12 @@ const Auth = () => {
     email: "",
     password: "",
   });
-  const handleChange = () => {
+  const handleChange = (e) => {
     setInput((prevState) => ({
       ...prevState,
       [e.target.value]: e.target.value,
     }));
-    consle.log(input)
+    console.log(input);
   };
   return (
     <div>
@@ -47,7 +47,7 @@ const Auth = () => {
               variant="outlined"
               name="name"
               value={input.name}
-              onChange={hangleChange}
+              onChange={handleChange}
             />
           )}
           <TextField
@@ -57,7 +57,7 @@ const Auth = () => {
             placeholder={"Email"}
             variant="outlined"
             value={input.email}
-            onChange={hangleChange}
+            onChange={handleChange}
           />
           <TextField
             margin="normal"
@@ -66,7 +66,7 @@ const Auth = () => {
             type={"password"}
             placeholder={"Password"}
             variant="outlined"
-            onChange={hangleChange}
+            onChange={handleChange}
           />
           <Button
             sx={{ maringTop: 3, borderRadius: 3 }}
