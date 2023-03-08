@@ -1,4 +1,4 @@
-import { Box, TextField, MenuItem, Select, FormControl } from "@mui/material";
+  import { Box, TextField, MenuItem, Select, FormControl } from "@mui/material";
 import { useState } from "react";
 const SearchResults = ({ columns, commentsData, setfilterResults }) => {
   let searchList = columns.filter((x) => x.searchAble);
@@ -17,7 +17,7 @@ const SearchResults = ({ columns, commentsData, setfilterResults }) => {
   const handleInput = (e) => {
     if (e.target.value) {
       const matchQuery = commentsData.filter((comment) =>
-        comment[keySelect].toLowerCase().includes(e.target.value)
+        comment[keySelect].toLowerCase().toString().includes(e.target.value)
       );
       setfilterResults(matchQuery);
     } else {
@@ -55,6 +55,7 @@ const SearchResults = ({ columns, commentsData, setfilterResults }) => {
               ))}
             </Select>
           </Box>
+         
         </Box>
       </FormControl>
     </>

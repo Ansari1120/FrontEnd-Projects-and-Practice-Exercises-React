@@ -1,5 +1,7 @@
-import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
+import SinglePost from "../screens/singlepost";
+import CommentsForm from "../screens/commentsform";
 import Dashboard from "../screens/dashboard";
 
 export default function AppRouter() {
@@ -7,8 +9,10 @@ export default function AppRouter() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="dashboard/*" element={<Dashboard />} />
-          <Route path="/" element={<Dashboard />} />
+          <Route path="singlepost/:id" element={<SinglePost />} />
+          <Route path="commentform" element={<CommentsForm />} />
+          <Route path="commentform/:id" element={<CommentsForm />} />
+          <Route path="/*" element={<Dashboard />} />
         </Routes>
       </BrowserRouter>
     </>

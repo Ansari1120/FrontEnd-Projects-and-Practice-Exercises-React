@@ -19,7 +19,6 @@ import Message from "../screens/dashboardScreens/message";
 import Notification from "../screens/dashboardScreens/notify";
 import Feedback from "../screens/dashboardScreens/feed";
 import Comments from "../screens/dashboardScreens/comments";
-import HomeIcon from '@mui/icons-material/Home';
 import MessageIcon from "@mui/icons-material/Message";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import FeedbackIcon from "@mui/icons-material/Feedback";
@@ -28,7 +27,8 @@ import About from "../screens/dashboardScreens/about";
 import Posts from "../screens/dashboardScreens/post";
 import PostAddIcon from "@mui/icons-material/PostAdd";
 import InfoIcon from "@mui/icons-material/Info";
-import Home from "../screens/Home";
+import HomeIcon from "@mui/icons-material/Home";
+import Home from "../screens/dashboardScreens/Home";
 const drawerWidth = 240;
 const DashboardLayout = (props) => {
   const { window } = props;
@@ -38,8 +38,8 @@ const DashboardLayout = (props) => {
       name: "Home",
       route: "Home",
       ico: <HomeIcon />,
-    }
-   , {
+    },
+    {
       name: "Messages",
       route: "message",
       ico: <MessageIcon />,
@@ -177,7 +177,7 @@ const DashboardLayout = (props) => {
         >
           <Toolbar />
           <Routes>
-          <Route path="//" element={<Home />} />
+            <Route path="Home" element={<Home />} />
             <Route path="message" element={<Message />} />
             <Route path="notify" element={<Notification />} />
             <Route path="feed" element={<Feedback />} />

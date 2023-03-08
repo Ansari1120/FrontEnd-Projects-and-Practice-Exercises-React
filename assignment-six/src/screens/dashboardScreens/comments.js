@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SearchResults from "../../components/SearchResults";
 import SMGrid from "../../components/SMGrid";
+import Sortout from "../../components/sortout";
 import { Get } from "../../config/apibasemethods";
 
 function Comments() {
@@ -14,7 +15,7 @@ function Comments() {
   let openAddForm = (id) => {
     navigation(`/commentform/${id}`);
   };
-
+  
   let columns = [
     {
       displayName: "Action",
@@ -72,6 +73,12 @@ function Comments() {
               setfilterResults={setfilterResults}
               columns={columns}
             />
+          </Box>
+          <Box>
+            <Sortout
+              datasource={filterResults}
+              setDatasource={setfilterResults}
+              />
           </Box>
           <Box>
             <SMGrid
