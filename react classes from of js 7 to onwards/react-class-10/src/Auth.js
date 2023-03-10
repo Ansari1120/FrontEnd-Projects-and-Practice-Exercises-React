@@ -1,6 +1,7 @@
-import { Button, TextField, Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
+import InputField from "./Non-Functional Components/InputField";
 
 const Auth = () => {
   const [isSignup, setSignup] = useState(false);
@@ -40,7 +41,7 @@ const Auth = () => {
             {isSignup ? "SignUp" : "Login"}
           </Typography>
           {isSignup && (
-            <TextField
+            <InputField
               margin="normal"
               type={"text"}
               placeholder={"Name"}
@@ -50,7 +51,7 @@ const Auth = () => {
               onChange={handleChange}
             />
           )}
-          <TextField
+          <InputField
             margin="normal"
             name="email"
             type={"email"}
@@ -59,7 +60,7 @@ const Auth = () => {
             value={input.email}
             onChange={handleChange}
           />
-          <TextField
+          <InputField
             margin="normal"
             name="password"
             value={input.password}
