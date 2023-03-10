@@ -12,19 +12,15 @@ import React, { useState } from "react";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { userSignup } from "../config/firebasemethods";
 import { userLogin } from "../config/firebasemethods";
-import { useNavigate, Route, Routes } from "react-router-dom";
+// import { Route, Routes, useNavigate } from "react-router-dom";
 import Dashboard from "./dashboard";
 
 const UserLoginSignin = () => {
-  const navigate = useNavigate();
+  // const navigation = useNavigate();
   const [isSignup, setSignup] = useState(false);
   const [model, setModel] = useState({});
 
-  // const [input, setInput] = useState({
-  //   userName: "",
-  //   email: "",
-  //   password: "",
-  // });
+ 
 
   let createUser = () => {
     console.log(model);
@@ -41,20 +37,20 @@ const UserLoginSignin = () => {
     userLogin(model)
       .then((res) => {
         console.log(`User Logged in Successfully ! ${res}`);
-        navigate(`dashboard`);
+        // const route = "dashboard/*";
+        // navigation(route);
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  // const handleChange = (e) => {
-  //   setInput((prevState) => ({
-  //     ...prevState,
-  //     [e.target.value]: e.target.value,
-  //   }));
-  //   console.log(input);
+  // let moveOnLogin = () => {
+  //   const route = "dashboard/*";
+  //   navigation(route);
   // };
+
+
   return (
     <Container maxWidth="xs">
       <form>
@@ -109,11 +105,9 @@ const UserLoginSignin = () => {
           <TextField
             margin="normal"
             name="password"
-            // value={input.password}
             type={"password"}
             placeholder={"Password"}
             variant="outlined"
-            // onChange={handleChange}
             onChange={(e) => setModel({ ...model, password: e.target.value })}
           />
           {!isSignup && (
@@ -126,7 +120,7 @@ const UserLoginSignin = () => {
             sx={{ maringTop: 3, borderRadius: 3 }}
             variant="contained"
             color="warning"
-            onClick={isSignup ? ()=>createUser() : ()=>loginUser()}
+            onClick={isSignup ? () => createUser() : () => loginUser()}
           >
             {isSignup ? "Signup" : "Login"}
           </Button>
@@ -145,11 +139,11 @@ const UserLoginSignin = () => {
               </Link>
             </Grid>
           ) : null}
-          <Box>
+          {/* <Box>
             <Routes>
               <Route path="dashboard/*" element={<Dashboard />} />
             </Routes>
-          </Box>
+          </Box> */}
         </Box>
       </form>
     </Container>
