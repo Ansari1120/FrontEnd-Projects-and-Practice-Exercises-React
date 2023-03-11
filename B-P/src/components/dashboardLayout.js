@@ -16,7 +16,6 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-
 import { Route, Routes, useNavigate } from "react-router-dom";
 import Message from "../screens/dashboardScreens/message";
 import Notification from "../screens/dashboardScreens/notify";
@@ -78,7 +77,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 export default function PersistentDrawerLeft(props) {
-  const { window } = props;
+  const { window, UserName } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [menuList, setMenuList] = React.useState([
     {
@@ -173,8 +172,9 @@ export default function PersistentDrawerLeft(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Persistent drawer
+            Dashboard
           </Typography>
+          <Typography>{UserName}</Typography>
         </Toolbar>
       </AppBar>
       <Box

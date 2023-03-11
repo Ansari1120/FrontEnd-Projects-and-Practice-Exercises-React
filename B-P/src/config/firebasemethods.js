@@ -4,12 +4,14 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import app from "./firebaseconfig";
-import { getDatabase, onValue,set, ref } from "firebase/database";
+import { getDatabase, onValue, set, ref } from "firebase/database";
 
 const auth = getAuth(app);
 const db = getDatabase(app);
 
-let userSignup = (obj) => {
+let Usersignup = (obj) => {
+  // const navigation = useNavigate();
+
   return new Promise((resolve, reject) => {
     createUserWithEmailAndPassword(auth, obj.email, obj.password).then(
       (res) => {
@@ -30,7 +32,9 @@ let userSignup = (obj) => {
   });
 };
 
-let userLogin = (obj) => {
+let UserLogin = (obj) => {
+  // const navigate = useNavigate();
+
   return new Promise((resolve, reject) => {
     signInWithEmailAndPassword(auth, obj.email, obj.password)
       .then((res) => {
@@ -42,6 +46,12 @@ let userLogin = (obj) => {
             reject("Data not Found !");
           }
         });
+        // navigate("dashboard/*");
+        // <BrowserRouter>
+        //   <Routes>
+        //     <Route path="/*" element={<Dashboard />} />
+        //   </Routes>
+        // </BrowserRouter>;
       })
       .catch((err) => {
         reject(err.message);
@@ -59,4 +69,4 @@ let fbEdit = () => {};
 
 let fbDelete = () => {};
 
-export { userLogin, userSignup, userSignOut, fbGet, fbGetId, fbEdit, fbDelete };
+export { UserLogin, Usersignup, userSignOut, fbGet, fbGetId, fbEdit, fbDelete };

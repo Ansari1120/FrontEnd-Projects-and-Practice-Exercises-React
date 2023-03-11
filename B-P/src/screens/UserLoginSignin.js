@@ -10,46 +10,36 @@ import {
 import { Box } from "@mui/system";
 import React, { useState } from "react";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import { userSignup } from "../config/firebasemethods";
-import { userLogin } from "../config/firebasemethods";
-// import { Route, Routes, useNavigate } from "react-router-dom";
-import Dashboard from "./dashboard";
-
+import { Usersignup } from "../config/firebasemethods";
+import { UserLogin } from "../config/firebasemethods";
+// import { Cridentials } from "../config/firebasemethods";
+import { useNavigate } from "react-router-dom";
 const UserLoginSignin = () => {
-  // const navigation = useNavigate();
+  const navigation = useNavigate();
   const [isSignup, setSignup] = useState(false);
   const [model, setModel] = useState({});
 
- 
-
   let createUser = () => {
     console.log(model);
-    userSignup(model)
+    Usersignup(model)
       .then((res) => {
-        console.log(res);
+        console.log(`User signed in in Successfully ! ${res}`);
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  let loginUser = () => {
-    userLogin(model)
+  let Login = () => {
+    UserLogin(model)
       .then((res) => {
         console.log(`User Logged in Successfully ! ${res}`);
-        // const route = "dashboard/*";
-        // navigation(route);
+        navigation("dashboard/*");
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
-  // let moveOnLogin = () => {
-  //   const route = "dashboard/*";
-  //   navigation(route);
-  // };
-
 
   return (
     <Container maxWidth="xs">
@@ -61,7 +51,7 @@ const UserLoginSignin = () => {
           alignItems="center"
           justifyContent={"center"}
           margin="auto"
-          maringTop={5}
+          // maringTop={5}
           padding={3}
           borderRadius={5}
           boxShadow={"5px  5px 10px #ccc"}
@@ -85,8 +75,6 @@ const UserLoginSignin = () => {
               required
               // fullWidth
               autoFocus
-              // value={input.name}
-              // onChange={handleChange}
               onChange={(e) => setModel({ ...model, userName: e.target.value })}
             />
           )}
@@ -96,7 +84,6 @@ const UserLoginSignin = () => {
             type={"email"}
             placeholder={"Email"}
             variant="outlined"
-            // onChange={handleChange}
             required
             autoFocus
             autoComplete="given-name"
@@ -120,7 +107,7 @@ const UserLoginSignin = () => {
             sx={{ maringTop: 3, borderRadius: 3 }}
             variant="contained"
             color="warning"
-            onClick={isSignup ? () => createUser() : () => loginUser()}
+            onClick={isSignup ? () => createUser() : () => Login()}
           >
             {isSignup ? "Signup" : "Login"}
           </Button>
@@ -139,11 +126,6 @@ const UserLoginSignin = () => {
               </Link>
             </Grid>
           ) : null}
-          {/* <Box>
-            <Routes>
-              <Route path="dashboard/*" element={<Dashboard />} />
-            </Routes>
-          </Box> */}
         </Box>
       </form>
     </Container>
