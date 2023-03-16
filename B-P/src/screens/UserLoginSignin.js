@@ -12,7 +12,6 @@ import React, { useState } from "react";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { Usersignup } from "../config/firebasemethods";
 import { UserLogin } from "../config/firebasemethods";
-// import { Cridentials } from "../config/firebasemethods";
 import { useNavigate } from "react-router-dom";
 const UserLoginSignin = () => {
   const navigation = useNavigate();
@@ -24,6 +23,7 @@ const UserLoginSignin = () => {
     Usersignup(model)
       .then((res) => {
         console.log(`User signed in in Successfully ! ${res}`);
+        navigation("dashboard/*");
       })
       .catch((err) => {
         console.log(err);
@@ -75,7 +75,9 @@ const UserLoginSignin = () => {
               required
               // fullWidth
               autoFocus
-              onChange={(e) => setModel({ ...model, userName: e.target.value })}
+              onChange={(e) =>
+                setModel({ ...model, userName: e.target.value })
+              }
             />
           )}
           <TextField

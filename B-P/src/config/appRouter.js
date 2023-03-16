@@ -5,16 +5,17 @@ import Dashboard from "../screens/dashboard";
 import UserLoginSignin from "../screens/UserLoginSignin";
 import { useEffect, useState } from "react";
 import { getAuth } from "firebase/auth";
+import app from "./firebaseconfig";
 
 export default function AppRouter() {
   const auth = getAuth();
-
   const [UserName, setUserName] = useState("");
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
         setUserName(user.displayName);
+        console.log(user.displayName)
       } else setUserName("");
     });
   }, []);

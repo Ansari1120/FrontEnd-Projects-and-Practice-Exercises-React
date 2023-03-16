@@ -174,7 +174,7 @@ export default function PersistentDrawerLeft(props) {
           <Typography variant="h6" noWrap component="div">
             Dashboard
           </Typography>
-          <Typography>{UserName}</Typography>
+          <Typography>{UserName} Kato</Typography>
         </Toolbar>
       </AppBar>
       <Box

@@ -2,6 +2,7 @@ import {
   createUserWithEmailAndPassword,
   getAuth,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
 import app from "./firebaseconfig";
 import { getDatabase, onValue, set, ref } from "firebase/database";
@@ -10,14 +11,14 @@ const auth = getAuth(app);
 const db = getDatabase(app);
 
 let Usersignup = (obj) => {
-  // const navigation = useNavigate();
-
   return new Promise((resolve, reject) => {
     createUserWithEmailAndPassword(auth, obj.email, obj.password).then(
       (res) => {
         obj.id = res.user.uid;
+        const user = res.user;
         //created new user in database users with id as base
         const reference = ref(db, `users/${obj.id}`);
+        updateProfile(user, { displayName: obj.userName });
         set(reference, obj)
           .then(() => {
             resolve(
@@ -33,8 +34,6 @@ let Usersignup = (obj) => {
 };
 
 let UserLogin = (obj) => {
-  // const navigate = useNavigate();
-
   return new Promise((resolve, reject) => {
     signInWithEmailAndPassword(auth, obj.email, obj.password)
       .then((res) => {
@@ -46,12 +45,6 @@ let UserLogin = (obj) => {
             reject("Data not Found !");
           }
         });
-        // navigate("dashboard/*");
-        // <BrowserRouter>
-        //   <Routes>
-        //     <Route path="/*" element={<Dashboard />} />
-        //   </Routes>
-        // </BrowserRouter>;
       })
       .catch((err) => {
         reject(err.message);
