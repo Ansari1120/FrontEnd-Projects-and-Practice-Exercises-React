@@ -3,9 +3,11 @@ import {
   getAuth,
   signInWithEmailAndPassword,
   updateProfile,
+  signOut,
 } from "firebase/auth";
 import app from "./firebaseconfig";
 import { getDatabase, onValue, set, ref } from "firebase/database";
+import firebaseAuth from "firebase-auth";
 
 const auth = getAuth(app);
 const db = getDatabase(app);
@@ -52,8 +54,21 @@ let UserLogin = (obj) => {
   });
 };
 
-let userSignOut = () => {};
-
+let userSignOut = () => {
+  return signOut(auth);
+};
+let checkAuth = () => {
+  return new Promise((resolve,reject)=>{
+   auth.onAuthStateChanged((user)=>{
+      if(user){
+        const uid = user.uid;
+        resolve(uid);
+      }else{
+        reject('User Not Logged In');
+      }
+    })
+  })
+};
 let fbGet = () => {};
 
 let fbGetId = () => {};
@@ -62,4 +77,13 @@ let fbEdit = () => {};
 
 let fbDelete = () => {};
 
-export { UserLogin, Usersignup, userSignOut, fbGet, fbGetId, fbEdit, fbDelete };
+export {
+  checkAuth,
+  UserLogin,
+  Usersignup,
+  userSignOut,
+  fbGet,
+  fbGetId,
+  fbEdit,
+  fbDelete,
+};

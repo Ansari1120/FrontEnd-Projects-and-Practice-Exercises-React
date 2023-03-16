@@ -3,22 +3,10 @@ import SinglePost from "../screens/singlepost";
 import CommentsForm from "../screens/commentsform";
 import Dashboard from "../screens/dashboard";
 import UserLoginSignin from "../screens/UserLoginSignin";
-import { useEffect, useState } from "react";
-import { getAuth } from "firebase/auth";
-import app from "./firebaseconfig";
+import ProtectedRoute from "./ProtectedRoute";
 
 export default function AppRouter() {
-  const auth = getAuth();
-  const [UserName, setUserName] = useState("");
-
-  useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        setUserName(user.displayName);
-        console.log(user.displayName)
-      } else setUserName("");
-    });
-  }, []);
+  // ProtectedRoute
   return (
     <>
       <BrowserRouter>
@@ -27,10 +15,8 @@ export default function AppRouter() {
           <Route path="singlepost/:id" element={<SinglePost />} />
           <Route path="commentform" element={<CommentsForm />} />
           <Route path="commentform/:id" element={<CommentsForm />} />
-          <Route
-            path="dashboard/*"
-            element={<Dashboard UserName={UserName} />}
-          />
+          {/* <Route path="dashboard/*" element={<Dashboard />} /> */}
+          <Route path="dashboard/*" element={<ProtectedRoute Component={Dashboard} />}/>
         </Routes>
       </BrowserRouter>
     </>

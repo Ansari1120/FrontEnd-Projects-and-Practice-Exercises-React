@@ -29,6 +29,8 @@ import About from "../screens/dashboardScreens/about";
 import Posts from "../screens/dashboardScreens/post";
 import PostAddIcon from "@mui/icons-material/PostAdd";
 import InfoIcon from "@mui/icons-material/Info";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import { userSignOut } from "../config/firebasemethods";
 const drawerWidth = 240;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
@@ -155,10 +157,27 @@ export default function PersistentDrawerLeft(props) {
           </ListItem>
         ))}
       </List>
+
+      <ListItem disablePadding>
+        <ListItemButton
+          onClick={() =>
+            userSignOut()
+              .then(() => {
+                navigation("/");
+              })
+              .catch((err) => {
+                console.log(err);
+              })
+          }
+        >
+          <ListItemIcon>{<ExitToAppIcon />} </ListItemIcon>
+          <ListItemText primary={"Logout"} />
+        </ListItemButton>
+      </ListItem>
     </div>
   );
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box alignItems="center" sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
         <Toolbar>
@@ -174,7 +193,9 @@ export default function PersistentDrawerLeft(props) {
           <Typography variant="h6" noWrap component="div">
             Dashboard
           </Typography>
-          <Typography>{UserName} Kato</Typography>
+          <Typography sx={{ ml: 120, ...(open && { ml: 100 }) }}>
+            Welcome ! {UserName}
+          </Typography>
         </Toolbar>
       </AppBar>
       <Box
