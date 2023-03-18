@@ -193,7 +193,7 @@ export default function PersistentDrawerLeft(props) {
           <Typography variant="h6" noWrap component="div">
             Dashboard
           </Typography>
-          <Typography sx={{ ml: 120, ...(open && { ml: 100 }) }}>
+          <Typography item md={6} sx={{ ml: 120, ...(open && { ml: 100 }) }}>
             Welcome ! {UserName}
           </Typography>
         </Toolbar>

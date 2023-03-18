@@ -6,8 +6,7 @@ import {
   signOut,
 } from "firebase/auth";
 import app from "./firebaseconfig";
-import { getDatabase, onValue, set, ref } from "firebase/database";
-import firebaseAuth from "firebase-auth";
+import { getDatabase, onValue, set, ref, push } from "firebase/database";
 
 const auth = getAuth(app);
 const db = getDatabase(app);
@@ -57,19 +56,64 @@ let UserLogin = (obj) => {
 let userSignOut = () => {
   return signOut(auth);
 };
+
 let checkAuth = () => {
-  return new Promise((resolve,reject)=>{
-   auth.onAuthStateChanged((user)=>{
-      if(user){
+  return new Promise((resolve, reject) => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
         const uid = user.uid;
         resolve(uid);
-      }else{
-        reject('User Not Logged In');
+      } else {
+        reject("User Not Logged In");
       }
-    })
-  })
+    });
+  });
 };
-let fbGet = () => {};
+
+let fbGet = (nodeName, id) => {
+  let reference = ref(db, `${nodeName}/${id ? id : ""}`);
+  return new Promise((resolve, reject) => {
+    onValue(reference, (dt) => {
+      if (dt.exists()) {
+        if (id) {
+          resolve(dt.val());
+        } else {
+          resolve(Object.values(dt.val()));
+        }
+      } else {
+        reject("no Data Found");
+      }
+    });
+  });
+};
+
+let fbPost = (nodeName, obj, id) => {
+  return new Promise((resolve, reject) => {
+    if (id) {
+      //post new Data
+      let reference = ref(db, `${nodeName}/${id ? id : ""}`);
+      set(reference, obj)
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    } else {
+      //edit existing data
+      let keyRef = ref(db, `${nodeName}`);
+      obj.id = push(keyRef).key;
+      let postRef = ref(db, `${nodeName}/${obj.id}`);
+      set(postRef, obj)
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    }
+  });
+};
 
 let fbGetId = () => {};
 
@@ -86,4 +130,5 @@ export {
   fbGetId,
   fbEdit,
   fbDelete,
+  fbPost,
 };

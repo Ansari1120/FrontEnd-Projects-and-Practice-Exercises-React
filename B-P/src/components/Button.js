@@ -1,30 +1,41 @@
 import React from "react";
 import { Button } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
+
 export default function MyButton(props) {
-  const { label, onClick, disabled, startIcon, endIcon } = props;
+  const {
+    loading,
+    loadingPosition,
+    variant,
+    label,
+    onClick,
+    disabled,
+    startIcon,
+    endIcon,
+  } = props;
 
   return (
     <>
       <Button
         startIcon={startIcon}
         endIcon={endIcon}
-        disabled={disabled}
+        disabled={loading ? "disabled" : disabled}
         onClick={onClick}
-        variant="contained"
-       
+        variant={variant}
+        loadingPosition={loadingPosition}
+        loading={loading}
+
         // onClick={props.click}
         // className={props.className ? props.className : "primary-button"}
       >
-        {label}
+        {loading ? <CircularProgress color="inherit" /> : label}
         {/* {props.label} */}
       </Button>
     </>
   );
 }
 
-
-//button form another 
-
+//button form another
 
 // function Input(props){
 //   console.log(props)
@@ -33,9 +44,10 @@ export default function MyButton(props) {
 
 // export default Input;
 
-
 //button form 3
 
-{/* <Button startIcon={<AcUnitIcon />} color="warning" variant="contained">
+{
+  /* <Button startIcon={<AcUnitIcon />} color="warning" variant="contained">
 {props.btnValue}
-</Button> */}
+</Button> */
+}
