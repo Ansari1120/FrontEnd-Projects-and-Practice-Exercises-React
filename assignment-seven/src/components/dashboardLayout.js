@@ -32,6 +32,7 @@ import InfoIcon from "@mui/icons-material/Info";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { userSignOut } from "../config/firebasemethods";
 import MySnackBarMessage from "./ShowMessage";
+import Todos from "../screens/dashboardScreens/todos";
 const drawerWidth = 240;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
@@ -80,7 +81,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 export default function PersistentDrawerLeft(props) {
-  const { window, UserName,switching } = props;
+  const { window, UserName, switching } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [res, setRes] = React.useState();
   const [condition, setCondition] = React.useState("");
@@ -114,6 +115,11 @@ export default function PersistentDrawerLeft(props) {
     {
       name: "Posts",
       route: "post",
+      ico: <PostAddIcon />,
+    },
+    {
+      name: "Todos",
+      route: "todos",
       ico: <PostAddIcon />,
     },
   ]);
@@ -260,6 +266,7 @@ export default function PersistentDrawerLeft(props) {
           <Route path="comments" element={<Comments />} />
           <Route path="about" element={<About />} />
           <Route path="post" element={<Posts />} />
+          <Route path="todos" element={<Todos />} />
         </Routes>
         <MySnackBarMessage
           variant="outlined"

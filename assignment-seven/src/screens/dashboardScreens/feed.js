@@ -38,18 +38,22 @@ export default function Feed() {
           View
         </Button>
       ),
+      searchAble: true,
     },
     {
       key: "userName",
       displayName: "User",
+      searchAble: true,
     },
     {
       key: "email",
       displayName: "E-mail",
+      searchAble: true,
     },
     {
       key: "message",
       displayName: "Message",
+      searchAble: true,
     },
   ];
 
@@ -180,7 +184,7 @@ export default function Feed() {
       </Box>
       <Box>
         <Grid container>
-          <Grid item md={9} marginRight={-128}>
+          <Grid item md={9} marginRight={-133}>
             <SMGrid datasource={listData} columns={col} />
           </Grid>
           <Grid item md={3} className="p-2">
