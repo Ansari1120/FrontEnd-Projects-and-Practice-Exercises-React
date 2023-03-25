@@ -1,5 +1,7 @@
 function SMGrid(props) {
   const { title, columns, datasource, onRowClick, isLoading } = props;
+  let searchList = columns.filter((x) => x.searchAble);
+
   return (
     <div>
       <h2>{title}</h2>
@@ -28,7 +30,7 @@ function SMGrid(props) {
             {datasource && Array.isArray(datasource) && datasource.length > 0
               ? datasource.map((x, i) => (
                   <tr key={i}>
-                    {columns.map((e, ind) => (
+                    {searchList.map((e, ind) => (
                       <td key={ind}>
                         {e.displayField ? e.displayField(x) : x[e.key]}
                       </td>

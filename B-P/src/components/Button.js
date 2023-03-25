@@ -12,11 +12,14 @@ export default function MyButton(props) {
     disabled,
     startIcon,
     endIcon,
+    sx,
+    color,
   } = props;
 
   return (
     <>
       <Button
+        sx={sx}
         startIcon={startIcon}
         endIcon={endIcon}
         disabled={loading ? "disabled" : disabled}
@@ -24,7 +27,7 @@ export default function MyButton(props) {
         variant={variant}
         loadingPosition={loadingPosition}
         loading={loading}
-
+        color={color}
         // onClick={props.click}
         // className={props.className ? props.className : "primary-button"}
       >

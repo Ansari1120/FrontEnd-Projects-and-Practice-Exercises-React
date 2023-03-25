@@ -13,31 +13,55 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import { Usersignup } from "../config/firebasemethods";
 import { UserLogin } from "../config/firebasemethods";
 import { useNavigate } from "react-router-dom";
+import MyButton from "../components/Button";
+import MySnackBarMessage from "../components/ShowMessage";
+
 const UserLoginSignin = () => {
   const navigation = useNavigate();
   const [isSignup, setSignup] = useState(false);
   const [model, setModel] = useState({});
+  const [loader, setloader] = useState(false);
+  const [open, setOpen] = React.useState(false);
+  const [err, setErr] = useState();
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
 
+    setOpen(false);
+  };
   let createUser = () => {
     console.log(model);
+    setloader(true);
     Usersignup(model)
       .then((res) => {
         console.log(`User signed in in Successfully ! ${res}`);
         navigation("dashboard/*");
+        setloader(false);
+        setOpen(false);
       })
       .catch((err) => {
         console.log(err);
+        setloader(false);
+        setOpen(true);
+        setErr(err);
       });
   };
 
   let Login = () => {
+    setloader(true);
     UserLogin(model)
       .then((res) => {
         console.log(`User Logged in Successfully ! ${res}`);
         navigation("dashboard/*");
+        setloader(false);
+        setOpen(false);
       })
       .catch((err) => {
         console.log(err);
+        setloader(false);
+        setOpen(true);
+        setErr(err);
       });
   };
 
@@ -75,9 +99,7 @@ const UserLoginSignin = () => {
               required
               // fullWidth
               autoFocus
-              onChange={(e) =>
-                setModel({ ...model, userName: e.target.value })
-              }
+              onChange={(e) => setModel({ ...model, userName: e.target.value })}
             />
           )}
           <TextField
@@ -105,22 +127,23 @@ const UserLoginSignin = () => {
               label="Remember me"
             />
           )}
-          <Button
+          <MyButton
             sx={{ maringTop: 3, borderRadius: 3 }}
             variant="contained"
             color="warning"
             onClick={isSignup ? () => createUser() : () => Login()}
-          >
-            {isSignup ? "Signup" : "Login"}
-          </Button>
-          <Button
+            label={isSignup ? "Signup" : "Login"}
+            loading={loader}
+          />
+          <MyButton
             onClick={() => setSignup(!isSignup)}
             sx={{ maringTop: 3, borderRadius: 3 }}
-          >
-            {isSignup
-              ? "Already Have an Account ! login Here "
-              : "  No Account ! signup here"}
-          </Button>
+            label={
+              isSignup
+                ? "Already Have an Account ! login Here "
+                : "  No Account ! signup here"
+            }
+          />
           {!isSignup ? (
             <Grid item xs>
               <Link href="#" variant="body2">
@@ -128,6 +151,14 @@ const UserLoginSignin = () => {
               </Link>
             </Grid>
           ) : null}
+
+          <MySnackBarMessage
+            variant="outlined"
+            open={open}
+            severity="error"
+            onClose={handleClose}
+            label={err}
+          />
         </Box>
       </form>
     </Container>

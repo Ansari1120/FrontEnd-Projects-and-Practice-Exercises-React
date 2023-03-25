@@ -7,13 +7,17 @@ import SaveIcon from "@mui/icons-material/Save";
 import { fbGet, fbPost } from "../../config/firebasemethods";
 import SMGrid from "../../components/SMGrid";
 import "bootstrap/dist/css/bootstrap.min.css";
+import MySnackBarMessage from "../../components/ShowMessage";
 
 export default function Feed() {
   const [open, setOpen] = useState(false);
+  const [msgopen, setmsgOpen] = useState(false);
   const [model, setModel] = useState({});
   const [loader, setloader] = useState(false);
   const [listData, setlistData] = useState([]);
   const [displayObj, setdisplayObj] = useState({});
+  const [res, setRes] = useState();
+  const [condition, setCondition] = useState("");
 
   const col = [
     {
@@ -34,20 +38,33 @@ export default function Feed() {
           View
         </Button>
       ),
+      searchAble: true,
     },
     {
       key: "userName",
       displayName: "User",
+      searchAble: true,
     },
     {
       key: "email",
       displayName: "E-mail",
+      searchAble: true,
     },
     {
       key: "message",
       displayName: "Message",
+      searchAble: true,
     },
   ];
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setmsgOpen(false);
+  };
+
   //saving user email,name,message in a node(Feeds) at firebase
   let saveFeed = () => {
     setloader(true);
@@ -56,23 +73,40 @@ export default function Feed() {
         console.log("Save SuccessFully !");
         setOpen(false);
         setloader(false);
+        setmsgOpen(true);
+        setCondition("success");
+        setRes("Save SuccessFully !");
       })
       .catch((err) => {
         console.log(err);
         setloader(false);
+        setOpen(true);
+        setRes(err);
+        setmsgOpen(true);
+        setCondition("error");
+        setRes(res);
       });
   };
 
   //Fetch data from a firabase node
 
   let showData = () => {
-    fbGet("Feeds")
+    fbGet("")
       .then((res) => {
         console.log("Data Fetched Successfully  ", res);
         setlistData([...res]);
+        setOpen(false);
+        setloader(false);
+        setmsgOpen(false);
+        setRes("Data Fetched Successfully");
+        setCondition("success");
       })
       .catch((err) => {
         console.log(err);
+        setOpen(true);
+        setRes(err);
+        setmsgOpen(true);
+        setCondition("error");
       });
     console.log(displayObj.userName);
   };
@@ -150,7 +184,7 @@ export default function Feed() {
       </Box>
       <Box>
         <Grid container>
-          <Grid item md={9} marginRight={-128}>
+          <Grid item md={9} marginRight={-133}>
             <SMGrid datasource={listData} columns={col} />
           </Grid>
           <Grid item md={3} className="p-2">
@@ -174,6 +208,13 @@ export default function Feed() {
             </Box>
           </Grid>
         </Grid>
+        <MySnackBarMessage
+          variant="outlined"
+          open={msgopen}
+          severity={condition}
+          onClose={handleClose}
+          label={res}
+        />
       </Box>
     </>
   );
