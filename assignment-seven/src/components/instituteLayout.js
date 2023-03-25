@@ -33,6 +33,8 @@ import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { userSignOut } from "../config/firebasemethods";
 import MySnackBarMessage from "./ShowMessage";
 import Todos from "../screens/dashboardScreens/todos";
+import SMcourse from "../screens/InstituteScreens/Course";
+import SMCoursefrom from "../screens/InstituteScreens/Coursefrom";
 const drawerWidth = 240;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
@@ -80,7 +82,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   justifyContent: "flex-end",
 }));
 
-export default function PersistentDrawerLeft(props) {
+export default function Institutelayout(props) {
   const { window, UserName, switching } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [res, setRes] = React.useState();
@@ -88,40 +90,12 @@ export default function PersistentDrawerLeft(props) {
   const [msgopen, setmsgOpen] = React.useState(false);
   const [menuList, setMenuList] = React.useState([
     {
-      name: "Messages",
-      route: "message",
+      name: "Course",
+      route: "Course",
       ico: <MessageIcon />,
     },
-    {
-      name: "Notification",
-      route: "notify",
-      ico: <NotificationsNoneIcon />,
-    },
-    {
-      name: "Feedback",
-      route: "feed",
-      ico: <FeedbackIcon />,
-    },
-    {
-      name: "Comments",
-      route: "comments",
-      ico: <NotesIcon />,
-    },
-    {
-      name: "About",
-      route: "about",
-      ico: <InfoIcon />,
-    },
-    {
-      name: "Posts",
-      route: "post",
-      ico: <PostAddIcon />,
-    },
-    {
-      name: "Todos",
-      route: "todos",
-      ico: <PostAddIcon />,
-    },
+    
+    
   ]);
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -215,7 +189,7 @@ export default function PersistentDrawerLeft(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Dashboard
+            Institute
           </Typography>
           <Typography item md={6} sx={{ ml: 120, ...(open && { ml: 100 }) }}>
             Welcome ! {UserName}
@@ -260,13 +234,10 @@ export default function PersistentDrawerLeft(props) {
       >
         <Toolbar />
         <Routes>
-          <Route path="message" element={<Message />} />
-          <Route path="notify" element={<Notification />} />
-          <Route path="feed" element={<Feedback />} />
-          <Route path="comments" element={<Comments />} />
-          <Route path="about" element={<About />} />
-          <Route path="post" element={<Posts />} />
-          <Route path="todos" element={<Todos />} />
+          <Route path="/Course" element={<SMcourse />} />
+          <Route path="/coursefrom" element={<SMCoursefrom />} />
+
+          
           
         </Routes>
         <MySnackBarMessage

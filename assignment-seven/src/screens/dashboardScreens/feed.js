@@ -91,7 +91,7 @@ export default function Feed() {
   //Fetch data from a firabase node
 
   let showData = () => {
-    fbGet("Feeds")
+    fbGet("")
       .then((res) => {
         console.log("Data Fetched Successfully  ", res);
         setlistData([...res]);
