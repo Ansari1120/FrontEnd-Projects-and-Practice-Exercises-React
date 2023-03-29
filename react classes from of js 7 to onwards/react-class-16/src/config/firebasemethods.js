@@ -34,11 +34,16 @@ let Usersignup = (obj) => {
   });
 };
 
-let UserLogin = (obj) => {
+let UserLogin = (obj, nodeName) => {
   return new Promise((resolve, reject) => {
     signInWithEmailAndPassword(auth, obj.email, obj.password)
       .then((res) => {
-        const reference = ref(db, `users/${res.user.uid}`);
+        const reference = ref(
+          db,
+          nodeName === "institute"
+            ? `institute/${res.user.uid}`
+            : `users/${res.user.uid}`
+        );
         onValue(reference, (data) => {
           if (data.exists()) {
             resolve(data.val());
@@ -120,10 +125,50 @@ let fbCustomPost = (nodeName, obj) => {
     const refernce = ref(db, `${nodeName}/`);
     set(refernce, obj)
       .then(() => {
-        console.log("data send Successfully !");
+        // console.log("data send Successfully !");
+        resolve("data send sucessfully");
       })
       .then((err) => {
-        console.log(err);
+        // console.log(err);
+        reject(err);
+      });
+  });
+};
+
+let IntituteLogin = (obj) => {
+  return new Promise((resolve, reject) => {
+    signInWithEmailAndPassword(auth, obj.email, obj.password)
+      .then((res) => {
+        const reference = ref(db, `institute/${res.user.uid}`);
+        onValue(reference, (data) => {
+          if (data.exists()) {
+            resolve(data.val());
+          } else {
+            reject("Data not Found !");
+          }
+        });
+      })
+      .catch((err) => {
+        reject(err.message);
+      });
+  });
+};
+
+let AdminLogin = (obj) => {
+  return new Promise((resolve, reject) => {
+    signInWithEmailAndPassword(auth, obj.email, obj.password)
+      .then((res) => {
+        const reference = ref(db, `admin/${res.user.uid}`);
+        onValue(reference, (data) => {
+          if (data.exists()) {
+            resolve(data.val());
+          } else {
+            reject("Data not Found !");
+          }
+        });
+      })
+      .catch((err) => {
+        reject(err.message);
       });
   });
 };

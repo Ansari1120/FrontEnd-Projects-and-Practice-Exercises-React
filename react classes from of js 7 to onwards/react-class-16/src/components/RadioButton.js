@@ -8,13 +8,7 @@ import FormLabel from '@mui/material/FormLabel';
 import Button from '@mui/material/Button';
 
 export default function MyRadioButton(props) {
-    const {value,error,handleSubmit,variant,handleRadioChange,label,helperText} = props;
-
-
- 
-
- 
-
+    const {value,error,handleSubmit,handleRadioChange,label,helperText} = props;
   return (
     <form onSubmit={handleSubmit}>
       <FormControl sx={{ m: 3 }} error={error} variant="standard">

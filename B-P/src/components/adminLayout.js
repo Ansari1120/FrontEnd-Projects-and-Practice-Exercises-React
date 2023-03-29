@@ -16,7 +16,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Message from "../screens/dashboardScreens/message";
 import Notification from "../screens/dashboardScreens/notify";
 import Feedback from "../screens/dashboardScreens/feed";
@@ -34,11 +34,7 @@ import { userSignOut } from "../config/firebasemethods";
 import MySnackBarMessage from "./ShowMessage";
 import Todos from "../screens/dashboardScreens/todos";
 import SMcourse from "../screens/InstituteScreens/Course";
-import SMCoursefrom from "../screens/InstituteScreens/Courseform";
-import Registration from "../screens/InstituteScreens/RegistrationControl";
-import StudentsList from "../screens/InstituteScreens/StudentsList";
-import StudentDetails from "../screens/InstituteScreens/StudentDetails";
-import SingleDetail from "../screens/InstituteScreens/SingleDetail";
+import SMCoursefrom from "../screens/InstituteScreens/Coursefrom";
 const drawerWidth = 240;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
@@ -86,7 +82,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   justifyContent: "flex-end",
 }));
 
-export default function Institutelayout(props) {
+export default function AdminLayout(props) {
   const { window, UserName, switching } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [res, setRes] = React.useState();
@@ -96,21 +92,6 @@ export default function Institutelayout(props) {
     {
       name: "Course",
       route: "Course",
-      ico: <MessageIcon />,
-    },
-    {
-      name: "Registrration Control",
-      route: "registration",
-      ico: <MessageIcon />,
-    },
-    {
-      name: "Students List",
-      route: "studentlist",
-      ico: <MessageIcon />,
-    },
-    {
-      name: "Students Details",
-      route: "studentdetails",
       ico: <MessageIcon />,
     },
   ]);
@@ -250,16 +231,10 @@ export default function Institutelayout(props) {
         }}
       >
         <Toolbar />
-        {/* <BrowserRouter> */}
         <Routes>
           <Route path="/Course" element={<SMcourse />} />
           <Route path="/coursefrom" element={<SMCoursefrom />} />
-          <Route path="/registration" element={<Registration />} />
-          <Route path="/studentlist" element={<StudentsList />} />
-          <Route path="/studentdetails" element={<StudentDetails />} />
-          {/* <Route path="/intitute/SingleDetail" element={<SingleDetail />} /> */}
         </Routes>
-        {/* </BrowserRouter> */}
         <MySnackBarMessage
           variant="outlined"
           open={msgopen}

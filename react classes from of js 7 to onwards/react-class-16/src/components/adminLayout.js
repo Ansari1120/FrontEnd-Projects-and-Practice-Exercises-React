@@ -34,7 +34,7 @@ import { userSignOut } from "../config/firebasemethods";
 import MySnackBarMessage from "./ShowMessage";
 import Todos from "../screens/dashboardScreens/todos";
 import SMcourse from "../screens/InstituteScreens/Course";
-import SMCoursefrom from "../screens/InstituteScreens/Coursefrom";
+import SMCoursefrom from "../screens/InstituteScreens/Courseform";
 const drawerWidth = 240;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(

@@ -9,6 +9,8 @@ import Institute from "../screens/InstituteScreens/institute";
 import Admin from "../screens/AdminScreens/admin";
 import Student from "../screens/StudentScreens/student";
 import Studentregistration from "../screens/StudentScreens/StudentRegistration";
+import SingleDetail from "../screens/InstituteScreens/SingleDetail";
+import PublicPage from "../screens/PublicPage";
 
 export default function AppRouter() {
   // ProtectedRoute
@@ -16,8 +18,10 @@ export default function AppRouter() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<UserLoginSignin />} />
+          <Route path="/userloginsignup" element={<UserLoginSignin />} />
+          <Route path="/" element={<PublicPage />} />
           <Route path="singlepost/:id" element={<SinglePost />} />
+          <Route path="SingleDetail/:id" element={<SingleDetail />} />
           <Route path="commentform" element={<CommentsForm />} />
           <Route path="commentform/:id" element={<CommentsForm />} />
           {/* <Route path="dashboard/*" element={<Dashboard />} /> */}
@@ -29,7 +33,10 @@ export default function AppRouter() {
           <Route path="/institute/*" element={<Institute />} />
           <Route path="/admin/*" element={<Admin />} />
           <Route path="/student/*" element={<Student />} />
-          <Route path="/studentRegistration" element={<Studentregistration />} />
+          <Route
+            path="/studentRegistration"
+            element={<Studentregistration />}
+          />
         </Routes>
       </BrowserRouter>
     </>

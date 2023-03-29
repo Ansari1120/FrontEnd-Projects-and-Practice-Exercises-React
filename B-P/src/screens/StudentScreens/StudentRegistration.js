@@ -25,6 +25,44 @@ function Studentregistration() {
     RegistrationOpen: true,
   });
 
+  const col = [
+    {
+      displayName: "Action",
+      key: "",
+      displayField: (e) => (
+        <Button
+          onClick={() =>
+            setdisplayObj({
+              ...displayObj,
+              userName: e.userName,
+              email: e.email,
+              message: e.message,
+            })
+          }
+          variant="contained"
+        >
+          View
+        </Button>
+      ),
+      searchAble: true,
+    },
+    {
+      key: "userName",
+      displayName: "User",
+      searchAble: true,
+    },
+    {
+      key: "email",
+      displayName: "E-mail",
+      searchAble: true,
+    },
+    {
+      key: "message",
+      displayName: "Message",
+      searchAble: true,
+    },
+  ];
+
   const save = (event) => {
     event.preventDefault();
     console.log("hasjdhas");
@@ -164,15 +202,8 @@ function Studentregistration() {
 
                 <div className="row p-2">
                   <div className="col-lg-6">
-                    <Form
-                      onChange={(e) =>
-                        setModel({ ...model, SelecGender: e.target.value })
-                      }
-                    >
-                      <div className="inline float-left">
-                        {/* <div className="col-lg-6">
                     <Form.Select
-                    aria-label="Default select example"
+                      aria-label="Default select example"
                       onChange={(e) =>
                         setModel({ ...model, SelecGender: e.target.value })
                       }
@@ -181,40 +212,21 @@ function Studentregistration() {
                       <option value="Male">Male</option>
                       <option value="Female">Female</option>
                     </Form.Select>
-                  </div> */}
-                        <label className="col-md-4">Select Gender</label>
-                        <Form.Check
-                          inline
-                          label="Male"
-                          value="Male"
-                          name="group1"
-                          type={"radio"}
-                          id={`inline-radio-1`}
-                        />
-                        <Form.Check
-                          inline
-                          label="Female"
-                          name="group1"
-                          value="Female"
-                          type={"radio"}
-                          id={`inline-radio-2`}
-                        />
-                      </div>
-                    </Form>
-                  </div>
-                  <div className="col-lg-6">
-                    <Form.Control
-                      type="text"
-                      placeholder="Address"
-                      onChange={(e) =>
-                        setModel({ ...model, Address: e.target.value })
-                      }
-                    />
                   </div>
                 </div>
               </Form.Group>
 
               <div className="row p-2">
+                <div className="col-lg-12">
+                  <Form.Control
+                    type="text"
+                    placeholder="Addres"
+                    onChange={(e) =>
+                      setModel({ ...model, Address: e.target.value })
+                    }
+                  />
+                </div>
+
                 <div className="col-lg-12 p-2 ">
                   <Form.Select
                     aria-label="Default select example"
@@ -246,7 +258,7 @@ function Studentregistration() {
                     type="file"
                     placeholder="file"
                     onChange={(e) =>
-                      setModel({ ...model, fileUpload: e.target.files[0].name })
+                      setModel({ ...model, fileUpload: e.target.value })
                     }
                   />
                 </div>
