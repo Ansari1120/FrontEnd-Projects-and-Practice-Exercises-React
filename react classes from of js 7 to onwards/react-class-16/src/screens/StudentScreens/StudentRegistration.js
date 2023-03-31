@@ -4,11 +4,14 @@ import { Box } from "@mui/system";
 import { useState } from "react";
 import Form from "react-bootstrap/Form";
 import { fbGet, fbPost } from "../../config/firebasemethods";
+import MySnackBarMessage from "../../components/ShowMessage";
 
 function Studentregistration() {
   const [model, setModel] = useState({});
   const [loader, setloader] = useState(false);
-  const [displayObj, setdisplayObj] = useState({});
+  const [msgopen, setmsgOpen] = useState(false);
+  const [condition, setCondition] = useState("");
+  const [Res, setRes] = useState("");
   const [Courses, setCourses] = useState([
     {
       RegistrationOpen: true,
@@ -31,9 +34,15 @@ function Studentregistration() {
     fbPost("StudentRegistrationData", model)
       .then(() => {
         console.log("Save SuccessFully !");
+        setmsgOpen(true);
+        setCondition("success");
+        setRes("Save SuccessFully !");
       })
       .catch((err) => {
         console.log(err);
+        setRes(err);
+        setmsgOpen(true);
+        setCondition("error");
       });
   };
 
@@ -46,12 +55,19 @@ function Studentregistration() {
         setloader(false);
         console.log("Firebase data", res);
         setRegStatus({ ...res, RegistrationOpen: res });
-        // setCourses([...res]);
       })
       .catch((err) => {
         console.log(err);
         setloader(false);
       });
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setmsgOpen(false);
   };
 
   useEffect(() => {
@@ -256,6 +272,13 @@ function Studentregistration() {
                 Submit
               </Button>
             </Form>
+            <MySnackBarMessage
+              variant="outlined"
+              open={msgopen}
+              severity={condition}
+              onClose={handleClose}
+              label={Res}
+            />
           </Box>
         </>
       ) : (

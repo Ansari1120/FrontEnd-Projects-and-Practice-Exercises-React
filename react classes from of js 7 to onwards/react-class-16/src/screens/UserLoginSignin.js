@@ -53,13 +53,22 @@ const UserLoginSignin = () => {
 
   let Login = () => {
     setloader(true);
-    UserLogin(model, mytype.myconsumetype[0] === "Inst" ? "institute" : "")
+    UserLogin(
+      model,
+      mytype.myconsumetype[0] === "Inst"
+        ? "institute"
+        : mytype.myconsumetype[0] === "adm"
+        ? "admin"
+        : ""
+    )
       .then((res) => {
         console.log(`User Logged in Successfully ! ${res}`);
-        if (mytype.myconsumetype[0] !== "Inst") {
-          navigation("/dashboard/*");
-        } else {
+        if (mytype.myconsumetype[0] === "Inst") {
           navigation("/institute/*");
+        } else if (mytype.myconsumetype[0] === "adm") {
+          navigation("/admin/*");
+        } else if (mytype.myconsumetype[0] === "std") {
+          navigation("/dashboard/*");
         }
         setloader(false);
         setOpen(false);
@@ -80,7 +89,6 @@ const UserLoginSignin = () => {
         console.log("Firebase data", res);
         setType({ ...res, myconsumetype: res });
         console.log("recieved type : ", res);
-        // setCourses([...res]);
       })
       .catch((err) => {
         console.log(err);
@@ -111,6 +119,13 @@ const UserLoginSignin = () => {
             },
           }}
         >
+          <label>
+            {mytype.myconsumetype[0] === "adm"
+              ? "Administrator"
+              : mytype.myconsumetype[0] === "std"
+              ? "Student"
+              : "Institute"}
+          </label>
           <Typography variant="h2" textAlign={"center"} padding="3">
             {isSignup ? "SignUp" : "Login"}
           </Typography>
@@ -161,7 +176,10 @@ const UserLoginSignin = () => {
             label={isSignup ? "Signup" : "Login"}
             loading={loader}
           />
-          {mytype.myconsumetype[0] !== "Inst" ? (
+          {mytype.myconsumetype[0] === "Inst" ||
+          mytype.myconsumetype[0] === "adm" ? (
+            ""
+          ) : (
             <MyButton
               onClick={() => setSignup(!isSignup)}
               sx={{ maringTop: 3, borderRadius: 3 }}
@@ -171,11 +189,9 @@ const UserLoginSignin = () => {
                   : "  No Account ! signup here"
               }
             />
-          ) : (
-            ""
           )}
 
-          {!isSignup ? (
+          {!isSignup && mytype.myconsumetype[0] === "std" ? (
             <Grid item xs>
               <Link href="#" variant="body2">
                 Forgot password?

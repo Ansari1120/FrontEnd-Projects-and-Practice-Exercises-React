@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Input from "../../components/Input";
 import MySwitch from "../../components/Switch";
-import Dashboard from "../dashboard";
+import Student from "../StudentScreens/student";
 
 export default function Message() {
   const [checked, setChecked] = React.useState(false);
@@ -16,7 +16,7 @@ export default function Message() {
         handleChange={handleChange}
         label="disable logout"
       />
-      <Dashboard checked={checked} />
+      <Student checked={checked} />
       <Input label="Enter SOmething" />
     </div>
   );

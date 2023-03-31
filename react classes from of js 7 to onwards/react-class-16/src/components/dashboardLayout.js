@@ -33,6 +33,7 @@ import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { userSignOut } from "../config/firebasemethods";
 import MySnackBarMessage from "./ShowMessage";
 import Todos from "../screens/dashboardScreens/todos";
+import Quiz from "../screens/StudentScreens/Quiz";
 const drawerWidth = 240;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
@@ -120,6 +121,11 @@ export default function PersistentDrawerLeft(props) {
     {
       name: "Todos",
       route: "todos",
+      ico: <PostAddIcon />,
+    },
+    {
+      name: "Quiz",
+      route: "quiz",
       ico: <PostAddIcon />,
     },
   ]);
@@ -215,7 +221,7 @@ export default function PersistentDrawerLeft(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Dashboard
+            Student Dashboard
           </Typography>
           <Typography item md={6} sx={{ ml: 120, ...(open && { ml: 100 }) }}>
             Welcome ! {UserName}
@@ -267,7 +273,7 @@ export default function PersistentDrawerLeft(props) {
           <Route path="about" element={<About />} />
           <Route path="post" element={<Posts />} />
           <Route path="todos" element={<Todos />} />
-          
+          <Route path="quiz" element={<Quiz />} />
         </Routes>
         <MySnackBarMessage
           variant="outlined"

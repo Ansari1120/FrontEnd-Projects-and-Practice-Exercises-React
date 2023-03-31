@@ -1,7 +1,8 @@
 import React from "react";
 import { TextField } from "@mui/material";
 export default function MyInput(props) {
-  const {rows,variant, color, value, label, disabled, onChange } = props;
+  const { type, rows, variant, color, value, label, disabled, onChange } =
+    props;
   return (
     <>
       <TextField
@@ -12,8 +13,9 @@ export default function MyInput(props) {
         variant={variant}
         label={label}
         multiline={true}
-        rows = {rows}
+        rows={rows}
         id="outlined-basic"
+        type={type}
       />
     </>
   );

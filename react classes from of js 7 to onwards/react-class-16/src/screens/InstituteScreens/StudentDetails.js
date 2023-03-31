@@ -3,55 +3,130 @@ import React, { useEffect, useState } from "react";
 import { fbGet } from "../../config/firebasemethods";
 import SMGrid from "../../components/SMGrid";
 import { useNavigate } from "react-router-dom";
+import StudentForm from "./StudentForm";
+
 const StudentDetails = () => {
-  const [students, setStudents] = useState([]);
+  const [listData, setlistData] = useState([]);
   const [loader, setloader] = useState(false);
   const [displayObj, setdisplayObj] = useState();
   const navigation = useNavigate();
-  const NavigateToSingleData = (id) => {
-    navigation(`/SingleDetail/${id}`);
-  };
+  const [myData, setMyData] = useState({});
+
+  const [barmsg, setBarmsg] = useState({});
+  const [open, setOpen] = useState(false);
+  const [severity, setSeverity] = useState();
+  const [msgopen, setmsgOpen] = useState(false);
+  const [res, setRes] = useState();
+  const [condition, setCondition] = useState("");
+  const [cridentials, setCridentials] = useState({});
+
   const col = [
-    ,
     {
       key: "FullName",
-      displayName: "Student Name",
+      displayName: "Name",
       searchAble: true,
     },
     {
-      displayName: "Action",
-      key: "",
-      displayField: (e) => (
-        <Button onClick={() => NavigateToSingleData(e.id)} variant="contained">
-          View Details
-        </Button>
-      ),
+      key: "FatherName",
+      displayName: "Father Name",
+      searchAble: true,
+    },
+    {
+      key: "Email",
+      displayName: "Account Email",
+      searchAble: true,
+    },
+    {
+      key: "CNIC",
+      displayName: "CNIC",
+      searchAble: true,
+    },
+    {
+      key: "HaveLaptop",
+      displayName: "HaveLaptop",
+      searchAble: true,
+    },
+    {
+      key: "LastQualification",
+      displayName: "LastQualification",
+      searchAble: true,
+    },
+    {
+      key: "PhoneNumber",
+      displayName: "PhoneNumber",
+      searchAble: true,
+    },
+    {
+      key: "SelecGender",
+      displayName: "SelecGender",
+      searchAble: true,
+    },
+    {
+      key: "SelectCity",
+      displayName: "City",
+      searchAble: true,
+    },
+    {
+      key: "SelectCourse",
+      displayName: "Course",
+      searchAble: true,
+    },
+    {
+      key: "date",
+      displayName: "Date of Birth",
+      searchAble: true,
+    },
+    {
+      key: "userName",
+      displayName: "Account UserName",
+      searchAble: true,
+    },
+    {
+      key: "password",
+      displayName: "Account Password",
+      searchAble: true,
+    },
+    {
+      key: "institute",
+      displayName: "Institute",
       searchAble: true,
     },
   ];
+  // const NavigateToSingleData = (id) => {
+  //   navigation(`/institute/SingleDetail/${id}`);
+  // };
 
-  const getStudents = () => {
-    setloader(true);
-    fbGet("StudentRegistrationData")
+  let showData = () => {
+    fbGet("InstituteStudentData")
       .then((res) => {
-        setStudents([...res]);
+        console.log("Data Fetched Successfully  ", res);
+        setlistData([...res]);
+        console.log("user Cridentials", cridentials);
+        setOpen(false);
         setloader(false);
+        setmsgOpen(false);
+        setRes("Data Fetched Successfully");
+        setCondition("success");
       })
       .catch((err) => {
         console.log(err);
-        setloader(false);
+        setOpen(true);
+        setRes(err);
+        setmsgOpen(true);
+        setCondition("error");
       });
   };
-
-  console.log(students);
   useEffect(() => {
-    getStudents();
+    showData();
   }, []);
   return (
     <>
-      <h1>Students Details</h1>
-      <label>(To see Each student's Detail Tap on its view Button !)</label>
-      <SMGrid datasource={students} columns={col} isLoading={loader} />
+      <h1>Intitute's Students</h1>
+      <label>
+        NOTE: This are the those Students whom officially admitted into the
+        institute in thier respective Course
+      </label>
+      <SMGrid datasource={listData} columns={col} isLoading={loader} />
     </>
   );
 };

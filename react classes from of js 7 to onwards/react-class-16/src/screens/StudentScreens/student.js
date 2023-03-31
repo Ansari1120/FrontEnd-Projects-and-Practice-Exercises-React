@@ -1,10 +1,23 @@
 import React from "react";
-import StudentLayout from "../../components/studentLayout";
+import DashboardLayout from "../../components/dashboardLayout";
+import { useEffect, useState } from "react";
+import { getAuth } from "firebase/auth";
 
-const Student = () => {
+const Student = (props) => {
+  const { checked } = props;
+  const auth = getAuth();
+  const [UserName, setUserName] = useState("");
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUserName(user.displayName);
+        console.log(user.displayName);
+      } else setUserName("");
+    });
+  }, []);
   return (
     <>
-      <StudentLayout />
+      <DashboardLayout UserName={UserName} switching={checked} />{" "}
     </>
   );
 };

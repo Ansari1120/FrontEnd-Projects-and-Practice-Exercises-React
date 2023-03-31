@@ -42,6 +42,8 @@ let UserLogin = (obj, nodeName) => {
           db,
           nodeName === "institute"
             ? `institute/${res.user.uid}`
+            : nodeName === "admin"
+            ? `admin/${res.user.uid}`
             : `users/${res.user.uid}`
         );
         onValue(reference, (data) => {
@@ -95,7 +97,6 @@ let fbGet = (nodeName, id) => {
 let fbPost = (nodeName, obj, id) => {
   return new Promise((resolve, reject) => {
     if (id) {
-      //post new Data
       let reference = ref(db, `${nodeName}/${id ? id : ""}`);
       set(reference, obj)
         .then((res) => {
@@ -105,7 +106,6 @@ let fbPost = (nodeName, obj, id) => {
           reject(err);
         });
     } else {
-      //edit existing data
       let keyRef = ref(db, `${nodeName}`);
       obj.id = push(keyRef).key;
       let postRef = ref(db, `${nodeName}/${obj.id}`);
@@ -131,44 +131,6 @@ let fbCustomPost = (nodeName, obj) => {
       .then((err) => {
         // console.log(err);
         reject(err);
-      });
-  });
-};
-
-let IntituteLogin = (obj) => {
-  return new Promise((resolve, reject) => {
-    signInWithEmailAndPassword(auth, obj.email, obj.password)
-      .then((res) => {
-        const reference = ref(db, `institute/${res.user.uid}`);
-        onValue(reference, (data) => {
-          if (data.exists()) {
-            resolve(data.val());
-          } else {
-            reject("Data not Found !");
-          }
-        });
-      })
-      .catch((err) => {
-        reject(err.message);
-      });
-  });
-};
-
-let AdminLogin = (obj) => {
-  return new Promise((resolve, reject) => {
-    signInWithEmailAndPassword(auth, obj.email, obj.password)
-      .then((res) => {
-        const reference = ref(db, `admin/${res.user.uid}`);
-        onValue(reference, (data) => {
-          if (data.exists()) {
-            resolve(data.val());
-          } else {
-            reject("Data not Found !");
-          }
-        });
-      })
-      .catch((err) => {
-        reject(err.message);
       });
   });
 };

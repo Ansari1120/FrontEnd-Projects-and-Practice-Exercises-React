@@ -39,6 +39,9 @@ import Registration from "../screens/InstituteScreens/RegistrationControl";
 import StudentsList from "../screens/InstituteScreens/StudentsList";
 import StudentDetails from "../screens/InstituteScreens/StudentDetails";
 import SingleDetail from "../screens/InstituteScreens/SingleDetail";
+import QuizControl from "../screens/InstituteScreens/QuizControl";
+import StudentFormAndCridentials from "../screens/InstituteScreens/StudentFormAndCridentials";
+import StudentForm from "../screens/InstituteScreens/StudentForm";
 const drawerWidth = 240;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
@@ -109,8 +112,23 @@ export default function Institutelayout(props) {
       ico: <MessageIcon />,
     },
     {
+      name: "Student Form",
+      route: "student_cridentials_for_institute",
+      ico: <MessageIcon />,
+    },
+    {
       name: "Students Details",
       route: "studentdetails",
+      ico: <MessageIcon />,
+    },
+    {
+      name: "Quiz",
+      route: "quizControl",
+      ico: <MessageIcon />,
+    },
+    {
+      name: "Add Quiz",
+      route: "",
       ico: <MessageIcon />,
     },
   ]);
@@ -250,16 +268,20 @@ export default function Institutelayout(props) {
         }}
       >
         <Toolbar />
-        {/* <BrowserRouter> */}
         <Routes>
           <Route path="/Course" element={<SMcourse />} />
           <Route path="/coursefrom" element={<SMCoursefrom />} />
+          <Route path="/StudentForm/:id" element={<StudentForm />} />
           <Route path="/registration" element={<Registration />} />
           <Route path="/studentlist" element={<StudentsList />} />
           <Route path="/studentdetails" element={<StudentDetails />} />
-          {/* <Route path="/intitute/SingleDetail" element={<SingleDetail />} /> */}
+          <Route path="SingleDetail/:id" element={<SingleDetail />} />
+          <Route path="/quizControl" element={<QuizControl />} />
+          <Route
+            path="/student_cridentials_for_institute"
+            element={<StudentFormAndCridentials />}
+          />
         </Routes>
-        {/* </BrowserRouter> */}
         <MySnackBarMessage
           variant="outlined"
           open={msgopen}

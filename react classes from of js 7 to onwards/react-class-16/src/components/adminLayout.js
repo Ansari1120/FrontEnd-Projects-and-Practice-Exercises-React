@@ -187,7 +187,7 @@ export default function AdminLayout(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Institute Dashboard
+            Admin Dashboard
           </Typography>
           <Typography item md={6} sx={{ ml: 120, ...(open && { ml: 100 }) }}>
             Welcome ! {UserName}
