@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ScreenHeader from "../../components/screenheader";
 import { Box, Grid, TextField, Typography } from "@mui/material";
 import MyInput from "../../components/Input";
-import { fbPost } from "../../config/firebasemethods";
+import { Usersignup, fbPost } from "../../config/firebasemethods";
 import MyButton from "../../components/Button";
 import SaveIcon from "@mui/icons-material/Save";
 
@@ -21,6 +21,28 @@ const AddInstitutes = () => {
         console.log(err);
       });
   };
+  const addCridentials = () => {
+    setloading(true);
+    let updatedmodel = {
+      userName: Data.userName,
+      email: Data.Email,
+      password: Data.password,
+    };
+    Usersignup(updatedmodel, "institute")
+      .then((res) => {
+        console.log(`Student's Credentials created Successfully! ${res}`);
+        setloading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setloading(false);
+        // setOpen(true);
+        // setRes(err);
+        // setmsgOpen(true);
+        // setCondition("error");
+        // setRes(res);
+      });
+  };
   return (
     <>
       <ScreenHeader
@@ -30,7 +52,12 @@ const AddInstitutes = () => {
             displayField: (
               <MyButton
                 label="Save"
-                onClick={save}
+                // onClick={{()=>save();
+                //   addCridentials();}}
+                onClick={() => {
+                  save();
+                  addCridentials();
+                }}
                 startIcon={<SaveIcon />}
                 loading={loading}
                 variant="contained"
@@ -104,7 +131,7 @@ const AddInstitutes = () => {
             <TextField
               type={"file"}
               value={Data.picture}
-              onChange={(e) => setData({ ...Data, picture: e.target.files[0] })}
+              onChange={(e) => setData({ ...Data, picture: e.target.value })}
             />
           </Grid>
         </Grid>

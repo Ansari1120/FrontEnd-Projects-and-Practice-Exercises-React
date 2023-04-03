@@ -10,9 +10,6 @@ const StudentFormAndCridentials = () => {
   const [loader, setloader] = useState(false);
   const navigation = useNavigate();
 
-  // const pagegoestoCourseFrom = () => {
-  //   navigation("/institute/StudentForm");
-  // };
 
   const NavigateToSingleData = (id) => {
     navigation(`/institute/studentform/${id}`);

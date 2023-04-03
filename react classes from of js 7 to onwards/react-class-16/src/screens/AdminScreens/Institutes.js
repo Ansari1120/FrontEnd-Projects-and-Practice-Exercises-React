@@ -1,13 +1,15 @@
 import { Box, Grid, Paper, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useNavigate, useNavigation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import ScreenHeader from "../../components/screenheader";
 import DeleteIcon from "@mui/icons-material/Delete";
 import MyIconbutton from "../../components/Iconbutton";
 import EditIcon from "@mui/icons-material/Edit";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import { fbGet } from "../../config/firebasemethods";
+import { fbDelete, fbGet } from "../../config/firebasemethods";
+import MySwitch from "../../components/Switch";
+import Form from "react-bootstrap/Form";
 
 const Institutes = () => {
   const [InstituteList, setInstituteList] = useState([
@@ -40,6 +42,8 @@ const Institutes = () => {
       Active_InActive: true,
     },
   ]);
+
+  const [Cridentials, setCridentitals] = useState([]);
   const navigate = useNavigate();
 
   let openDetail = (obj) => {
@@ -54,11 +58,47 @@ const Institutes = () => {
     navigate("/admin/AddInstitutes");
   };
 
+  let DeleteItem = (obj) => {
+    console.log(obj);
+    fbDelete("ListedInstitutes", obj.id)
+      .then(() => {
+        console.log("data Deleted Successfully");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  let getCridentitals = () => {
+    fbGet("institute")
+      .then((res) => {
+        setCridentitals([...res]);
+        console.log("inst cridentials", res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  let DeleteCridentials = (obj) => {
+    //run a map on institutelist and match cridentials instname and instiutelist instname when matched delete cridentitals instname's id
+    const obj1 = Cridentials.filter((x) => {
+      return x.password === obj.password;
+    });
+    console.log("matched obj : ", obj1[0].id);
+    fbDelete("institute", obj1[0].id)
+      .then(() => {
+        console.log("cridentials Deleted Successfully");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const save = () => {
     fbGet("ListedInstitutes")
       .then((res) => {
         console.log("Data retrieved SuccessFully !");
-        setInstituteList([...InstituteList, res]);
+        setInstituteList([...res]);
         console.log(res);
         console.log(InstituteList);
       })
@@ -69,6 +109,8 @@ const Institutes = () => {
 
   useEffect(() => {
     save();
+    getCridentitals();
+    console.log("cridenttials", Cridentials);
   }, []);
 
   return (
@@ -98,7 +140,7 @@ const Institutes = () => {
                 onClick={() => openDetail(x)}
               >
                 <Grid container>
-                  <Grid item md={1}>
+                  <Grid item md={2}>
                     <Box className="m-2 p-2 text-center">
                       <img
                         src={x.InstLogo}
@@ -108,7 +150,7 @@ const Institutes = () => {
                       />
                     </Box>
                   </Grid>
-                  <Grid item md={3} variant="h5">
+                  <Grid item md={2} variant="h5">
                     <Box className="mt-4 p-2">
                       <Typography
                         sx={{ fontSize: 12 }}
@@ -119,7 +161,7 @@ const Institutes = () => {
                       <Typography>{x.InstName}</Typography>
                     </Box>
                   </Grid>
-                  <Grid item md={3} variant="h5">
+                  <Grid item md={2} variant="h5">
                     <Box className="mt-4 p-2">
                       <Typography
                         sx={{ fontSize: 12 }}
@@ -131,7 +173,7 @@ const Institutes = () => {
                     </Box>
                   </Grid>
 
-                  <Grid item md={3}>
+                  <Grid item md={2}>
                     <Box className="mt-4  align-middle p-2">
                       <Typography
                         sx={{ fontSize: 12 }}
@@ -139,6 +181,7 @@ const Institutes = () => {
                       >
                         Active / InActive
                       </Typography>
+
                       <Typography>
                         <FiberManualRecordIcon
                           color={x.Active_InActive ? "error" : ""}
@@ -146,11 +189,41 @@ const Institutes = () => {
                       </Typography>
                     </Box>
                   </Grid>
+                  <Grid item md={2}>
+                    <Box className="mt-4 align-middle p-2">
+                      <Typography
+                        sx={{ fontSize: 12 }}
+                        className="fw-bold text-muted"
+                      >
+                        Toggle Institute Activation
+                      </Typography>
+                      <MySwitch
+                        checked={InstituteList.Active_InActive}
+                        handleChange={(e) => {
+                          e.stopPropagation();
+                          setInstituteList((prevList) =>
+                            prevList.map((item) =>
+                              item.InstName === x.InstName
+                                ? {
+                                    ...item,
+                                    Active_InActive: e.target.checked,
+                                  }
+                                : item
+                            )
+                          );
+                        }}
+                      />
+                    </Box>
+                  </Grid>
                   <Grid item md={1}>
                     <Box className="mt-4">
                       <MyIconbutton
                         val={<DeleteIcon />}
-                        onClick={(e) => e.stopPropagation()}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          DeleteItem(x);
+                          DeleteCridentials(x);
+                        }}
                       />
                     </Box>
                   </Grid>

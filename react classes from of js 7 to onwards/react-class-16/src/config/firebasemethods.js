@@ -18,14 +18,21 @@ import {
 const auth = getAuth(app);
 const db = getDatabase(app);
 
-let Usersignup = (obj) => {
+let Usersignup = (obj, nodeName) => {
   return new Promise((resolve, reject) => {
     createUserWithEmailAndPassword(auth, obj.email, obj.password).then(
       (res) => {
         obj.id = res.user.uid;
         const user = res.user;
         //created new user in database users with id as base
-        const reference = ref(db, `users/${obj.id}`);
+        const reference = ref(
+          db,
+          nodeName === "institute"
+            ? `institute/${obj.id}`
+            : nodeName === "admin"
+            ? `admin${obj.id}`
+            : `users/${obj.id}`
+        );
         updateProfile(user, { displayName: obj.userName });
         set(reference, obj)
           .then(() => {

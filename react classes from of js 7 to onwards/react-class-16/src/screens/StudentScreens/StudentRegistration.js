@@ -186,18 +186,7 @@ function Studentregistration() {
                       }
                     >
                       <div className="inline float-left">
-                        {/* <div className="col-lg-6">
-                    <Form.Select
-                    aria-label="Default select example"
-                      onChange={(e) =>
-                        setModel({ ...model, SelecGender: e.target.value })
-                      }
-                    >
-                      <option>SelectGender</option>
-                      <option value="Male">Male</option>
-                      <option value="Female">Female</option>
-                    </Form.Select>
-                  </div> */}
+                       
                         <label className="col-md-4">Select Gender</label>
                         <Form.Check
                           inline

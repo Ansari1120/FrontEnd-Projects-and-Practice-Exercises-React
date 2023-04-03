@@ -12,6 +12,7 @@ const InstituteForm = () => {
   const [loading, setLoading] = useState(false);
   const location = useLocation();
   console.log(location);
+  console.log(Data.id);
 
   const save = () => {
     setLoading(true);
