@@ -5,6 +5,10 @@ import MyInput from "../../components/Input";
 import { Usersignup, fbPost } from "../../config/firebasemethods";
 import MyButton from "../../components/Button";
 import SaveIcon from "@mui/icons-material/Save";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
 const AddInstitutes = () => {
   const [Data, setData] = useState({});
@@ -133,6 +137,55 @@ const AddInstitutes = () => {
               value={Data.picture}
               onChange={(e) => setData({ ...Data, picture: e.target.value })}
             />
+          </Grid>
+          <Grid item className="p-2" md={4}>
+            <MyInput
+              label="Instiute Details"
+              type="text"
+              value={Data.Details}
+              onChange={(e) => setData({ ...Data, Details: e.target.value })}
+              multiline
+              rows={4}
+            />
+          </Grid>
+          <Grid item className="p-2" md={4}>
+            <MyInput
+              label="Instiute Contact"
+              type="text"
+              value={Data.Contact}
+              onChange={(e) => setData({ ...Data, Contact: e.target.value })}
+            />
+          </Grid>
+          <Grid item className="p-2" md={4}>
+            <MyInput
+              label="Instiute owner Contact"
+              type="text"
+              value={Data.OwnerContact}
+              onChange={(e) =>
+                setData({ ...Data, OwnerContact: e.target.value })
+              }
+            />
+          </Grid>
+          <Grid item className="p-2" md={4}>
+            <Box sx={{ minWidth: 120 }}>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">
+                  Select Type
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  label={"Institute Type"}
+                  value={Data.Type}
+                  onChange={(e) => setData({ ...Data, Type: e.target.value })}
+                >
+                  <MenuItem value={"University"}>University</MenuItem>
+                  <MenuItem value={"School"}>School</MenuItem>
+                  <MenuItem value={"Institute"}>Institute</MenuItem>
+                  <MenuItem value={"College"}>College</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
           </Grid>
         </Grid>
       </Box>
