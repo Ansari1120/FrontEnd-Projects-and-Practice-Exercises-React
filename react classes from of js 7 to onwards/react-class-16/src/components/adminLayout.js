@@ -35,6 +35,10 @@ import MySnackBarMessage from "./ShowMessage";
 import Todos from "../screens/dashboardScreens/todos";
 import SMcourse from "../screens/InstituteScreens/Course";
 import SMCoursefrom from "../screens/InstituteScreens/Courseform";
+import Institutes from "../screens/AdminScreens/Institutes";
+import AddInstitutes from "../screens/AdminScreens/AddInstitutes";
+import SingleInstitute from "../screens/AdminScreens/SingleInstitute";
+import InstituteForm from "../screens/AdminScreens/InstituteForm";
 const drawerWidth = 240;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
@@ -92,6 +96,11 @@ export default function AdminLayout(props) {
     {
       name: "Course",
       route: "Course",
+      ico: <MessageIcon />,
+    },
+    {
+      name: "Institutes List",
+      route: "Institutes",
       ico: <MessageIcon />,
     },
   ]);
@@ -234,6 +243,11 @@ export default function AdminLayout(props) {
         <Routes>
           <Route path="/Course" element={<SMcourse />} />
           <Route path="/coursefrom" element={<SMCoursefrom />} />
+          <Route path="/Institutes" element={<Institutes />} />
+          <Route path="/AddInstitutes" element={<AddInstitutes />} />
+          <Route path="/SingleInstitute" element={<SingleInstitute />} />
+          <Route path="/InstituteForm" element={<InstituteForm />} />
+          <Route path="/AddInstitutes" element={<AddInstitutes />} />
         </Routes>
         <MySnackBarMessage
           variant="outlined"

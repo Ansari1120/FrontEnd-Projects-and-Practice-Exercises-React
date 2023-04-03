@@ -6,7 +6,14 @@ import {
   signOut,
 } from "firebase/auth";
 import app from "./firebaseconfig";
-import { getDatabase, onValue, set, ref, push } from "firebase/database";
+import {
+  getDatabase,
+  onValue,
+  set,
+  ref,
+  push,
+  remove,
+} from "firebase/database";
 
 const auth = getAuth(app);
 const db = getDatabase(app);
@@ -94,6 +101,7 @@ let fbGet = (nodeName, id) => {
   });
 };
 
+//firebase add data + edit data
 let fbPost = (nodeName, obj, id) => {
   return new Promise((resolve, reject) => {
     if (id) {
@@ -137,9 +145,10 @@ let fbCustomPost = (nodeName, obj) => {
 
 let fbGetId = () => {};
 
-let fbEdit = () => {};
-
-let fbDelete = () => {};
+let fbDelete = (nodeName, id) => {
+  const refrence = ref(db, nodeName + "/" + id);
+  return remove(refrence);
+};
 
 export {
   checkAuth,
@@ -148,7 +157,6 @@ export {
   userSignOut,
   fbGet,
   fbGetId,
-  fbEdit,
   fbDelete,
   fbPost,
   fbCustomPost,

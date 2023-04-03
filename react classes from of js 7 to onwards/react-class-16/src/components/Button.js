@@ -12,6 +12,7 @@ export default function MyButton(props) {
     disabled,
     startIcon,
     endIcon,
+    icon,
     sx,
     color,
   } = props;
@@ -28,11 +29,11 @@ export default function MyButton(props) {
         loadingPosition={loadingPosition}
         loading={loading}
         color={color}
+        icon={icon}
         // onClick={props.click}
         // className={props.className ? props.className : "primary-button"}
       >
         {loading ? <CircularProgress color="inherit" /> : label}
-        {/* {props.label} */}
       </Button>
     </>
   );

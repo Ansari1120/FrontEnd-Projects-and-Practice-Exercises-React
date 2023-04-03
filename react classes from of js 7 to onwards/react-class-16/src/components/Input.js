@@ -6,7 +6,7 @@ export default function MyInput(props) {
   return (
     <>
       <TextField
-        value={value}
+        value={value ?? ""}
         color={color}
         onChange={onChange}
         disabled={disabled}
