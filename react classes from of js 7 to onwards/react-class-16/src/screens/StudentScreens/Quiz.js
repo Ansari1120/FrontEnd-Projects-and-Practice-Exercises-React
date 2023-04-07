@@ -5,10 +5,9 @@ import Options from "../../components/options.js";
 import Buttons from "../../components/commonbuttons.js";
 import { Box } from "@mui/system";
 import ReviewAnswer from "../../components/Status.js";
-// import "../../index.css";
-
 import { Typography } from "@mui/material";
-import { fbGet } from "../../config/firebasemethods";
+import { fbGet, fbPost } from "../../config/firebasemethods";
+import MyButton from "../../components/Button";
 
 export default function Quiz() {
   const [Index, setIndex] = useState(0);
@@ -24,7 +23,7 @@ export default function Quiz() {
   const [checkUser, setcheckUser] = useState(false);
   let Timeout, countout;
   let initial = 5;
-  const questions = [
+  const [questions, setQuestions] = useState([
     {
       question:
         "What is the process of finding errors and fixing them within a program.",
@@ -53,25 +52,28 @@ export default function Quiz() {
       options: ["Alt - C", "Shift - C", "Esc", "Ctrl - C"],
     },
     {
-      question: " A loop that never ends is referred to as a",
+      question: "A loop that never ends is referred to as a",
       answer: "Infinite loop",
       options: ["While loop", "Infinite loop", "Recursive loop", "for loop"],
     },
-  ];
+  ]);
   let total_marks = initial * questions.length;
-
-  const [model, setModel] = useState({});
+  const [report, setReport] = useState({});
   const [loader, setloader] = useState(false);
-  const [displayObj, setdisplayObj] = useState({});
-  // const [Courses, setCourses] = useState({
-  //   RegistrationOpen: true,
-  // });
-
+  const [attempts, setAttempts] = useState(0);
   let [QuizStatus, setQuizStatus] = useState({
     QuizOpen: true,
   });
-
-  console.log(model);
+  let [RollNum, setRollNum] = useState("");
+  const getFeed = () => {
+    fbGet("QuizQuestions")
+      .then((res) => {
+        setQuestions([...res]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const getStatus = () => {
     setloader(true);
@@ -87,8 +89,21 @@ export default function Quiz() {
       });
   };
 
+  const submitAttempt = () => {
+    fbPost("Results", report)
+      .then(() => {
+        console.log("Data Sent SuccessFully !");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
     getStatus();
+    getFeed();
+    setAttempts(attempts + 1);
+    RollNumberFunction();
   }, []);
   //Total Score and Result update arrow function
   const checkAnswer = (UserAnswer, CorrectAnswer) => {
@@ -101,11 +116,39 @@ export default function Quiz() {
     console.log(Index);
   };
 
+  let RollNumberFunction = () => {
+    let randomNumber = Math.floor(Math.random() * 1000) + 1;
+
+    // generate a random string of three uppercase letters
+    let randomLetters = "";
+    for (let i = 0; i < 3; i++) {
+      randomLetters += String.fromCharCode(Math.floor(Math.random() * 26) + 65);
+    }
+
+    // combine the random number and letters to create the roll number
+    let rollNumber = randomLetters + randomNumber;
+    setRollNum(rollNumber);
+    // output the roll number to the console
+    console.log("Your roll number is: " + rollNumber);
+  };
+
   //go forward
   const Next = () => {
     //call result screen
     if (Index + 1 === questions.length) {
       setResult(true);
+      setReport({
+        ...report,
+        Total_marks: total_marks,
+        Score: score,
+        Status: status,
+        Percentage: percentage,
+        Useranswer: [arr],
+        minutes: Minutes,
+        sec: Sec,
+        Questions: [questions],
+        RollNum: RollNum,
+      });
     }
     if (checkUser) {
       setIndex(Index + 1);
@@ -185,17 +228,23 @@ export default function Quiz() {
   }, [Sec, countdown]);
   //restart quiz
   function Try() {
-    setIndex(0);
-    setScore(0);
-    setResult(false);
-    setMinutes(0);
-    setSec(0);
-    setPercentage(0);
-    setStatus("fail");
-    setcountdown(59);
-    setcountdownMin(2);
-    setArr([]);
-    setcheckUser(false);
+    setAttempts(attempts + 2);
+    if (attempts <= 2) {
+      setIndex(0);
+      setScore(0);
+      setResult(false);
+      setMinutes(0);
+      setSec(0);
+      setPercentage(0);
+      setStatus("fail");
+      setcountdown(59);
+      setcountdownMin(2);
+      setArr([]);
+      setcheckUser(false);
+    } else {
+      alert("No of Attempts Exceeds no more Tries Allowed !");
+      console.log("No of Attempts Exceeds no more Tries Allowed !");
+    }
   }
   return (
     <>
@@ -228,6 +277,13 @@ export default function Quiz() {
                     selectedOption={arr[Index - 1]}
                     onBack={RevBack}
                     onNext={RevNext}
+                  />
+                </Box>
+                <Box>
+                  <MyButton
+                    label="submit"
+                    variant="contained"
+                    onClick={submitAttempt}
                   />
                 </Box>
               </>

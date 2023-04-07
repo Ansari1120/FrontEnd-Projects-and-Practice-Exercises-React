@@ -10,6 +10,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Studentregistration from "../screens/StudentScreens/StudentRegistration";
+import ShowResults from "../screens/ShowResults";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -96,20 +97,11 @@ export default function MyTabs() {
         <button onClick={send}>click to login</button>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <InputGroup className="mb-3 mt-3">
-          <Form.Control
-            placeholder="Enter Roll Number"
-            aria-label="Enter Roll Number"
-            aria-describedby="basic-addon2"
-          />
-          <Button variant="outline-secondary" id="button-addon2">
-            Search
-          </Button>
-        </InputGroup>
+        <ShowResults />
       </TabPanel>
     </Box>
   );
 }
 
 //continue from refining login screens ui
-//add quiz (add new questions and render them in student's quiz)
+//retreive results data from firebase render data in this file add search component to search results

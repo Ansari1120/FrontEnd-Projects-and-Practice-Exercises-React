@@ -40,10 +40,7 @@ const StudentForm = () => {
         console.log(err);
       });
   };
-  // if (!instData.Email) {
-  //   console.log("Email is missing");
-  //   return;
-  // }
+
   let createUser = () => {
     Usersignup(model)
       .then((res) => {
@@ -93,6 +90,7 @@ const StudentForm = () => {
       });
     setConfrm(!confrm);
   };
+  console.log(model);
 
   useEffect(() => {
     getSingleComment();

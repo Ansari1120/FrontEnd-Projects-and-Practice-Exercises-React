@@ -42,6 +42,7 @@ import SingleDetail from "../screens/InstituteScreens/SingleDetail";
 import QuizControl from "../screens/InstituteScreens/QuizControl";
 import StudentFormAndCridentials from "../screens/InstituteScreens/StudentFormAndCridentials";
 import StudentForm from "../screens/InstituteScreens/StudentForm";
+import AddQuiz from "../screens/InstituteScreens/AddQuiz";
 const drawerWidth = 240;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
@@ -128,7 +129,7 @@ export default function Institutelayout(props) {
     },
     {
       name: "Add Quiz",
-      route: "",
+      route: "AddQuiz",
       ico: <MessageIcon />,
     },
   ]);
@@ -277,6 +278,7 @@ export default function Institutelayout(props) {
           <Route path="/studentdetails" element={<StudentDetails />} />
           <Route path="SingleDetail/:id" element={<SingleDetail />} />
           <Route path="/quizControl" element={<QuizControl />} />
+          <Route path="/AddQuiz" element={<AddQuiz />} />
           <Route
             path="/student_cridentials_for_institute"
             element={<StudentFormAndCridentials />}

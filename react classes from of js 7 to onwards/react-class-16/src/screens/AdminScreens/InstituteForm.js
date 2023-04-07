@@ -107,18 +107,6 @@ const InstituteForm = () => {
               onChange={(e) => setData({ ...Data, userName: e.target.value })}
             />
           </Grid>
-          {/* <Grid item className="p-2" md={4}>
-            <Box className="mt-4">
-              <MyButton
-                val={<EditIcon />}
-                onClick={() =>  openEdit(x)}
-                label="Edit"
-                startIcon={<SaveIcon />}
-                loading={loading}
-                variant="contained"
-              />
-            </Box>
-          </Grid> */}
         </Grid>
       </Box>
     </>
