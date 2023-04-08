@@ -6,11 +6,12 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { useNavigate } from "react-router-dom";
 import { fbCustomPost } from "../config/firebasemethods";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 import Studentregistration from "../screens/StudentScreens/StudentRegistration";
 import ShowResults from "../screens/ShowResults";
+import DialogSelect from "./Select";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -47,23 +48,7 @@ function a11yProps(index) {
 
 export default function MyTabs() {
   const [value, setValue] = React.useState(0);
-  const [model, setmodel] = React.useState({});
-  const navigation = useNavigate();
-  const Nav = (myval) => {
-    console.log(myval);
-    setmodel({ ...model, mytype: myval });
-  };
 
-  const send = () => {
-    fbCustomPost("myconsumetype", model)
-      .then((res) => {
-        console.log(res);
-      })
-      .then((err) => {
-        console.log(err);
-      });
-    navigation("/userloginsignup");
-  };
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -85,16 +70,7 @@ export default function MyTabs() {
         <Studentregistration />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <button onClick={(e) => Nav(e.target.value)} value="std">
-          Select student login
-        </button>
-        <button onClick={(e) => Nav(e.target.value)} value="Inst">
-          select type Instituteloginsignup
-        </button>
-        <button onClick={(e) => Nav(e.target.value)} value="adm">
-          select type Admin login
-        </button>
-        <button onClick={send}>click to login</button>
+        <DialogSelect />
       </TabPanel>
       <TabPanel value={value} index={2}>
         <ShowResults />
