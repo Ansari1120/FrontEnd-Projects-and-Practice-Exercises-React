@@ -9,7 +9,6 @@ import EditIcon from "@mui/icons-material/Edit";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { fbDelete, fbGet } from "../../config/firebasemethods";
 import MySwitch from "../../components/Switch";
-import Form from "react-bootstrap/Form";
 
 const Institutes = () => {
   const [InstituteList, setInstituteList] = useState([
@@ -199,7 +198,7 @@ const Institutes = () => {
                       </Typography>
                       <MySwitch
                         checked={InstituteList.Active_InActive}
-                        handleChange={(e) => {
+                        handleChangeonClick={(e) => {
                           e.stopPropagation();
                           setInstituteList((prevList) =>
                             prevList.map((item) =>

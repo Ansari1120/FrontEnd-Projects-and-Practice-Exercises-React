@@ -37,14 +37,15 @@ const Android12Switch = styled(Switch)(({ theme }) => ({
 }));
 
 export default function MySwitch(props) {
-  const { label, checked, handleChange } = props;
+  const { label, checked, handleChange, handleChangeonClick } = props;
   return (
     <div>
       {" "}
       <FormControlLabel
         control={<Android12Switch />}
-        onChange={handleChange}
+        onClick={handleChangeonClick}
         label={label}
+        onChange={handleChange}
         checked={checked}
       />
     </div>

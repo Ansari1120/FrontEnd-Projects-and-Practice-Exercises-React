@@ -39,6 +39,8 @@ import Institutes from "../screens/AdminScreens/Institutes";
 import AddInstitutes from "../screens/AdminScreens/AddInstitutes";
 import SingleInstitute from "../screens/AdminScreens/SingleInstitute";
 import InstituteForm from "../screens/AdminScreens/InstituteForm";
+import QuestionsRecieved from "../screens/AdminScreens/QuestionsRecieved";
+import QuestionsResponse from "../screens/AdminScreens/QuestionsResponse";
 const drawerWidth = 240;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
@@ -101,6 +103,11 @@ export default function AdminLayout(props) {
     {
       name: "Institutes List",
       route: "Institutes",
+      ico: <MessageIcon />,
+    },
+    {
+      name: "user's Questions",
+      route: "QuestionsRecieved",
       ico: <MessageIcon />,
     },
   ]);
@@ -248,6 +255,8 @@ export default function AdminLayout(props) {
           <Route path="/SingleInstitute" element={<SingleInstitute />} />
           <Route path="/InstituteForm" element={<InstituteForm />} />
           <Route path="/AddInstitutes" element={<AddInstitutes />} />
+          <Route path="QuestionsRecieved" element={<QuestionsRecieved />} />
+          <Route path="QuestionsResponse/:id" element={<QuestionsResponse />} />
         </Routes>
         <MySnackBarMessage
           variant="outlined"

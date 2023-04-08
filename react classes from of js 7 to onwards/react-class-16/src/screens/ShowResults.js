@@ -9,21 +9,22 @@ import { Box, Grid, Typography } from "@mui/material";
 const ShowResults = () => {
   const [results, setShowResults] = useState([]);
   const [searched, setSearched] = useState("");
-  const [displayObj, setdisplayObj] = useState([]);
+  // const [displayObj, setdisplayObj] = useState([]);
+  const [check, setCheck] = useState(false);
   let col = [
-    {
-      displayName: "Review Quiz",
-      key: "",
-      displayField: (e) => (
-        <Button
-          onClick={() => setdisplayObj([e.Questions])}
-          variant="contained"
-        >
-          Review
-        </Button>
-      ),
-      searchAble: true,
-    },
+    // {
+    //   displayName: "Review Quiz",
+    //   key: "",
+    //   displayField: (e) => (
+    //     <Button
+    //       onClick={() => setdisplayObj([e.Questions])}
+    //       variant="contained"
+    //     >
+    //       Review
+    //     </Button>
+    //   ),
+    //   searchAble: true,
+    // },
     {
       displayName: "Roll Number",
       key: "RollNum",
@@ -75,6 +76,7 @@ const ShowResults = () => {
         data["RollNum"].includes(searched)
       );
       setShowResults(matchQuery);
+      setCheck(true);
     } else {
       setShowResults(results);
     }
@@ -100,7 +102,7 @@ const ShowResults = () => {
         </Button>
       </InputGroup>
 
-      {searched !== "" ? (
+      {check ? (
         <SMGrid datasource={results} columns={col} title="Results" />
       ) : (
         "Nothing Seached yet...."

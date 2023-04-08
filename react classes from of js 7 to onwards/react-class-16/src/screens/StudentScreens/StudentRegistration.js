@@ -46,7 +46,8 @@ function Studentregistration() {
       });
   };
 
-  console.log(model);
+  console.log("data get we have" ,RegStatus);
+  
 
   const getStatus = () => {
     setloader(true);
@@ -186,7 +187,6 @@ function Studentregistration() {
                       }
                     >
                       <div className="inline float-left">
-                       
                         <label className="col-md-4">Select Gender</label>
                         <Form.Check
                           inline

@@ -7,6 +7,7 @@ const QuizControl = () => {
   const [model, setmodel] = useState({});
 
   const save = () => {
+    
     fbCustomPost("quizcontrol", model)
       .then((res) => {
         console.log(res);

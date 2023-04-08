@@ -11,6 +11,8 @@ import SingleDetail from "../screens/InstituteScreens/SingleDetail";
 import PublicPage from "../screens/PublicPage";
 import StudentForm from "../screens/InstituteScreens/StudentForm";
 import ShowResults from "../screens/ShowResults";
+import QuestionsRecieved from "../screens/AdminScreens/QuestionsRecieved";
+import QuestionsResponse from "../screens/AdminScreens/QuestionsResponse";
 
 export default function AppRouter() {
   return (
@@ -25,6 +27,8 @@ export default function AppRouter() {
           <Route path="commentform" element={<CommentsForm />} />
           <Route path="/StudentForm/:id" element={<StudentForm />} />
           <Route path="commentform/:id" element={<CommentsForm />} />
+          <Route path="QuestionsRecieved" element={<QuestionsRecieved />} />
+          <Route path="QuestionsResponse/:id" element={<QuestionsResponse />} />
           <Route
             path="dashboard/*"
             element={<ProtectedRoute Component={Dashboard} />}

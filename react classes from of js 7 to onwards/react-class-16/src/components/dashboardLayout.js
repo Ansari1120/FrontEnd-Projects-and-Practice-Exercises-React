@@ -34,6 +34,8 @@ import { userSignOut } from "../config/firebasemethods";
 import MySnackBarMessage from "./ShowMessage";
 import Todos from "../screens/dashboardScreens/todos";
 import Quiz from "../screens/StudentScreens/Quiz";
+import QandA from "../screens/StudentScreens/QandA";
+import QandAresponse from "../screens/StudentScreens/QandAresponse";
 const drawerWidth = 240;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
@@ -126,6 +128,16 @@ export default function PersistentDrawerLeft(props) {
     {
       name: "Quiz",
       route: "quiz",
+      ico: <PostAddIcon />,
+    },
+    {
+      name: "Ask Questions",
+      route: "QandA",
+      ico: <PostAddIcon />,
+    },
+    {
+      name: "Responses",
+      route: "QandAresponse",
       ico: <PostAddIcon />,
     },
   ]);
@@ -274,6 +286,8 @@ export default function PersistentDrawerLeft(props) {
           <Route path="post" element={<Posts />} />
           <Route path="todos" element={<Todos />} />
           <Route path="quiz" element={<Quiz />} />
+          <Route path="QandA" element={<QandA />} />
+          <Route path="QandAresponse" element={<QandAresponse />} />
         </Routes>
         <MySnackBarMessage
           variant="outlined"
