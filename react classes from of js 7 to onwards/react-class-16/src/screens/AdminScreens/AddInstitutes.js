@@ -19,6 +19,7 @@ const AddInstitutes = () => {
       .then(() => {
         setloading(false);
         console.log("Data Posted Successfully !");
+        setData({});
       })
       .catch((err) => {
         setloading(false);
@@ -135,7 +136,7 @@ const AddInstitutes = () => {
             <TextField
               type={"file"}
               value={Data.picture}
-              onChange={(e) => setData({ ...Data, picture: e.target.files[0] })}
+              onChange={(e) => setData({ ...Data, picture: e.target.value })}
             />
           </Grid>
           <Grid item className="p-2" md={4}>

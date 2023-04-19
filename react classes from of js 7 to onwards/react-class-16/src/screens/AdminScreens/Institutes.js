@@ -7,41 +7,13 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import MyIconbutton from "../../components/Iconbutton";
 import EditIcon from "@mui/icons-material/Edit";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import { fbDelete, fbGet } from "../../config/firebasemethods";
+import { fbDelete, fbGet, fbPost } from "../../config/firebasemethods";
 import MySwitch from "../../components/Switch";
 
 const Institutes = () => {
-  const [InstituteList, setInstituteList] = useState([
-    {
-      InstLogo:
-        "https://png.pngtree.com/png-vector/20211003/ourmid/pngtree-educational-institution-logo-vector-png-image_3968842.png",
-      InstName: "Indus",
-      No_of_Campuses: 3,
-      Active_InActive: false,
-    },
-    {
-      InstLogo:
-        "https://png.pngtree.com/png-vector/20211003/ourmid/pngtree-educational-institution-logo-vector-png-image_3968842.png",
-      InstName: "SAIMS",
-      No_of_Campuses: 5,
-      Active_InActive: true,
-    },
-    {
-      InstLogo:
-        "https://png.pngtree.com/png-vector/20211003/ourmid/pngtree-educational-institution-logo-vector-png-image_3968842.png",
-      InstName: "SMUI",
-      No_of_Campuses: 2,
-      Active_InActive: false,
-    },
-    {
-      InstLogo:
-        "https://png.pngtree.com/png-vector/20211003/ourmid/pngtree-educational-institution-logo-vector-png-image_3968842.png",
-      InstName: "KU",
-      No_of_Campuses: 3,
-      Active_InActive: true,
-    },
-  ]);
+  const [InstituteList, setInstituteList] = useState([]);
 
+  const [singleObj, setSingleObj] = useState({});
   const [Cridentials, setCridentitals] = useState([]);
   const navigate = useNavigate();
 
@@ -106,12 +78,46 @@ const Institutes = () => {
       });
   };
 
+  const sent = (x) => {
+    fbPost("ListedInstitutes", x, x.id)
+      .then(() => {
+        console.log(
+          "data sent Successfully ! new institute list should be with active_inActive",
+          x
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  //Below useEffects are applied for different purposes and for different scenarios instead of using one useEffect
   useEffect(() => {
     save();
     getCridentitals();
-    console.log("cridenttials", Cridentials);
   }, []);
 
+  useEffect(() => {
+    InstituteList.forEach((inst) => {
+      fbPost("ListedInstitutes", inst, inst.id)
+        .then(() => {
+          console.log(
+            "data sent Successfully ! new institute list should be with active_inActive",
+            inst
+          );
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+  }, [InstituteList]);
+
+  const handleActiveInactiveToggle = (index) => {
+    const updatedInstituteList = InstituteList.map((inst, i) =>
+      i === index ? { ...inst, Active_InActive: !inst.Active_InActive } : inst
+    );
+    setInstituteList(updatedInstituteList);
+  };
   return (
     <>
       <ScreenHeader
@@ -200,16 +206,8 @@ const Institutes = () => {
                         checked={InstituteList.Active_InActive}
                         handleChangeonClick={(e) => {
                           e.stopPropagation();
-                          setInstituteList((prevList) =>
-                            prevList.map((item) =>
-                              item.InstName === x.InstName
-                                ? {
-                                    ...item,
-                                    Active_InActive: e.target.checked,
-                                  }
-                                : item
-                            )
-                          );
+                          handleActiveInactiveToggle(i);
+                          sent(x);
                         }}
                       />
                     </Box>
@@ -249,3 +247,34 @@ const Institutes = () => {
 export default Institutes;
 
 //do edit work here and add institutes work also and delete work of institutes.
+
+// const [InstituteList, setInstituteList] = useState([
+//   {
+//     InstLogo:
+//       "https://png.pngtree.com/png-vector/20211003/ourmid/pngtree-educational-institution-logo-vector-png-image_3968842.png",
+//     InstName: "Indus",
+//     No_of_Campuses: 3,
+//     Active_InActive: false,
+//   },
+//   {
+//     InstLogo:
+//       "https://png.pngtree.com/png-vector/20211003/ourmid/pngtree-educational-institution-logo-vector-png-image_3968842.png",
+//     InstName: "SAIMS",
+//     No_of_Campuses: 5,
+//     Active_InActive: true,
+//   },
+//   {
+//     InstLogo:
+//       "https://png.pngtree.com/png-vector/20211003/ourmid/pngtree-educational-institution-logo-vector-png-image_3968842.png",
+//     InstName: "SMUI",
+//     No_of_Campuses: 2,
+//     Active_InActive: false,
+//   },
+//   {
+//     InstLogo:
+//       "https://png.pngtree.com/png-vector/20211003/ourmid/pngtree-educational-institution-logo-vector-png-image_3968842.png",
+//     InstName: "KU",
+//     No_of_Campuses: 3,
+//     Active_InActive: true,
+//   },
+// ]);

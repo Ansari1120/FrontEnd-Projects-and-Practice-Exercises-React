@@ -46,8 +46,7 @@ function Studentregistration() {
       });
   };
 
-  console.log("data get we have" ,RegStatus);
-  
+  console.log("data get we have", RegStatus);
 
   const getStatus = () => {
     setloader(true);

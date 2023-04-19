@@ -45,8 +45,9 @@ export default function MySwitch(props) {
         control={<Android12Switch />}
         onClick={handleChangeonClick}
         label={label}
-        onChange={handleChange}
+        onChange={handleChangeonClick}
         checked={checked}
+        // defaultValue={checked}
       />
     </div>
   );
