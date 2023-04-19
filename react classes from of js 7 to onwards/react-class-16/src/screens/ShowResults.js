@@ -4,58 +4,14 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { useState } from "react";
 import { fbGet } from "../config/firebasemethods";
-import SMGrid from "../components/SMGrid";
-import { Box, Grid, Typography } from "@mui/material";
+import { Card, CardActions, CardContent, Typography } from "@mui/material";
+
 const ShowResults = () => {
   const [results, setShowResults] = useState([]);
   const [searched, setSearched] = useState("");
-  // const [displayObj, setdisplayObj] = useState([]);
+  const [Filtered, setFiltered] = useState([]);
   const [check, setCheck] = useState(false);
-  let col = [
-    // {
-    //   displayName: "Review Quiz",
-    //   key: "",
-    //   displayField: (e) => (
-    //     <Button
-    //       onClick={() => setdisplayObj([e.Questions])}
-    //       variant="contained"
-    //     >
-    //       Review
-    //     </Button>
-    //   ),
-    //   searchAble: true,
-    // },
-    {
-      displayName: "Roll Number",
-      key: "RollNum",
-      searchAble: true,
-    },
-    {
-      displayName: "Percentage",
-      key: "Percentage",
-      searchAble: true,
-    },
-    {
-      displayName: "Total_marks",
-      key: "Total_marks",
-      searchAble: true,
-    },
-    {
-      displayName: "Score",
-      key: "Score",
-      searchAble: true,
-    },
-    {
-      displayName: "TimeTaken (in Minutes)",
-      key: "minutes",
-      searchAble: true,
-    },
-    {
-      displayName: "TimeTaken (in Seconds)",
-      key: "sec",
-      searchAble: true,
-    },
-  ];
+
   const getResults = () => {
     fbGet("Results")
       .then((res) => {
@@ -75,10 +31,9 @@ const ShowResults = () => {
       const matchQuery = results.filter((data) =>
         data["RollNum"].includes(searched)
       );
-      setShowResults(matchQuery);
+      setFiltered([...matchQuery]);
+      console.log("results", Filtered);
       setCheck(true);
-    } else {
-      setShowResults(results);
     }
   };
   useEffect(() => {
@@ -103,7 +58,74 @@ const ShowResults = () => {
       </InputGroup>
 
       {check ? (
-        <SMGrid datasource={results} columns={col} title="Results" />
+        <>
+          {Filtered.map((x, i) => {
+            return (
+              <div
+                style={{ margin: "25%" }}
+                key={i}
+                className="mdc-card__actions"
+              >
+                <Card sx={{ maxWidth: 600 }}>
+                  <CardContent>
+                    <Typography
+                      variant="h3"
+                      gutterBottom
+                      class="mdc-button__ripple"
+                    >
+                      Roll Number : {x.RollNum}
+                    </Typography>
+                    <Typography
+                      sx={{ mb: 1.5 }}
+                      color="text.secondary"
+                      class="mdc-button__label"
+                    >
+                      Percentage : {x.Percentage}
+                    </Typography>
+                    <Typography
+                      sx={{ mb: 1.5 }}
+                      color="text.secondary"
+                      class="mdc-button__label"
+                    >
+                      Total Marks : {x.Total_marks}
+                    </Typography>
+                    <Typography
+                      sx={{ mb: 1.5 }}
+                      color="text.secondary"
+                      class="mdc-button__label"
+                    >
+                      Score : {x.Score}
+                    </Typography>
+                    <Typography
+                      sx={{ mb: 1.5 }}
+                      color="text.secondary"
+                      class="mdc-button__label"
+                    >
+                      Time Taken (in Minutes) : {x.minutes}
+                    </Typography>
+                    <Typography
+                      sx={{ mb: 1.5 }}
+                      color="text.secondary"
+                      class="mdc-button__label"
+                    >
+                      Time Taken (in Seconds) : {x.sec}
+                    </Typography>
+                    <Typography
+                      sx={{ mb: 1.5 }}
+                      color="text.secondary"
+                      class="mdc-button__label"
+                    >
+                      Status : {x.Status}
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button size="small">View More Info</Button>
+                  </CardActions>
+                </Card>
+              </div>
+            );
+          })}
+        </>
       ) : (
         "Nothing Seached yet...."
       )}
