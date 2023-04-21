@@ -16,7 +16,12 @@ export default function MyStack(props) {
   const { data, title } = props;
   return (
     <Box sx={{ width: "100%" }}>
-      <Stack spacing={2}>
+      <Stack
+        direction="column"
+        justifyContent="center"
+        alignItems="center"
+        spacing={2}
+      >
         <Item>{`${title} : ${data}`}</Item>
       </Stack>
     </Box>

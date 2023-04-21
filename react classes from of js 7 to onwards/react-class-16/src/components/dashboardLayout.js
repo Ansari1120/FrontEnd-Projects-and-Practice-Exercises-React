@@ -36,6 +36,7 @@ import Todos from "../screens/dashboardScreens/todos";
 import Quiz from "../screens/StudentScreens/Quiz";
 import QandA from "../screens/StudentScreens/QandA";
 import QandAresponse from "../screens/StudentScreens/QandAresponse";
+import StudentDetails from "../screens/StudentScreens/StudentDetails";
 const drawerWidth = 240;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
@@ -138,6 +139,11 @@ export default function PersistentDrawerLeft(props) {
     {
       name: "Responses",
       route: "QandAresponse",
+      ico: <PostAddIcon />,
+    },
+    {
+      name: "Student Details",
+      route: "StudentDetails",
       ico: <PostAddIcon />,
     },
   ]);
@@ -288,6 +294,7 @@ export default function PersistentDrawerLeft(props) {
           <Route path="quiz" element={<Quiz />} />
           <Route path="QandA" element={<QandA />} />
           <Route path="QandAresponse" element={<QandAresponse />} />
+          <Route path="StudentDetails" element={<StudentDetails />} />
         </Routes>
         <MySnackBarMessage
           variant="outlined"
