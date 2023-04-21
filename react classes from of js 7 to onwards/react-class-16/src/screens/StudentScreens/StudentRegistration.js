@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { Box } from "@mui/system";
 import { useState } from "react";
 import Form from "react-bootstrap/Form";
-import { fbGet, fbPost } from "../../config/firebasemethods";
+import { Usersignup, fbGet, fbPost } from "../../config/firebasemethods";
 import MySnackBarMessage from "../../components/ShowMessage";
 
 function Studentregistration() {
@@ -23,14 +23,13 @@ function Studentregistration() {
       ],
     },
   ]);
-
   let [RegStatus, setRegStatus] = useState({
     RegistrationOpen: true,
   });
 
   const save = (event) => {
     event.preventDefault();
-    console.log("hasjdhas");
+
     fbPost("StudentRegistrationData", model)
       .then(() => {
         console.log("Save SuccessFully !");
@@ -61,7 +60,16 @@ function Studentregistration() {
         setloader(false);
       });
   };
-
+  const getCourses = () => {
+    fbGet("CourseForm")
+      .then((res) => {
+        console.log("Data Fetched Successfully  ", res);
+        setCourses([...res]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -72,14 +80,15 @@ function Studentregistration() {
 
   useEffect(() => {
     getStatus();
+    getCourses();
   }, []);
 
-  const courseName = Courses[1].courseList[0].courseName;
-  console.log(courseName); // Output: "TypeScript"
-  const courseName1 = Courses[1].courseList[1].courseName;
-  console.log(courseName1); // Output: "mobile Repairing"
+  // const courseName = Courses[1].courseList[0].courseName;
+  // console.log(courseName); // Output: "TypeScript"
+  // const courseName1 = Courses[1].courseList[1].courseName;
+  // console.log(courseName1); // Output: "mobile Repairing"
 
-  console.log(Courses);
+  // console.log(Courses);
   return (
     <>
       {loader ? (
@@ -110,7 +119,14 @@ function Studentregistration() {
                 >
                   <option>SelectCourse</option>
                   {/* <option value={checks}>{checks}</option> */}
-                  <option
+                  {Courses.map((x, i) => {
+                    return (
+                      <option key={i} value={x.CourseName}>
+                        {x.CourseName}
+                      </option>
+                    );
+                  })}
+                  {/* <option
                     value={
                       model.SelectCity === "All Pakistan"
                         ? courseName1
@@ -120,7 +136,7 @@ function Studentregistration() {
                     {model.SelectCity === "All Pakistan"
                       ? courseName1
                       : courseName}
-                  </option>
+                  </option> */}
                 </Form.Select>
               </div>
             </div>
@@ -147,7 +163,14 @@ function Studentregistration() {
                   type="email"
                   placeholder="Enter email"
                   onChange={(e) =>
-                    setModel({ ...model, Email: e.target.value })
+                    setModel({ ...model, email: e.target.value })
+                  }
+                />
+                <Form.Control
+                  type="password"
+                  placeholder="Enter password (for student portal)"
+                  onChange={(e) =>
+                    setModel({ ...model, password: e.target.value })
                   }
                 />
 

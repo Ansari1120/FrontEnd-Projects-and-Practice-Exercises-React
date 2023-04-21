@@ -37,6 +37,7 @@ const AddInstitutes = () => {
       .then((res) => {
         console.log(`Student's Credentials created Successfully! ${res}`);
         setloading(false);
+        updatedmodel = {};
       })
       .catch((err) => {
         console.log(err);
