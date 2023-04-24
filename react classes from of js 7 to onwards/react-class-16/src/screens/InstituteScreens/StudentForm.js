@@ -74,7 +74,7 @@ const StudentForm = () => {
         setRes("Save SuccessFully !");
         let updatedmodel = {
           userName: instData.userName,
-          email: instData.Email,
+          email: instData.email,
           password: instData.password,
         };
         setModel({ ...updatedmodel });
@@ -104,7 +104,7 @@ const StudentForm = () => {
       <MyStack title="Name" data={instData.FullName} />
       <MyStack title="Father Name" data={instData.FatherName} />
       <MyStack title="Course" data={instData.SelectCourse} />
-      <MyStack title="E-mail" data={instData.Email} />
+      <MyStack title="E-mail" data={instData.email} />
       <MyStack title="CNIC" data={instData.CNIC} />
       <MyStack title="Father's CNIC" data={instData.FatherCnic} />
       <MyStack title="Date Of Birth" data={instData.date} />

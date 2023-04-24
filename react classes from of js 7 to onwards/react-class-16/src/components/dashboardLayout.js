@@ -37,6 +37,8 @@ import Quiz from "../screens/StudentScreens/Quiz";
 import QandA from "../screens/StudentScreens/QandA";
 import QandAresponse from "../screens/StudentScreens/QandAresponse";
 import StudentDetails from "../screens/StudentScreens/StudentDetails";
+import YourStats from "../screens/StudentScreens/YourStats";
+import More_Available_Courses from "../screens/StudentScreens/More_Available_Courses";
 const drawerWidth = 240;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
@@ -137,13 +139,23 @@ export default function PersistentDrawerLeft(props) {
       ico: <PostAddIcon />,
     },
     {
-      name: "Responses",
+      name: "Intiute Query Responses",
       route: "QandAresponse",
       ico: <PostAddIcon />,
     },
     {
       name: "Student Details",
       route: "StudentDetails",
+      ico: <PostAddIcon />,
+    },
+    {
+      name: "Your Program Stats",
+      route: "YourStats",
+      ico: <PostAddIcon />,
+    },
+    {
+      name: "More Available Courses",
+      route: "More_Available_Courses",
       ico: <PostAddIcon />,
     },
   ]);
@@ -295,6 +307,8 @@ export default function PersistentDrawerLeft(props) {
           <Route path="QandA" element={<QandA />} />
           <Route path="QandAresponse" element={<QandAresponse />} />
           <Route path="StudentDetails" element={<StudentDetails />} />
+          <Route path="YourStats" element={<YourStats />} />
+          <Route path="More_Available_Courses" element={<More_Available_Courses />} />
         </Routes>
         <MySnackBarMessage
           variant="outlined"

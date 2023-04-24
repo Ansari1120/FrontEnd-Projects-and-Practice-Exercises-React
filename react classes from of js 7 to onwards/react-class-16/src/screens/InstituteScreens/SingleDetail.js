@@ -28,9 +28,9 @@ const SingleDetail = () => {
       <img src={model.fileUpload} alt={"profile"} />
       <MyStack title="City" data={model.SelectCity} />
       <MyStack title="Name" data={model.FullName} />
-      <MyStack  title="Father Name" data={model.FatherName} />
+      <MyStack title="Father Name" data={model.FatherName} />
       <MyStack title="Course" data={model.SelectCourse} />
-      <MyStack title="E-mail" data={model.Email} />
+      <MyStack title="E-mail" data={model.email} />
       <MyStack title="CNIC" data={model.CNIC} />
       <MyStack title="Father's CNIC" data={model.FatherCnic} />
       <MyStack title="Date Of Birth" data={model.date} />

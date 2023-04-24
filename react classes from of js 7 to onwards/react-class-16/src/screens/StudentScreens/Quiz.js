@@ -8,8 +8,11 @@ import ReviewAnswer from "../../components/Status.js";
 import { Typography } from "@mui/material";
 import { fbGet, fbPost } from "../../config/firebasemethods";
 import MyButton from "../../components/Button";
+import { getAuth } from "firebase/auth";
 
 export default function Quiz() {
+  const auth = getAuth();
+  const [UserName, setUserName] = useState("");
   const [Index, setIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [Result, setResult] = useState(false);
@@ -100,6 +103,12 @@ export default function Quiz() {
   };
 
   useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUserName(user.displayName);
+        console.log(user.displayName);
+      } else setUserName("");
+    });
     getStatus();
     getFeed();
     setAttempts(attempts + 1);
@@ -139,6 +148,7 @@ export default function Quiz() {
       setResult(true);
       setReport({
         ...report,
+        UserName: UserName,
         Total_marks: total_marks,
         Score: score,
         Status: status,

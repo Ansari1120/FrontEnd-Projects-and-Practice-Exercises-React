@@ -166,13 +166,6 @@ function Studentregistration() {
                     setModel({ ...model, email: e.target.value })
                   }
                 />
-                <Form.Control
-                  type="password"
-                  placeholder="Enter password (for student portal)"
-                  onChange={(e) =>
-                    setModel({ ...model, password: e.target.value })
-                  }
-                />
 
                 <Form.Control
                   type="number"

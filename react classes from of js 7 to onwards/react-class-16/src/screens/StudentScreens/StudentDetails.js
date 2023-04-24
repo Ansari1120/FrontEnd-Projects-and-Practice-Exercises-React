@@ -8,64 +8,6 @@ const StudentDetails = () => {
   const auth = getAuth();
   const [data, setData] = useState([]);
   const [UserName, setUserName] = useState("");
-  const col = [
-    {
-      displayName: "Your Name",
-      key: "FullName",
-    },
-    {
-      displayName: "Your Father Name",
-      key: "FatherName",
-    },
-    {
-      displayName: "E-mail",
-      key: "email",
-    },
-    {
-      displayName: "Your City",
-      key: "SelectCity",
-    },
-    {
-      displayName: "Date Of Birth",
-      key: "date",
-    },
-    {
-      displayName: "Your Phone Number",
-      key: "PhoneNumber",
-    },
-    {
-      displayName: "Gender",
-      key: "SelectGender",
-    },
-    {
-      displayName: "Qualification",
-      key: "LastQualification",
-    },
-    {
-      displayName: "Your CNIC",
-      key: "CNIC",
-    },
-    {
-      displayName: "Father's CNIC",
-      key: "FatherCnic",
-    },
-    {
-      displayName: "Home Address",
-      key: "Address",
-    },
-    {
-      displayName: "User Name",
-      key: "userName",
-    },
-    {
-      displayName: "Home Address",
-      key: "Address",
-    },
-    {
-      displayName: "Student Portal Password",
-      key: "password",
-    },
-  ];
 
   const getData = () => {
     fbGet("InstituteStudentData")
@@ -102,7 +44,7 @@ const StudentDetails = () => {
             <MyStack title="Father Name" data={x.FatherName} />
             <MyStack title="User Name" data={x.userName} />
             <MyStack title="Course" data={x.SelectCourse} />
-            <MyStack title="E-mail" data={x.Email} />
+            <MyStack title="E-mail" data={x.email} />
             <MyStack title="City" data={x.SelectCity} />
             <MyStack title="CNIC" data={x.CNIC} />
             <MyStack title="Father's CNIC" data={x.FatherCnic} />

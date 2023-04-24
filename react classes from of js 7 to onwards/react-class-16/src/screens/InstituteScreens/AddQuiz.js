@@ -291,15 +291,7 @@ export default function AddQuiz() {
             onClose={handleClose}
             label={"res"}
           />
-
           <Box>
-            {questions.map((x, i) => {
-              return (
-                <Typography key={i} variant="h5">
-                  {x.question}
-                </Typography>
-              );
-            })}
             <SMGrid
               datasource={questions}
               columns={col}
