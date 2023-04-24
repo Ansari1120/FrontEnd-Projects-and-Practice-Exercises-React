@@ -246,7 +246,7 @@ const Institutes = () => {
 
 export default Institutes;
 
-//do edit work here and add institutes work also and delete work of institutes.
+
 
 // const [InstituteList, setInstituteList] = useState([
 //   {
