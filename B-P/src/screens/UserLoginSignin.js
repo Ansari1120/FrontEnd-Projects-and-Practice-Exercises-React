@@ -8,9 +8,9 @@ import {
   Container,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import { Usersignup } from "../config/firebasemethods";
+import { fbGet, Usersignup } from "../config/firebasemethods";
 import { UserLogin } from "../config/firebasemethods";
 import { useNavigate } from "react-router-dom";
 import MyButton from "../components/Button";
@@ -23,6 +23,9 @@ const UserLoginSignin = () => {
   const [loader, setloader] = useState(false);
   const [open, setOpen] = React.useState(false);
   const [err, setErr] = useState();
+  const [mytype, setType] = useState({
+    myconsumetype: "Inst",
+  });
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -50,10 +53,23 @@ const UserLoginSignin = () => {
 
   let Login = () => {
     setloader(true);
-    UserLogin(model)
+    UserLogin(
+      model,
+      mytype.myconsumetype[0] === "Inst"
+        ? "institute"
+        : mytype.myconsumetype[0] === "adm"
+        ? "admin"
+        : ""
+    )
       .then((res) => {
         console.log(`User Logged in Successfully ! ${res}`);
-        navigation("dashboard/*");
+        if (mytype.myconsumetype[0] === "Inst") {
+          navigation("/institute/*");
+        } else if (mytype.myconsumetype[0] === "adm") {
+          navigation("/admin/*");
+        } else if (mytype.myconsumetype[0] === "std") {
+          navigation("/dashboard/*");
+        }
         setloader(false);
         setOpen(false);
       })
@@ -65,6 +81,24 @@ const UserLoginSignin = () => {
       });
   };
 
+  const getStatus = () => {
+    setloader(true);
+    fbGet("myconsumetype")
+      .then((res) => {
+        setloader(false);
+        console.log("Firebase data", res);
+        setType({ ...res, myconsumetype: res });
+        console.log("recieved type : ", res);
+      })
+      .catch((err) => {
+        console.log(err);
+        setloader(false);
+      });
+  };
+
+  useEffect(() => {
+    getStatus();
+  }, []);
   return (
     <Container maxWidth="xs">
       <form>
@@ -85,6 +119,13 @@ const UserLoginSignin = () => {
             },
           }}
         >
+          <label>
+            {mytype.myconsumetype[0] === "adm"
+              ? "Administrator"
+              : mytype.myconsumetype[0] === "std"
+              ? "Student"
+              : "Institute"}
+          </label>
           <Typography variant="h2" textAlign={"center"} padding="3">
             {isSignup ? "SignUp" : "Login"}
           </Typography>
@@ -135,16 +176,22 @@ const UserLoginSignin = () => {
             label={isSignup ? "Signup" : "Login"}
             loading={loader}
           />
-          <MyButton
-            onClick={() => setSignup(!isSignup)}
-            sx={{ maringTop: 3, borderRadius: 3 }}
-            label={
-              isSignup
-                ? "Already Have an Account ! login Here "
-                : "  No Account ! signup here"
-            }
-          />
-          {!isSignup ? (
+          {mytype.myconsumetype[0] === "Inst" ||
+          mytype.myconsumetype[0] === "adm" ? (
+            ""
+          ) : (
+            <MyButton
+              onClick={() => setSignup(!isSignup)}
+              sx={{ maringTop: 3, borderRadius: 3 }}
+              label={
+                isSignup
+                  ? "Already Have an Account ! login Here "
+                  : "  No Account ! signup here"
+              }
+            />
+          )}
+
+          {!isSignup && mytype.myconsumetype[0] === "std" ? (
             <Grid item xs>
               <Link href="#" variant="body2">
                 Forgot password?
