@@ -5,12 +5,12 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCT0ImpDOWiaR0iF1n_N0RQ6ZqtHeNui5c",
-  authDomain: "fir-for-react-apps.firebaseapp.com",
-  projectId: "fir-for-react-apps",
-  storageBucket: "fir-for-react-apps.appspot.com",
-  messagingSenderId: "1078427290837",
-  appId: "1:1078427290837:web:61d8b6ee5ade25517f265c"
+  apiKey: "AIzaSyA-ih6HEJmcm5qRt8LnBCTnLe06Q0IUSR8",
+  authDomain: "hackathonproject01.firebaseapp.com",
+  projectId: "hackathonproject01",
+  storageBucket: "hackathonproject01.appspot.com",
+  messagingSenderId: "952221978878",
+  appId: "1:952221978878:web:7ceb48e219bc9c774795af"
 };
 
 // Initialize Firebase
