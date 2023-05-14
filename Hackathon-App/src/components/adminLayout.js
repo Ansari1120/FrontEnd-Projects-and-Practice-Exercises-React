@@ -34,7 +34,13 @@ import { userSignOut } from "../config/firebasemethods";
 import MySnackBarMessage from "./ShowMessage";
 import Todos from "../screens/dashboardScreens/todos";
 import SMcourse from "../screens/InstituteScreens/Course";
-import SMCoursefrom from "../screens/InstituteScreens/Coursefrom";
+import SMCoursefrom from "../screens/InstituteScreens/Courseform";
+import Institutes from "../screens/AdminScreens/Institutes";
+import AddInstitutes from "../screens/AdminScreens/AddInstitutes";
+import SingleInstitute from "../screens/AdminScreens/SingleInstitute";
+import InstituteForm from "../screens/AdminScreens/InstituteForm";
+import QuestionsRecieved from "../screens/AdminScreens/QuestionsRecieved";
+import QuestionsResponse from "../screens/AdminScreens/QuestionsResponse";
 const drawerWidth = 240;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
@@ -92,6 +98,16 @@ export default function AdminLayout(props) {
     {
       name: "Course",
       route: "Course",
+      ico: <MessageIcon />,
+    },
+    {
+      name: "Institutes List",
+      route: "Institutes",
+      ico: <MessageIcon />,
+    },
+    {
+      name: "user's Questions",
+      route: "QuestionsRecieved",
       ico: <MessageIcon />,
     },
   ]);
@@ -187,7 +203,7 @@ export default function AdminLayout(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Institute Dashboard
+            Admin Dashboard
           </Typography>
           <Typography item md={6} sx={{ ml: 120, ...(open && { ml: 100 }) }}>
             Welcome ! {UserName}
@@ -234,6 +250,13 @@ export default function AdminLayout(props) {
         <Routes>
           <Route path="/Course" element={<SMcourse />} />
           <Route path="/coursefrom" element={<SMCoursefrom />} />
+          <Route path="/Institutes" element={<Institutes />} />
+          <Route path="/AddInstitutes" element={<AddInstitutes />} />
+          <Route path="/SingleInstitute" element={<SingleInstitute />} />
+          <Route path="/InstituteForm" element={<InstituteForm />} />
+          <Route path="/AddInstitutes" element={<AddInstitutes />} />
+          <Route path="QuestionsRecieved" element={<QuestionsRecieved />} />
+          <Route path="QuestionsResponse/:id" element={<QuestionsResponse />} />
         </Routes>
         <MySnackBarMessage
           variant="outlined"

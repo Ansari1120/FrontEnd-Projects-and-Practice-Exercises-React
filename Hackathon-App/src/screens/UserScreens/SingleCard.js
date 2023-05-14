@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Card from "react-bootstrap/Card";
+import { fbPost } from "../../config/firebasemethods";
 
 const SingleCard = () => {
   const [SingleCar, setSingleCar] = useState({});
   const location = useLocation();
   console.log(SingleCar);
+
+
   useEffect(() => {
     setSingleCar(location.state);
   }, []);

@@ -15,7 +15,7 @@ function ProtectedRoute({ Component }) {
       .catch((err) => {
         setLoader(false);
         console.log(err);
-        navigate("/");
+        navigate("/userloginsignup");
       });
   }, []);
   return <>{loader ? <h1>Loading...</h1> : <Component />}</>;

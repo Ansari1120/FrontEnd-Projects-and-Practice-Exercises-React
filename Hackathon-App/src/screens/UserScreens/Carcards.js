@@ -296,7 +296,6 @@ const Carcards = () => {
   const [Cridentials, setCridentitals] = useState([]);
   const navigate = useNavigate();
 
-  
   let openDetail = (obj) => {
     navigate("/SingleCard", { state: obj });
   };
@@ -357,9 +356,12 @@ const Carcards = () => {
     //     console.log(err);
     //   });
   };
-  const Navigate_to_Login = (e) => {
-    navigate("/userloginsignup");
+  const Navigate_to_Login = (obj) => {
+    navigate("/BookNow", { state: obj });
   };
+  // const Navigate_to_Login = () => {
+  //   navigate("/userloginsignup");
+  // };
   const sent = (x) => {
     fbPost("ListedInstitutes", x, x.id)
       .then(() => {
@@ -379,20 +381,20 @@ const Carcards = () => {
     getCridentitals();
   }, []);
 
-  useEffect(() => {
-    // CarsList.forEach((inst) => {
-    //   fbPost("ListedInstitutes", inst, inst.id)
-    //     .then(() => {
-    //       console.log(
-    //         "data sent Successfully ! new institute list should be with active_inActive",
-    //         inst
-    //       );
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
-    // });
-  }, [CarsList]);
+  // useEffect(() => {
+  //   // CarsList.forEach((inst) => {
+  //   //   fbPost("ListedInstitutes", inst, inst.id)
+  //   //     .then(() => {
+  //   //       console.log(
+  //   //         "data sent Successfully ! new institute list should be with active_inActive",
+  //   //         inst
+  //   //       );
+  //   //     })
+  //   //     .catch((err) => {
+  //   //       console.log(err);
+  //   //     });
+  //   // });
+  // }, [CarsList]);
 
   //   const handleActiveInactiveToggle = (index) => {
   //     const updatedCarsList = CarsList.map((inst, i) =>
@@ -445,7 +447,7 @@ const Carcards = () => {
                     <Button
                       onClick={(e) => {
                         e.stopPropagation();
-                        Navigate_to_Login();
+                        Navigate_to_Login(x);
                       }}
                       variant="primary"
                     >

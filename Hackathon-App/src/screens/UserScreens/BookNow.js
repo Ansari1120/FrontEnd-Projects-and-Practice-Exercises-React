@@ -3,7 +3,7 @@ import MyIconbutton from "../../components/Iconbutton";
 import { fbPost, userSignOut } from "../../config/firebasemethods";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import ScreenHeader from "../../components/screenheader";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import { Box } from "@mui/system";
 import { Button } from "@mui/material";
@@ -14,18 +14,11 @@ const BookNow = () => {
   const navigation = useNavigate();
   const [model, setModel] = useState({});
   const [UserName, setUserName] = useState("");
+  const [SingleCar, setSingleCar] = useState({});
+  const location = useLocation();
 
-  useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        setUserName(user.displayName);
-        console.log(user.displayName);
-      } else setUserName("");
-    });
-  }, []);
   const save = (event) => {
     event.preventDefault();
-
     fbPost("UserRequirments", model)
       .then(() => {
         console.log("Save SuccessFully !");
@@ -34,26 +27,33 @@ const BookNow = () => {
         console.log(err);
       });
   };
-  // let / = () => {
-  //   let randomNumber = Math.floor(Math.random() * 1000) + 1;
-
-  //   // generate a random string of three uppercase letters
-  //   let randomLetters = "";
-  //   for (let i = 0; i < 3; i++) {
-  //     randomLetters += String.fromCharCode(Math.floor(Math.random() * 26) + 65);
-  //   }
-
-  //   // combine the random number and letters to create the UserIdGenerator
-  //   let rollNumber = randomLetters + randomNumber;
-  //   // setRollNum(rollNumber);
-  //   // output the UserIdGenerator to the console
-  //   console.log("Your UserIdGenerator is: " + rollNumber);
-  //   setModel({ ...model, UserId: rollNumber });
-  // };
+  const SaveCartoBook = () => {
+    fbPost("CartoBook", SingleCar)
+      .then(() => {
+        console.log("Save SuccessFully !");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   useEffect(() => {
     setModel({ ...model, UserName: UserName });
+    setSingleCar({ ...SingleCar, UserName: UserName });
     console.log("username", model.UserName);
   }, [model.AllCarDetails]);
+
+  
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUserName(user.displayName);
+        console.log(user.displayName);
+      } else setUserName("");
+    });
+    setSingleCar(location.state);
+    //SaveCartoBook();
+  }, []);
+
   return (
     <>
       <ScreenHeader

@@ -32,7 +32,7 @@ function SMGrid(props) {
                   <tr key={i}>
                     {searchList.map((e, ind) => (
                       <td key={ind}>
-                        {e.displayField ? e.displayField(x) : x[e.key]}
+                         {e.displayField ? e.displayField(x) : x[e.key]}
                       </td>
                     ))}
                   </tr>

@@ -3,6 +3,7 @@ import { Box } from "@mui/system";
 import { useNavigate } from "react-router-dom";
 import MyButton from "./Button";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 function ScreenHeader(props) {
   const { title, buttonsList } = props;
@@ -17,6 +18,12 @@ function ScreenHeader(props) {
               navigate(-1);
             }}
             startIcon={<ArrowBackIcon />}
+          />
+          <MyButton
+            onClick={() => {
+              navigate(+1);
+            }}
+            startIcon={<ArrowForwardIcon />}
           />
         </Box>
         <Typography variant="h4" className="d-flex float-end">

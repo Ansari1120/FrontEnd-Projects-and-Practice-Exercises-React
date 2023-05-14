@@ -161,6 +161,21 @@ const UserLoginSignin = () => {
             variant="outlined"
             onChange={(e) => setModel({ ...model, password: e.target.value })}
           />
+          {isSignup ? (
+            <TextField
+              margin="normal"
+              name="ContactNumber"
+              type={"number"}
+              placeholder={"Contact Number"}
+              variant="outlined"
+              onChange={(e) =>
+                setModel({ ...model, ContactNumber: e.target.value })
+              }
+            />
+          ) : (
+            ""
+          )}
+
           {!isSignup && (
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
