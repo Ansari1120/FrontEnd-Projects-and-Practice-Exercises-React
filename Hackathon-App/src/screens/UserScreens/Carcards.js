@@ -16,20 +16,6 @@ import { getAuth } from "firebase/auth";
 const Carcards = () => {
   const [CarsList, setCarsList] = useState([
     {
-      id: 1,
-      ReviewsAndRatings: [
-        {
-          UserName: "Ahmed",
-          StarRating: "****",
-          Description: "fasdfasdf",
-        },
-      ],
-      Availability: [
-        {
-          Days: ["Mond", "Tuesday", "Staturday"],
-          Timings: "9 to 5",
-        },
-      ],
       carImg:
         "https://images.pexels.com/photos/2676096/pexels-photo-2676096.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
       car: "Mitsubishi",
@@ -38,12 +24,7 @@ const Carcards = () => {
       car_model_year: 2002,
       car_vin: "SAJWJ0FF3F8321657",
       price: "$2814.46",
-      availability: false,
-      Features: [
-        {
-          featureFour: "USB Port",
-        },
-      ],
+      available: false,
       ReviewsAndRatings: [
         {
           UserName: "Ahmed",
@@ -51,15 +32,19 @@ const Carcards = () => {
           Description: "fasdfasdf",
         },
       ],
-      Availability: [
+      availability: [
         {
           Days: ["Mond", "Tuesday", "Staturday"],
           Timings: "9 to 5",
         },
       ],
+      Features: [
+        {
+          featureFour: "USB Port",
+        },
+      ],
     },
     {
-      id: 2,
       car: "Volkswagen",
       carImg:
         "https://images.pexels.com/photos/1467476/pexels-photo-1467476.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
@@ -69,7 +54,7 @@ const Carcards = () => {
 
       car_vin: "WBANV9C51AC203320",
       price: "$1731.98",
-      availability: false,
+      available: false,
       Features: [
         {
           featureOne: "AC",
@@ -84,7 +69,7 @@ const Carcards = () => {
           Description: "fasdfasdfded",
         },
       ],
-      Availability: [
+      availability: [
         {
           Days: ["Mond", "Tuesday", "Staturday"],
           Timings: "9 to 5",
@@ -92,7 +77,6 @@ const Carcards = () => {
       ],
     },
     {
-      id: 3,
       car: "Saturn",
       carImg:
         "https://images.pexels.com/photos/16648008/pexels-photo-16648008.jpeg?auto=compress&cs=tinysrgb&w=600",
@@ -116,16 +100,14 @@ const Carcards = () => {
           Description: "fasdfasdf",
         },
       ],
-      Availability: [
+      availability: [
         {
           Days: ["Mond", "Tuesday", "Staturday"],
           Timings: "9 to 5",
         },
       ],
     },
-
     {
-      id: 4,
       car: "Jeep",
       carImg:
         "https://images.pexels.com/photos/1682666/pexels-photo-1682666.jpeg?auto=compress&cs=tinysrgb&w=600",
@@ -135,7 +117,7 @@ const Carcards = () => {
       car_model_year: 2012,
       car_vin: "4USBT33454L511606",
       price: "$2732.99",
-      availability: false,
+      available: false,
       Features: [
         {
           featureOne: "AC",
@@ -150,7 +132,7 @@ const Carcards = () => {
           Description: "fasdfasdf",
         },
       ],
-      Availability: [
+      availability: [
         {
           Days: ["Mond", "Tuesday", "Staturday"],
           Timings: "9 to 5",
@@ -158,7 +140,6 @@ const Carcards = () => {
       ],
     },
     {
-      id: 5,
       car: "Mitsubishi",
       carImg:
         "https://images.pexels.com/photos/12446376/pexels-photo-12446376.jpeg?auto=compress&cs=tinysrgb&w=600",
@@ -167,7 +148,7 @@ const Carcards = () => {
       car_model_year: 2002,
       car_vin: "WAU2GBFCXDN339713",
       price: "$3849.47",
-      availability: false,
+      available: false,
       Features: [
         {
           featureOne: "AC",
@@ -183,7 +164,7 @@ const Carcards = () => {
           Description: "fasdfasdf",
         },
       ],
-      Availability: [
+      availability: [
         {
           Days: ["Mond", "Tuesday", "Staturday"],
           Timings: "9 to 5",
@@ -191,7 +172,6 @@ const Carcards = () => {
       ],
     },
     {
-      id: 6,
       car: "Chevrolet",
       carImg:
         "https://images.pexels.com/photos/242139/pexels-photo-242139.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
@@ -201,7 +181,7 @@ const Carcards = () => {
       car_vin: "WAUSH98E96A592763",
       price: "$1252.30",
 
-      availability: false,
+      available: false,
       ReviewsAndRatings: [
         {
           UserName: "Ahmed",
@@ -209,7 +189,7 @@ const Carcards = () => {
           Description: "fasdfasdf",
         },
       ],
-      Availability: [
+      availability: [
         {
           Days: ["Mond", "Tuesday", "Staturday"],
           Timings: "9 to 5",
@@ -217,7 +197,6 @@ const Carcards = () => {
       ],
     },
     {
-      id: 7,
       car: "Dodge",
       car_model: "Ram Van B350",
       car_color: "Yellow",
@@ -241,7 +220,7 @@ const Carcards = () => {
           Description: "fasdfasdf",
         },
       ],
-      Availability: [
+      availability: [
         {
           Days: ["Mond", "Tuesday", "Staturday"],
           Timings: "9 to 5",
@@ -249,7 +228,6 @@ const Carcards = () => {
       ],
     },
     {
-      id: 8,
       car: "Isuzu",
       car_model: "Ascender",
       car_color: "Teal",
@@ -272,7 +250,7 @@ const Carcards = () => {
           Description: "fasdfasdf",
         },
       ],
-      Availability: [
+      availability: [
         {
           Days: ["Mond", "Tuesday", "Staturday"],
           Timings: "9 to 5",
@@ -280,6 +258,7 @@ const Carcards = () => {
       ],
     },
   ]);
+
   let columns = [
     {
       displayName: "Car Image",
@@ -295,6 +274,19 @@ const Carcards = () => {
   const [singleObj, setSingleObj] = useState({});
   const [Cridentials, setCridentitals] = useState([]);
   const navigate = useNavigate();
+
+  const sent = () => {
+    fbPost("AvailableCars", CarsList)
+      .then(() => {
+        console.log(
+          "data sent Successfully ! new institute list should be with active_inActive",
+          CarsList
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   let openDetail = (obj) => {
     navigate("/SingleCard", { state: obj });
@@ -362,24 +354,21 @@ const Carcards = () => {
   // const Navigate_to_Login = () => {
   //   navigate("/userloginsignup");
   // };
-  const sent = (x) => {
-    fbPost("ListedInstitutes", x, x.id)
-      .then(() => {
-        console.log(
-          "data sent Successfully ! new institute list should be with active_inActive",
-          x
-        );
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+
+  // const sent = (x) => {
+  //   fbPost("ListedInstitutes", x, x.id)
+  //     .then(() => {
+  //       console.log(
+  //         "data sent Successfully ! new institute list should be with active_inActive",
+  //         x
+  //       );
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
   //Below useEffects are applied for different purposes and for different scenarios instead of using one useEffect
-  useEffect(() => {
-    save();
-    getCridentitals();
-  }, []);
 
   // useEffect(() => {
   //   // CarsList.forEach((inst) => {

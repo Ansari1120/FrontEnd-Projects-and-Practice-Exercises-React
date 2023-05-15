@@ -137,7 +137,7 @@ const AddInstitutes = () => {
             <TextField
               type={"file"}
               value={Data.picture}
-              onChange={(e) => setData({ ...Data, picture: e.target.value })}
+              onChange={(e) => setData({ ...Data, picture: e.target.files[0] })}
             />
           </Grid>
           <Grid item className="p-2" md={4}>

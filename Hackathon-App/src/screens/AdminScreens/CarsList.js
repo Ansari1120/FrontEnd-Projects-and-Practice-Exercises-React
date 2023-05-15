@@ -10,10 +10,10 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { fbDelete, fbGet, fbPost } from "../../config/firebasemethods";
 import MySwitch from "../../components/Switch";
 
-const Institutes = () => {
-  const [InstituteList, setInstituteList] = useState([]);
-
+const CarsList = () => {
+  const [CarsList, setCarsList] = useState([]);
   const [singleObj, setSingleObj] = useState({});
+
   const [Cridentials, setCridentitals] = useState([]);
   const navigate = useNavigate();
 
@@ -22,16 +22,16 @@ const Institutes = () => {
   };
 
   let openEdit = (obj) => {
-    navigate("/admin/InstituteForm", { state: obj });
+    navigate("/admin/AddCars", { state: obj });
   };
 
   let openForm = () => {
-    navigate("/admin/AddInstitutes");
+    navigate("/admin/AddCars");
   };
 
   let DeleteItem = (obj) => {
     console.log(obj);
-    fbDelete("ListedInstitutes", obj.id)
+    fbDelete("ListedCarsList", obj.id)
       .then(() => {
         console.log("data Deleted Successfully");
       })
@@ -51,7 +51,7 @@ const Institutes = () => {
       });
   };
   let DeleteCridentials = (obj) => {
-    //run a map on institutelist and match cridentials instname and instiutelist instname when matched delete cridentitals instname's id
+    //run a map on CarsList and match cridentials instname and instiutelist instname when matched delete cridentitals instname's id
     const obj1 = Cridentials.filter((x) => {
       return x.password === obj.password;
     });
@@ -66,12 +66,10 @@ const Institutes = () => {
   };
 
   const save = () => {
-    fbGet("ListedInstitutes")
+    fbGet("AvailableCars")
       .then((res) => {
         console.log("Data retrieved SuccessFully !");
-        setInstituteList([...res]);
-        console.log(res);
-        console.log(InstituteList);
+        setCarsList([...res]);
       })
       .catch((err) => {
         console.log(err);
@@ -79,7 +77,7 @@ const Institutes = () => {
   };
 
   const sent = (x) => {
-    fbPost("ListedInstitutes", x, x.id)
+    fbPost("ListedCarsList", x, x.id)
       .then(() => {
         console.log(
           "data sent Successfully ! new institute list should be with active_inActive",
@@ -94,34 +92,35 @@ const Institutes = () => {
   //Below useEffects are applied for different purposes and for different scenarios instead of using one useEffect
   useEffect(() => {
     save();
-    getCridentitals();
+   // getCridentitals();
   }, []);
+  console.log("List : ",CarsList);
 
-  useEffect(() => {
-    InstituteList.forEach((inst) => {
-      fbPost("ListedInstitutes", inst, inst.id)
-        .then(() => {
-          console.log(
-            "data sent Successfully ! new institute list should be with active_inActive",
-            inst
-          );
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    });
-  }, [InstituteList]);
+  // useEffect(() => {
+  //   CarsList.forEach((inst) => {
+  //     fbPost("ListedCarsList", inst, inst.id)
+  //       .then(() => {
+  //         console.log(
+  //           "data sent Successfully ! new institute list should be with active_inActive",
+  //           inst
+  //         );
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   });
+  // }, [CarsList]);
 
   const handleActiveInactiveToggle = (index) => {
-    const updatedInstituteList = InstituteList.map((inst, i) =>
-      i === index ? { ...inst, Active_InActive: !inst.Active_InActive } : inst
+    const updatedCarsList = CarsList.map((inst, i) =>
+      i === index ? { ...inst, availibility: !inst.availibility } : inst
     );
-    setInstituteList(updatedInstituteList);
+    setCarsList(updatedCarsList);
   };
   return (
     <>
       <ScreenHeader
-        title="Institutes List"
+        title="CarsList List"
         buttonsList={[
           {
             displayField: (
@@ -135,10 +134,8 @@ const Institutes = () => {
         ]}
       />
       <Box className="d-flex row mt-4 justify-content-between p-3 align-items-center">
-        {InstituteList &&
-        Array.isArray(InstituteList) &&
-        InstituteList.length > 0
-          ? InstituteList.map((x, i) => (
+        {CarsList && Array.isArray(CarsList) && CarsList.length > 0
+          ? CarsList.map((x, i) => (
               <Paper
                 key={i}
                 className="p-2 my-2 border"
@@ -148,8 +145,8 @@ const Institutes = () => {
                   <Grid item md={2}>
                     <Box className="m-2 p-2 text-center">
                       <img
-                        src={x.InstLogo}
-                        alt={x.InstName}
+                        src={x.carImg}
+                        alt={x.car}
                         width={100}
                         height={100}
                       />
@@ -161,9 +158,9 @@ const Institutes = () => {
                         sx={{ fontSize: 12 }}
                         className="fw-bold text-muted"
                       >
-                        Institute Name
+                        Car Name
                       </Typography>
-                      <Typography>{x.InstName}</Typography>
+                      <Typography>{x.car}</Typography>
                     </Box>
                   </Grid>
                   <Grid item md={2} variant="h5">
@@ -172,9 +169,9 @@ const Institutes = () => {
                         sx={{ fontSize: 12 }}
                         className="fw-bold text-muted"
                       >
-                        Number of Campuses
+                        Car Model
                       </Typography>
-                      <Typography>{x.No_of_Campuses}</Typography>
+                      <Typography>{x.car_model}</Typography>
                     </Box>
                   </Grid>
 
@@ -184,12 +181,12 @@ const Institutes = () => {
                         sx={{ fontSize: 12 }}
                         className="fw-bold text-muted"
                       >
-                        Active / InActive
+                        Availibility / NotAvailable
                       </Typography>
 
                       <Typography>
                         <FiberManualRecordIcon
-                          color={x.Active_InActive ? "error" : ""}
+                          color={x.availibility ? "error" : ""}
                         />
                       </Typography>
                     </Box>
@@ -200,10 +197,11 @@ const Institutes = () => {
                         sx={{ fontSize: 12 }}
                         className="fw-bold text-muted"
                       >
-                        Toggle Institute Activation
+                        Toggle Availibility Activation
                       </Typography>
+
                       <MySwitch
-                        checked={InstituteList.Active_InActive}
+                        checked={CarsList.availibility}
                         handleChangeonClick={(e) => {
                           e.stopPropagation();
                           handleActiveInactiveToggle(i);
@@ -244,37 +242,4 @@ const Institutes = () => {
   );
 };
 
-export default Institutes;
-
-
-
-// const [InstituteList, setInstituteList] = useState([
-//   {
-//     InstLogo:
-//       "https://png.pngtree.com/png-vector/20211003/ourmid/pngtree-educational-institution-logo-vector-png-image_3968842.png",
-//     InstName: "Indus",
-//     No_of_Campuses: 3,
-//     Active_InActive: false,
-//   },
-//   {
-//     InstLogo:
-//       "https://png.pngtree.com/png-vector/20211003/ourmid/pngtree-educational-institution-logo-vector-png-image_3968842.png",
-//     InstName: "SAIMS",
-//     No_of_Campuses: 5,
-//     Active_InActive: true,
-//   },
-//   {
-//     InstLogo:
-//       "https://png.pngtree.com/png-vector/20211003/ourmid/pngtree-educational-institution-logo-vector-png-image_3968842.png",
-//     InstName: "SMUI",
-//     No_of_Campuses: 2,
-//     Active_InActive: false,
-//   },
-//   {
-//     InstLogo:
-//       "https://png.pngtree.com/png-vector/20211003/ourmid/pngtree-educational-institution-logo-vector-png-image_3968842.png",
-//     InstName: "KU",
-//     No_of_Campuses: 3,
-//     Active_InActive: true,
-//   },
-// ]);
+export default CarsList;

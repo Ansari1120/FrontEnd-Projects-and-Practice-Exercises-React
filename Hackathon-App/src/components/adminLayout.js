@@ -35,12 +35,14 @@ import MySnackBarMessage from "./ShowMessage";
 import Todos from "../screens/dashboardScreens/todos";
 import SMcourse from "../screens/InstituteScreens/Course";
 import SMCoursefrom from "../screens/InstituteScreens/Courseform";
-import Institutes from "../screens/AdminScreens/Institutes";
+import Institutes from "../screens/AdminScreens/CarsList";
 import AddInstitutes from "../screens/AdminScreens/AddInstitutes";
 import SingleInstitute from "../screens/AdminScreens/SingleInstitute";
-import InstituteForm from "../screens/AdminScreens/InstituteForm";
+import InstituteForm from "../screens/AdminScreens/AddCars";
 import QuestionsRecieved from "../screens/AdminScreens/QuestionsRecieved";
 import QuestionsResponse from "../screens/AdminScreens/QuestionsResponse";
+import CarsList from "../screens/AdminScreens/CarsList";
+import AddCars from "../screens/AdminScreens/AddCars";
 const drawerWidth = 240;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
@@ -101,8 +103,8 @@ export default function AdminLayout(props) {
       ico: <MessageIcon />,
     },
     {
-      name: "Institutes List",
-      route: "Institutes",
+      name: "Cars List",
+      route: "CarsList",
       ico: <MessageIcon />,
     },
     {
@@ -250,10 +252,10 @@ export default function AdminLayout(props) {
         <Routes>
           <Route path="/Course" element={<SMcourse />} />
           <Route path="/coursefrom" element={<SMCoursefrom />} />
-          <Route path="/Institutes" element={<Institutes />} />
+          <Route path="/CarsList" element={<CarsList />} />
           <Route path="/AddInstitutes" element={<AddInstitutes />} />
           <Route path="/SingleInstitute" element={<SingleInstitute />} />
-          <Route path="/InstituteForm" element={<InstituteForm />} />
+          <Route path="/AddCars" element={<AddCars />} />
           <Route path="/AddInstitutes" element={<AddInstitutes />} />
           <Route path="QuestionsRecieved" element={<QuestionsRecieved />} />
           <Route path="QuestionsResponse/:id" element={<QuestionsResponse />} />
