@@ -4,7 +4,7 @@ import ScreenHeader from "../../components/screenheader";
 import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 import MyInput from "../../components/Input";
 import MyButton from "../../components/Button";
-import { Usersignup, fbPost } from "../../config/firebasemethods";
+import { Usersignup, fbPost, storage } from "../../config/firebasemethods";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -12,6 +12,7 @@ import Select from "@mui/material/Select";
 import MultipleSelect from "../../components/MultiSelect";
 import SmModal from "../../components/SmModal";
 import SaveIcon from "@mui/icons-material/Save";
+
 
 const AddCars = () => {
   const [Data, setData] = useState({
@@ -23,6 +24,19 @@ const AddCars = () => {
         featureFour: "",
       },
     ],
+    ReviewsAndRatings: [
+      {
+        UserName: "",
+        StarRating: "",
+        Description: "",
+      },
+    ],
+    availability: [
+      {
+        Days: "Monday , Teusday , Saturday",
+        Timings: "9 to 5",
+      },
+    ],
   });
   const Feature = [
     {
@@ -32,8 +46,24 @@ const AddCars = () => {
       featureFour: "",
     },
   ];
+  const ReviewsAndRatings = [
+    {
+      UserName: "",
+      StarRating: "",
+      Description: "",
+    },
+  ];
+  const availability = [
+    {
+      Days: "",
+      Timings: "",
+    },
+  ];
   const [open, setOpen] = useState(false);
+  const [Revopen, setRevOpen] = useState(false);
+  const [Avopen, setAvOpen] = useState(false);
   const [loading, setloading] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
   const save = () => {
     setloading(true);
     fbPost("AvailableCars", Data)
@@ -41,6 +71,15 @@ const AddCars = () => {
         setloading(false);
         console.log("Data Posted Successfully !");
         setData({});
+        if (selectedFile) {
+          const storageRef = storage().ref();
+          const fileRef = storageRef.child(selectedFile.name);
+          fileRef.put(selectedFile).then(() => {
+            fileRef.getDownloadURL().then((url) => {
+              setData({ ...Data, carImg: url });
+            });
+          });
+        }
       })
       .catch((err) => {
         setloading(false);
@@ -71,7 +110,7 @@ const AddCars = () => {
       });
   };
   const saveFeed = () => {
-    console.log("nested data added");
+    setOpen(false);
   };
   console.log(Data);
 
@@ -83,6 +122,42 @@ const AddCars = () => {
       updatedData.Features = updatedFeatures;
       return updatedData;
     });
+  };
+
+  const handleReviewsAndRatingsChange = (index, field, value) => {
+    setData((prevData) => {
+      const updatedData = { ...prevData };
+      const updatedFeatures = [...updatedData.ReviewsAndRatings];
+      updatedFeatures[index][field] = value;
+      updatedData.Features = updatedFeatures;
+      return updatedData;
+    });
+  };
+  const handleavailabilityChange = (index, field, value) => {
+    setData((prevData) => {
+      const updatedData = { ...prevData };
+      const updatedFeatures = [...updatedData.availability];
+      updatedFeatures[index][field] = value;
+      updatedData.Features = updatedFeatures;
+      return updatedData;
+    });
+  };
+
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
+
+  const handleUpload = () => {
+    if (selectedFile) {
+      const storageRef = storage().ref();
+      const fileRef = storageRef.child(selectedFile.name);
+      fileRef.put(selectedFile).then(() => {
+        fileRef.getDownloadURL().then((url) => {
+          // setImageUrl(url);
+          setData({ ...Data, carImg: url });
+        });
+      });
+    }
   };
 
   return (
@@ -165,72 +240,221 @@ const AddCars = () => {
             <Typography>Upload Car's Picture</Typography>
             <TextField
               type={"file"}
-              value={Data.carImg}
-              onChange={(e) => setData({ ...Data, carImg: e.target.files[0] })}
+              // value={Data.carImg}
+              onChange={(e) => handleFileChange(e)}
             />
           </Grid>
           <Grid item className="p-2" md={4}>
             <Typography>Multiple Features Select</Typography>
-            {Feature.map((feature, index) => (
-              <div key={index}>
-                <TextField
-                  label="Feature One"
-                  value={feature.featureOne}
-                  onChange={(event) =>
-                    handleFeatureChange(index, "featureOne", event.target.value)
-                  }
-                />
-                <TextField
-                  label="Feature Two"
-                  value={feature.featureOne}
-                  onChange={(event) =>
-                    handleFeatureChange(index, "featureTwo", event.target.value)
-                  }
-                />
-                <TextField
-                  label="Feature Three"
-                  value={feature.featureThree}
-                  onChange={(event) =>
-                    handleFeatureChange(
-                      index,
-                      "featureThree",
-                      event.target.value
-                    )
-                  }
-                />
-                <TextField
-                  label="Feature Four"
-                  value={feature.featureFour}
-                  onChange={(event) =>
-                    handleFeatureChange(
-                      index,
-                      "featureFour",
-                      event.target.value
-                    )
-                  }
-                />
-              </div>
-            ))}
+            <SmModal
+              Title="Multiple Features Select"
+              innerContent={
+                <Box>
+                  {Feature.map((feature, index) => (
+                    <div key={index}>
+                      <TextField
+                        label="Feature One"
+                        // value={feature.featureOne}
+                        onChange={(event) =>
+                          handleFeatureChange(
+                            index,
+                            "featureOne",
+                            event.target.value
+                          )
+                        }
+                      />
+                      <TextField
+                        label="Feature Two"
+                        //value={feature.featureOne}
+                        onChange={(event) =>
+                          handleFeatureChange(
+                            index,
+                            "featureTwo",
+                            event.target.value
+                          )
+                        }
+                      />
+                      <TextField
+                        label="Feature Three"
+                        //value={feature.featureThree}
+                        onChange={(event) =>
+                          handleFeatureChange(
+                            index,
+                            "featureThree",
+                            event.target.value
+                          )
+                        }
+                      />
+                      <TextField
+                        label="Feature Four"
+                        //   value={feature.featureFour}
+                        onChange={(event) =>
+                          handleFeatureChange(
+                            index,
+                            "featureFour",
+                            event.target.value
+                          )
+                        }
+                      />
+                    </div>
+                  ))}
+                </Box>
+              }
+              modalFooter={
+                <Box align="right">
+                  <MyButton
+                    label="Save"
+                    variant="contained"
+                    onClick={() => saveFeed()}
+                    loadingPosition="start"
+                    //loading={loader}
+                    startIcon={<SaveIcon />}
+                  />
+                </Box>
+              }
+              open={open}
+              //close is working in child to parent context
+              close={(e) => setOpen(e)}
+            />
+            <Box>
+              <MyButton
+                label="Multiple Features Select"
+                variant="contained"
+                onClick={() => {
+                  setOpen(true);
+                }}
+              />
+            </Box>
           </Grid>
           <Grid item className="p-2" md={4}>
-            <Box sx={{ minWidth: 120 }}>
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">
-                  Select Type
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  label={"Institute Type"}
-                  value={Data.Type}
-                  onChange={(e) => setData({ ...Data, Type: e.target.value })}
-                >
-                  <MenuItem value={"University"}>University</MenuItem>
-                  <MenuItem value={"School"}>School</MenuItem>
-                  <MenuItem value={"Institute"}>Institute</MenuItem>
-                  <MenuItem value={"College"}>College</MenuItem>
-                </Select>
-              </FormControl>
+            <Typography>Add Reviews And Ratings</Typography>
+            <SmModal
+              Title="Reviews and Ratings"
+              innerContent={
+                <Box>
+                  {ReviewsAndRatings.map((rating, index) => (
+                    <div key={index}>
+                      <TextField
+                        label="User Name"
+                        //value={rating.UserName}
+                        onChange={(event) =>
+                          handleReviewsAndRatingsChange(
+                            index,
+                            "UserName",
+                            event.target.value
+                          )
+                        }
+                      />
+                      <TextField
+                        label="Star Rating"
+                        // value={rating.StarRating}
+                        onChange={(event) =>
+                          handleReviewsAndRatingsChange(
+                            index,
+                            "StarRating",
+                            event.target.value
+                          )
+                        }
+                      />
+                      <TextField
+                        label="Description"
+                        // value={rating.Description}
+                        onChange={(event) =>
+                          handleReviewsAndRatingsChange(
+                            index,
+                            "Description",
+                            event.target.value
+                          )
+                        }
+                      />
+                    </div>
+                  ))}
+                </Box>
+              }
+              modalFooter={
+                <Box align="right">
+                  <MyButton
+                    label="Save"
+                    variant="contained"
+                    onClick={() => saveFeed()}
+                    loadingPosition="start"
+                    // loading={loader}
+                    startIcon={<SaveIcon />}
+                  />
+                </Box>
+              }
+              open={Revopen}
+              //close is working in child to parent context
+              close={(e) => setRevOpen(e)}
+            />
+            <Box>
+              <MyButton
+                label="Add Reviews and Ratings"
+                variant="contained"
+                onClick={() => {
+                  setRevOpen(true);
+                }}
+              />
+            </Box>
+          </Grid>
+          <Grid item className="p-2" md={4}>
+            <Typography>Add Availibility</Typography>
+            <SmModal
+              Title="Add Availibility"
+              innerContent={
+                <Box>
+                  {availability.map((avail, index) => (
+                    <div key={index}>
+                      <TextField
+                        label="Days"
+                        // value={avail.Days}
+                        onChange={(event) =>
+                          handleavailabilityChange(
+                            index,
+                            "Days",
+                            event.target.value
+                          )
+                        }
+                      />
+                      <TextField
+                        label="Timings"
+                        //value={avail.Timings}
+                        onChange={(event) =>
+                          handleavailabilityChange(
+                            index,
+                            "Timings",
+                            event.target.value
+                          )
+                        }
+                      />
+                    </div>
+                  ))}
+                </Box>
+              }
+              modalFooter={
+                <Box align="right">
+                  <MyButton
+                    label="Save"
+                    variant="contained"
+                    onClick={() => saveFeed()}
+                    loadingPosition="start"
+                    //loading={loader}
+                    startIcon={<SaveIcon />}
+                  />
+                </Box>
+              }
+              open={Avopen}
+              //close is working in child to parent context
+              close={(e) => setAvOpen(e)}
+            />
+            <Box>
+              <MyButton
+                label="Add Availibility"
+                variant="contained"
+                onClick={() => {
+                  setAvOpen(true);
+                }}
+              />
             </Box>
           </Grid>
         </Grid>

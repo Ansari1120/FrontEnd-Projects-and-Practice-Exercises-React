@@ -14,9 +14,11 @@ import {
   push,
   remove,
 } from "firebase/database";
+import { getStorage } from "firebase/storage";
 
 const auth = getAuth(app);
 const db = getDatabase(app);
+const storage = getStorage(app);
 
 let Usersignup = (obj, nodeName) => {
   return new Promise((resolve, reject) => {
@@ -162,4 +164,5 @@ export {
   fbDelete,
   fbPost,
   fbCustomPost,
+  storage,
 };
