@@ -31,7 +31,7 @@ const CarsList = () => {
 
   let DeleteItem = (obj) => {
     console.log(obj);
-    fbDelete("ListedCarsList", obj.id)
+    fbDelete("AvailableCars", obj.id)
       .then(() => {
         console.log("data Deleted Successfully");
       })
@@ -77,10 +77,10 @@ const CarsList = () => {
   };
 
   const sent = (x) => {
-    fbPost("ListedCarsList", x, x.id)
+    fbPost("AvailableCars", x, x.id)
       .then(() => {
         console.log(
-          "data sent Successfully ! new institute list should be with active_inActive",
+          "data sent Successfully ! new cars list should be with active_inActive",
           x
         );
       })
@@ -92,9 +92,9 @@ const CarsList = () => {
   //Below useEffects are applied for different purposes and for different scenarios instead of using one useEffect
   useEffect(() => {
     save();
-   // getCridentitals();
+    // getCridentitals();
   }, []);
-  console.log("List : ",CarsList);
+  console.log("List : ", CarsList);
 
   // useEffect(() => {
   //   CarsList.forEach((inst) => {
@@ -113,7 +113,7 @@ const CarsList = () => {
 
   const handleActiveInactiveToggle = (index) => {
     const updatedCarsList = CarsList.map((inst, i) =>
-      i === index ? { ...inst, availibility: !inst.availibility } : inst
+      i === index ? { ...inst, available: !inst.available } : inst
     );
     setCarsList(updatedCarsList);
   };
@@ -186,7 +186,7 @@ const CarsList = () => {
 
                       <Typography>
                         <FiberManualRecordIcon
-                          color={x.availibility ? "error" : ""}
+                          color={x.available ? "error" : ""}
                         />
                       </Typography>
                     </Box>
@@ -217,7 +217,7 @@ const CarsList = () => {
                         onClick={(e) => {
                           e.stopPropagation();
                           DeleteItem(x);
-                          DeleteCridentials(x);
+                          // DeleteCridentials(x);
                         }}
                       />
                     </Box>

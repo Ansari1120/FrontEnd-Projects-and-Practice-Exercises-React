@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import ScreenHeader from "../../components/screenheader";
-import { Box, Grid, TextField, Typography } from "@mui/material";
+import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 import MyInput from "../../components/Input";
 import MyButton from "../../components/Button";
 import { Usersignup, fbPost } from "../../config/firebasemethods";
@@ -14,14 +14,25 @@ import SmModal from "../../components/SmModal";
 import SaveIcon from "@mui/icons-material/Save";
 
 const AddCars = () => {
-  const [Data, setData] = useState({});
+  const [Data, setData] = useState({
+    Features: [
+      {
+        featureOne: "",
+        featureTwo: "",
+        featureThree: "",
+        featureFour: "",
+      },
+    ],
+  });
+  const Feature = [
+    {
+      featureOne: "",
+      featureTwo: "",
+      featureThree: "",
+      featureFour: "",
+    },
+  ];
   const [open, setOpen] = useState(false);
-  const Features = {
-    featureOne: "AC",
-    featureTwo: "GPS",
-    featureThree: "Bluetooth",
-    featureFour: "USB Port",
-  };
   const [loading, setloading] = useState(false);
   const save = () => {
     setloading(true);
@@ -63,6 +74,17 @@ const AddCars = () => {
     console.log("nested data added");
   };
   console.log(Data);
+
+  const handleFeatureChange = (index, field, value) => {
+    setData((prevData) => {
+      const updatedData = { ...prevData };
+      const updatedFeatures = [...updatedData.Features];
+      updatedFeatures[index][field] = value;
+      updatedData.Features = updatedFeatures;
+      return updatedData;
+    });
+  };
+
   return (
     <>
       <ScreenHeader
@@ -149,116 +171,46 @@ const AddCars = () => {
           </Grid>
           <Grid item className="p-2" md={4}>
             <Typography>Multiple Features Select</Typography>
-            {/* <SmModal
-              Title="Add Features "
-              innerContent={
-                <Box>
-                  <Grid container>
-                    <Grid className="p-2" item md={6}>
-                      <MyInput
-                        onChange={(e) =>
-                          setData((prevState) => ({
-                            ...prevState,
-                            Features: prevState.Features
-                              ? [
-                                  {
-                                    ...(prevState.Features[0] || {}),
-                                    featureOne: e.target.value,
-                                  },
-                                ]
-                              : [],
-                          }))
-                        }
-                        label="featureOne"
-                        type={"text"}
-                        variant="outlined"
-                      />
-                    </Grid>
-                    <Grid className="p-2" item md={6} marginTop="10px">
-                      <TextField
-                        onChange={(e) =>
-                          setData((prevState) => ({
-                            ...prevState,
-                            Features: prevState.Features
-                              ? [
-                                  {
-                                    ...(prevState.Features[1] || {}),
-                                    featureTwo: e.target.value,
-                                  },
-                                ]
-                              : [],
-                          }))
-                        }
-                        label="featureTwo"
-                        type={"text"}
-                      />
-                    </Grid>
-                    <Grid className="p-2" item md={6}>
-                      <MyInput
-                        onChange={(e) =>
-                          setData((prevState) => ({
-                            ...prevState,
-                            Features: prevState.Features
-                              ? [
-                                  {
-                                    ...(prevState.Features[2] || {}),
-                                    FeatureThree: e.target.value,
-                                  },
-                                ]
-                              : [],
-                          }))
-                        }
-                        label="FeatureThree"
-                        type={"text"}
-                      />
-                    </Grid>
-                    <Grid className="p-2" item md={6}>
-                      <MyInput
-                        onChange={(e) =>
-                          setData((prevState) => ({
-                            ...prevState,
-                            Features: prevState.Features
-                              ? [
-                                  {
-                                    ...(prevState.Features[3] || {}),
-                                    featureFour: e.target.value,
-                                  },
-                                ]
-                              : [],
-                          }))
-                        }
-                        label="featureFour"
-                        type={"text"}
-                      />
-                    </Grid>
-                  </Grid>
-                </Box>
-              }
-              modalFooter={
-                <Box align="right">
-                  <MyButton
-                    label="Save"
-                    variant="contained"
-                    onClick={() => saveFeed()}
-                    loadingPosition="start"
-                    // loading={loader}
-                    startIcon={<SaveIcon />}
-                  />
-                </Box>
-              }
-              open={open}
-              //close is working in child to parent context
-              close={(e) => setOpen(e)}
-            />
-            <Box>
-              <MyButton
-                label="Add Features"
-                variant="outlined"
-                onClick={() => {
-                  setOpen(true);
-                }}
-              />
-            </Box> */}
+            {Feature.map((feature, index) => (
+              <div key={index}>
+                <TextField
+                  label="Feature One"
+                  value={feature.featureOne}
+                  onChange={(event) =>
+                    handleFeatureChange(index, "featureOne", event.target.value)
+                  }
+                />
+                <TextField
+                  label="Feature Two"
+                  value={feature.featureOne}
+                  onChange={(event) =>
+                    handleFeatureChange(index, "featureTwo", event.target.value)
+                  }
+                />
+                <TextField
+                  label="Feature Three"
+                  value={feature.featureThree}
+                  onChange={(event) =>
+                    handleFeatureChange(
+                      index,
+                      "featureThree",
+                      event.target.value
+                    )
+                  }
+                />
+                <TextField
+                  label="Feature Four"
+                  value={feature.featureFour}
+                  onChange={(event) =>
+                    handleFeatureChange(
+                      index,
+                      "featureFour",
+                      event.target.value
+                    )
+                  }
+                />
+              </div>
+            ))}
           </Grid>
           <Grid item className="p-2" md={4}>
             <Box sx={{ minWidth: 120 }}>

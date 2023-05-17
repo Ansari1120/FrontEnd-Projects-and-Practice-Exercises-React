@@ -16,35 +16,6 @@ import { getAuth } from "firebase/auth";
 const Carcards = () => {
   const [CarsList, setCarsList] = useState([
     {
-      carImg:
-        "https://images.pexels.com/photos/2676096/pexels-photo-2676096.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      car: "Mitsubishi",
-      car_model: "Montero",
-      car_color: "Yellow",
-      car_model_year: 2002,
-      car_vin: "SAJWJ0FF3F8321657",
-      price: "$2814.46",
-      available: false,
-      ReviewsAndRatings: [
-        {
-          UserName: "Ahmed",
-          StarRating: "****",
-          Description: "fasdfasdf",
-        },
-      ],
-      availability: [
-        {
-          Days: ["Mond", "Tuesday", "Staturday"],
-          Timings: "9 to 5",
-        },
-      ],
-      Features: [
-        {
-          featureFour: "USB Port",
-        },
-      ],
-    },
-    {
       car: "Volkswagen",
       carImg:
         "https://images.pexels.com/photos/1467476/pexels-photo-1467476.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
@@ -257,6 +228,35 @@ const Carcards = () => {
         },
       ],
     },
+    {
+      carImg:
+        "https://images.pexels.com/photos/2676096/pexels-photo-2676096.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      car: "Mitsubishi",
+      car_model: "Montero",
+      car_color: "Yellow",
+      car_model_year: 2002,
+      car_vin: "SAJWJ0FF3F8321657",
+      price: "$2814.46",
+      available: false,
+      ReviewsAndRatings: [
+        {
+          UserName: "Ahmed",
+          StarRating: "****",
+          Description: "fasdfasdf",
+        },
+      ],
+      availability: [
+        {
+          Days: ["Mond", "Tuesday", "Staturday"],
+          Timings: "9 to 5",
+        },
+      ],
+      Features: [
+        {
+          featureFour: "USB Port",
+        },
+      ],
+    },
   ]);
 
   let columns = [
@@ -275,18 +275,18 @@ const Carcards = () => {
   const [Cridentials, setCridentitals] = useState([]);
   const navigate = useNavigate();
 
-  const sent = () => {
-    fbPost("AvailableCars", CarsList)
-      .then(() => {
-        console.log(
-          "data sent Successfully ! new institute list should be with active_inActive",
-          CarsList
-        );
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  // const sent = () => {
+  //   fbPost("AvailableCars", CarsList)
+  //     .then(() => {
+  //       console.log(
+  //         "data sent Successfully ! new institute list should be with active_inActive",
+  //         CarsList
+  //       );
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
   let openDetail = (obj) => {
     navigate("/SingleCard", { state: obj });
