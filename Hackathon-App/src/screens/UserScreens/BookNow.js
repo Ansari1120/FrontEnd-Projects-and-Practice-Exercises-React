@@ -38,7 +38,17 @@ const BookNow = () => {
   };
   useEffect(() => {
     setSingleCar({ ...SingleCar, UserName: UserName });
-    setModel({ ...model, UserName: UserName, Car: SingleCar.car,carImg:SingleCar.carImg,car_color:SingleCar.car_color,car_model:SingleCar.car_model,car_model_year:SingleCar.car_model_year });
+    setModel({
+      ...model,
+      UserName: UserName,
+      Car: SingleCar.car,
+      carImg: SingleCar.carImg,
+      car_color: SingleCar.car_color,
+      car_model: SingleCar.car_model,
+      car_model_year: SingleCar.car_model_year,
+      availability: SingleCar.availability,
+      availableStatus: SingleCar.available,
+    });
     console.log("username", model.UserName);
   }, [model.AllCarDetails]);
 
@@ -50,7 +60,6 @@ const BookNow = () => {
       } else setUserName("");
     });
     setSingleCar(location.state);
-    //SaveCartoBook();
   }, []);
   console.log(SingleCar);
   return (
@@ -65,15 +74,9 @@ const BookNow = () => {
                   userSignOut()
                     .then(() => {
                       navigation("/");
-                      //   msgopen(true);
-                      //   setRes("Logged Out Successfully !");
-                      //   setCondition("success");
                     })
                     .catch((err) => {
                       console.log(err);
-                      //   msgopen(true);
-                      //   setRes(err);
-                      //   setCondition("error");
                     })
                 }
                 val={<ExitToAppIcon />}

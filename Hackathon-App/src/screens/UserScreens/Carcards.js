@@ -1,17 +1,10 @@
-import { Box, Grid, Paper, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import { fbDelete, fbGet, fbPost } from "../../config/firebasemethods";
-import MySwitch from "../../components/Switch";
-import MyIconbutton from "../../components/Iconbutton";
+import { fbDelete, fbGet } from "../../config/firebasemethods";
 import ScreenHeader from "../../components/screenheader";
 import SearchResults from "../../components/SearchResults";
-import { Button, Card, Col, Row } from "react-bootstrap";
-import { getAuth } from "firebase/auth";
+import { Button, Card } from "react-bootstrap";
 
 const Carcards = () => {
   const [CarsList, setCarsList] = useState([
@@ -290,14 +283,6 @@ const Carcards = () => {
     navigate("/SingleCard", { state: obj });
   };
 
-  //   let openEdit = (obj) => {
-  //     navigate("/admin/InstituteForm", { state: obj });
-  //   };
-
-  //   let openForm = () => {
-  //     navigate("/admin/AddInstitutes");
-  //   };
-
   let DeleteItem = (obj) => {
     console.log(obj);
     fbDelete("ListedInstitutes", obj.id)
@@ -309,86 +294,9 @@ const Carcards = () => {
       });
   };
 
-  let getCridentitals = () => {
-    // fbGet("institute")
-    //   .then((res) => {
-    //     setCridentitals([...res]);
-    //     console.log("inst cridentials", res);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-  };
-  let DeleteCridentials = (obj) => {
-    //run a map on CarsList and match cridentials instname and instiutelist instname when matched delete cridentitals instname's id
-    const obj1 = Cridentials.filter((x) => {
-      return x.password === obj.password;
-    });
-    console.log("matched obj : ", obj1[0].id);
-    fbDelete("institute", obj1[0].id)
-      .then(() => {
-        console.log("cridentials Deleted Successfully");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  // const save = () => {
-  //   // fbGet("ListedInstitutes")
-  //   //   .then((res) => {
-  //   //     console.log("Data retrieved SuccessFully !");
-  //   //     setCarsList([...res]);
-  //   //     console.log(res);
-  //   //     console.log(CarsList);
-  //   //   })
-  //   //   .catch((err) => {
-  //   //     console.log(err);
-  //   //   });
-  // };
   const Navigate_to_Login = (obj) => {
     navigate("/BookNow", { state: obj });
   };
-  // const Navigate_to_Login = () => {
-  //   navigate("/userloginsignup");
-  // };
-
-  // const sent = (x) => {
-  //   fbPost("ListedInstitutes", x, x.id)
-  //     .then(() => {
-  //       console.log(
-  //         "data sent Successfully ! new institute list should be with active_inActive",
-  //         x
-  //       );
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
-
-  //Below useEffects are applied for different purposes and for different scenarios instead of using one useEffect
-
-  // useEffect(() => {
-  //   // CarsList.forEach((inst) => {
-  //   //   fbPost("ListedInstitutes", inst, inst.id)
-  //   //     .then(() => {
-  //   //       console.log(
-  //   //         "data sent Successfully ! new institute list should be with active_inActive",
-  //   //         inst
-  //   //       );
-  //   //     })
-  //   //     .catch((err) => {
-  //   //       console.log(err);
-  //   //     });
-  //   // });
-  // }, [CarsList]);
-
-  //   const handleActiveInactiveToggle = (index) => {
-  //     const updatedCarsList = CarsList.map((inst, i) =>
-  //       i === index ? { ...inst, Active_InActive: !inst.Active_InActive } : inst
-  //     );
-  //     setCarsList(updatedCarsList);
-  //   };
 
   const NavToProfile = () => {
     navigate("/Profile");
@@ -404,11 +312,6 @@ const Carcards = () => {
         buttonsList={[
           {
             displayField: (
-              // <MyIconbutton
-              //   onClick={() => openForm()}
-              //   val={<AddCircleOutlineIcon />}
-              //   variant="contained"
-              // />
               <button onClick={() => NavToProfile()}>Profile</button>
             ),
           },

@@ -3,7 +3,7 @@ import { Box } from "@mui/system";
 import { useNavigate } from "react-router-dom";
 import MyButton from "./Button";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 function ScreenHeader(props) {
   const { title, buttonsList } = props;

@@ -25,13 +25,13 @@ const Bookings = () => {
     navigate("/admin/AddCars", { state: obj });
   };
 
-  let openForm = () => {
-    navigate("/admin/AddCars");
+  let openForm = (obj) => {
+    navigate("/admin/BookingForm", { state: obj });
   };
 
   let DeleteItem = (obj) => {
     console.log(obj);
-    fbDelete("AvailableCars", obj.id)
+    fbDelete("UserRequirments", obj.id)
       .then(() => {
         console.log("data Deleted Successfully");
       })
@@ -92,24 +92,8 @@ const Bookings = () => {
   //Below useEffects are applied for different purposes and for different scenarios instead of using one useEffect
   useEffect(() => {
     save();
-    // getCridentitals();
   }, []);
   console.log("List : ", BookingList);
-
-  // useEffect(() => {
-  //   BookingList.forEach((inst) => {
-  //     fbPost("ListedBookingList", inst, inst.id)
-  //       .then(() => {
-  //         console.log(
-  //           "data sent Successfully ! new institute list should be with active_inActive",
-  //           inst
-  //         );
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   });
-  // }, [BookingList]);
 
   const handleActiveInactiveToggle = (index) => {
     const updatedBookingList = BookingList.map((inst, i) =>
@@ -119,27 +103,14 @@ const Bookings = () => {
   };
   return (
     <>
-      <ScreenHeader
-        title="BookingList List"
-        buttonsList={[
-          {
-            displayField: (
-              <MyIconbutton
-                onClick={() => openForm()}
-                val={<AddCircleOutlineIcon />}
-                variant="contained"
-              />
-            ),
-          },
-        ]}
-      />
+      <ScreenHeader title="BookingList List" />
       <Box className="d-flex row mt-4 justify-content-between p-3 align-items-center">
         {BookingList && Array.isArray(BookingList) && BookingList.length > 0
           ? BookingList.map((x, i) => (
               <Paper
                 key={i}
                 className="p-2 my-2 border"
-                onClick={() => openDetail(x)}
+                onClick={() => openForm(x)}
               >
                 <Grid container>
                   <Grid item md={2}>
@@ -160,7 +131,7 @@ const Bookings = () => {
                       >
                         Car Name
                       </Typography>
-                      <Typography>{x.car}</Typography>
+                      <Typography>{x.Car}</Typography>
                     </Box>
                   </Grid>
                   <Grid item md={2} variant="h5">
@@ -217,7 +188,6 @@ const Bookings = () => {
                         onClick={(e) => {
                           e.stopPropagation();
                           DeleteItem(x);
-                          // DeleteCridentials(x);
                         }}
                       />
                     </Box>

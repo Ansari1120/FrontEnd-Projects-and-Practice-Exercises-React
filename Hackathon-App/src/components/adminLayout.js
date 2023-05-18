@@ -17,34 +17,15 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import Message from "../screens/dashboardScreens/message";
-import Notification from "../screens/dashboardScreens/notify";
-import Feedback from "../screens/dashboardScreens/feed";
-import Comments from "../screens/dashboardScreens/comments";
 import MessageIcon from "@mui/icons-material/Message";
-import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
-import FeedbackIcon from "@mui/icons-material/Feedback";
-import NotesIcon from "@mui/icons-material/Notes";
-import About from "../screens/dashboardScreens/about";
-import Posts from "../screens/dashboardScreens/post";
-import PostAddIcon from "@mui/icons-material/PostAdd";
-import InfoIcon from "@mui/icons-material/Info";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { userSignOut } from "../config/firebasemethods";
 import MySnackBarMessage from "./ShowMessage";
-import Todos from "../screens/dashboardScreens/todos";
-import SMcourse from "../screens/InstituteScreens/Course";
-import SMCoursefrom from "../screens/InstituteScreens/Courseform";
-import Institutes from "../screens/AdminScreens/CarsList";
-import AddInstitutes from "../screens/AdminScreens/AddInstitutes";
-import SingleInstitute from "../screens/AdminScreens/SingleInstitute";
-import InstituteForm from "../screens/AdminScreens/AddCars";
-import QuestionsRecieved from "../screens/AdminScreens/QuestionsRecieved";
-import QuestionsResponse from "../screens/AdminScreens/QuestionsResponse";
 import CarsList from "../screens/AdminScreens/CarsList";
 import AddCars from "../screens/AdminScreens/AddCars";
 import Bookings from "../screens/AdminScreens/Bookings";
 import SelectedCar from "../screens/UserScreens/SelectedCar";
+import BookingForm from "../screens/AdminScreens/BookingForm";
 const drawerWidth = 240;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
@@ -257,17 +238,11 @@ export default function AdminLayout(props) {
       >
         <Toolbar />
         <Routes>
-          <Route path="/Course" element={<SMcourse />} />
-          <Route path="/coursefrom" element={<SMCoursefrom />} />
           <Route path="/CarsList" element={<CarsList />} />
           <Route path="/Bookings" element={<Bookings />} />
           <Route path="/SelectedCar" element={<SelectedCar />} />
-          <Route path="/AddInstitutes" element={<AddInstitutes />} />
-          <Route path="/SingleInstitute" element={<SingleInstitute />} />
+          <Route path="/BookingForm" element={<BookingForm />} />
           <Route path="/AddCars" element={<AddCars />} />
-          <Route path="/AddInstitutes" element={<AddInstitutes />} />
-          <Route path="QuestionsRecieved" element={<QuestionsRecieved />} />
-          <Route path="QuestionsResponse/:id" element={<QuestionsResponse />} />
         </Routes>
         <MySnackBarMessage
           variant="outlined"

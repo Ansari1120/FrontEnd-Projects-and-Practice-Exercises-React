@@ -14,15 +14,6 @@ const Profile = () => {
   const [UserName, setUserName] = useState("");
   const [BookingData, setBookingData] = useState([]);
   const [userDetails, setuserDetails] = useState([]);
-  
-  useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        setUserName(user.displayName);
-        console.log(user.displayName);
-      } else setUserName("");
-    });
-  }, []);
 
   let columns = [
     {
@@ -67,6 +58,11 @@ const Profile = () => {
     {
       displayName: "Cancelation Policy",
       key: "CancelationPolicy",
+      searchAble: true,
+    },
+    {
+      displayName: "Car Price",
+      key: "price",
       searchAble: true,
     },
   ];
@@ -119,13 +115,22 @@ const Profile = () => {
       });
   };
 
+  const filteredUser = BookingData.filter((x) => x.UserName === UserName);
+
+  const FilterDetails = userDetails.filter((x) => x.userName === UserName);
+  
+  console.log("filtered User", filteredUser.available);
+
   useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUserName(user.displayName);
+        console.log(user.displayName);
+      } else setUserName("");
+    });
     getBookingStatus();
     getUserDetails();
   }, []);
-  const filteredUser = BookingData.filter((x) => x.UserName === UserName);
-  const FilterDetails = userDetails.filter((x) => x.userName === UserName);
-  console.log("filtered User", filteredUser);
   return (
     <>
       <ScreenHeader
@@ -138,15 +143,11 @@ const Profile = () => {
                   userSignOut()
                     .then(() => {
                       navigation("/");
-                      //   msgopen(true);
-                      //   setRes("Logged Out Successfully !");
-                      //   setCondition("success");
+                      
                     })
                     .catch((err) => {
                       console.log(err);
-                      //   msgopen(true);
-                      //   setRes(err);
-                      //   setCondition("error");
+                     
                     })
                 }
                 val={<ExitToAppIcon />}
@@ -166,6 +167,10 @@ const Profile = () => {
         columns={columns}
         datasource={filteredUser}
       />
+      <label>Status</label>
+      {filteredUser.map((x) => {
+        return x.available ? <div>Approved</div> : <div>Reject</div>;
+      })}
     </>
   );
 };
