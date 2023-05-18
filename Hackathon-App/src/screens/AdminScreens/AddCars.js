@@ -12,7 +12,7 @@ import Select from "@mui/material/Select";
 import MultipleSelect from "../../components/MultiSelect";
 import SmModal from "../../components/SmModal";
 import SaveIcon from "@mui/icons-material/Save";
-
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 const AddCars = () => {
   const [Data, setData] = useState({
@@ -33,8 +33,8 @@ const AddCars = () => {
     ],
     availability: [
       {
-        Days: "Monday , Teusday , Saturday",
-        Timings: "9 to 5",
+        Days: "",
+        Timings: "",
       },
     ],
   });
@@ -64,6 +64,7 @@ const AddCars = () => {
   const [Avopen, setAvOpen] = useState(false);
   const [loading, setloading] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [confirmUpload, setconfirmUpload] = useState(false);
   const save = () => {
     setloading(true);
     fbPost("AvailableCars", Data)
@@ -71,21 +72,13 @@ const AddCars = () => {
         setloading(false);
         console.log("Data Posted Successfully !");
         setData({});
-        if (selectedFile) {
-          const storageRef = storage().ref();
-          const fileRef = storageRef.child(selectedFile.name);
-          fileRef.put(selectedFile).then(() => {
-            fileRef.getDownloadURL().then((url) => {
-              setData({ ...Data, carImg: url });
-            });
-          });
-        }
       })
       .catch((err) => {
         setloading(false);
         console.log(err);
       });
   };
+
   const addCridentials = () => {
     setloading(true);
     let updatedmodel = {
@@ -149,15 +142,26 @@ const AddCars = () => {
 
   const handleUpload = () => {
     if (selectedFile) {
-      const storageRef = storage().ref();
-      const fileRef = storageRef.child(selectedFile.name);
-      fileRef.put(selectedFile).then(() => {
-        fileRef.getDownloadURL().then((url) => {
-          // setImageUrl(url);
+      alert("Please upload an image first!");
+    }
+    const storageRef = ref(storage, `/files/${selectedFile.name}`); // progress can be paused and resumed. It also exposes progress updates. // Receives the storage reference and the file to upload.
+    const uploadTask = uploadBytesResumable(storageRef, selectedFile);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const percent = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        ); // update progress
+        //                 setPercent(percent);
+      },
+      (err) => console.log(err),
+      () => {
+        // download url
+        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
           setData({ ...Data, carImg: url });
         });
-      });
-    }
+      }
+    );
   };
 
   return (
@@ -172,8 +176,9 @@ const AddCars = () => {
                 // onClick={{()=>save();
                 //   addCridentials();}}
                 onClick={() => {
-                  save();
                   //addCridentials();
+
+                  save();
                 }}
                 startIcon={<SaveIcon />}
                 loading={loading}
@@ -219,14 +224,14 @@ const AddCars = () => {
               }
             />
           </Grid>
-          <Grid item className="p-2" md={4}>
+          {/* <Grid item className="p-2" md={4}>
             <TextField
               label="Car Price"
               type="number"
               value={Data.price}
               onChange={(e) => setData({ ...Data, price: e.target.value })}
             />
-          </Grid>
+          </Grid> */}
 
           <Grid item className="p-2" md={4}>
             <MyInput
@@ -242,6 +247,17 @@ const AddCars = () => {
               type={"file"}
               // value={Data.carImg}
               onChange={(e) => handleFileChange(e)}
+            />
+            <MyButton
+              label="Save Upload"
+              // onClick={{()=>save();
+              //   addCridentials();}}
+              onClick={() => {
+                handleUpload();
+              }}
+              startIcon={<SaveIcon />}
+              loading={loading}
+              variant="contained"
             />
           </Grid>
           <Grid item className="p-2" md={4}>
