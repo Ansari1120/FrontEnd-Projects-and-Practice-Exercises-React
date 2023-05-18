@@ -37,12 +37,11 @@ const BookNow = () => {
       });
   };
   useEffect(() => {
-    setModel({ ...model, UserName: UserName });
     setSingleCar({ ...SingleCar, UserName: UserName });
+    setModel({ ...model, UserName: UserName, Car: SingleCar.car,carImg:SingleCar.carImg,car_color:SingleCar.car_color,car_model:SingleCar.car_model,car_model_year:SingleCar.car_model_year });
     console.log("username", model.UserName);
   }, [model.AllCarDetails]);
 
-  
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
@@ -53,7 +52,7 @@ const BookNow = () => {
     setSingleCar(location.state);
     //SaveCartoBook();
   }, []);
-
+  console.log(SingleCar);
   return (
     <>
       <ScreenHeader

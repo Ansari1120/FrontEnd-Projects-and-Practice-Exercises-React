@@ -120,18 +120,18 @@ const AddCars = () => {
   const handleReviewsAndRatingsChange = (index, field, value) => {
     setData((prevData) => {
       const updatedData = { ...prevData };
-      const updatedFeatures = [...updatedData.ReviewsAndRatings];
-      updatedFeatures[index][field] = value;
-      updatedData.Features = updatedFeatures;
+      const updatedReviewsAndRatings = [...updatedData.ReviewsAndRatings];
+      updatedReviewsAndRatings[index][field] = value;
+      updatedData.ReviewsAndRatings = updatedReviewsAndRatings;
       return updatedData;
     });
   };
   const handleavailabilityChange = (index, field, value) => {
     setData((prevData) => {
       const updatedData = { ...prevData };
-      const updatedFeatures = [...updatedData.availability];
-      updatedFeatures[index][field] = value;
-      updatedData.Features = updatedFeatures;
+      const updatedavailability = [...updatedData.availability];
+      updatedavailability[index][field] = value;
+      updatedData.availability = updatedavailability;
       return updatedData;
     });
   };

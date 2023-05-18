@@ -43,6 +43,8 @@ import QuestionsRecieved from "../screens/AdminScreens/QuestionsRecieved";
 import QuestionsResponse from "../screens/AdminScreens/QuestionsResponse";
 import CarsList from "../screens/AdminScreens/CarsList";
 import AddCars from "../screens/AdminScreens/AddCars";
+import Bookings from "../screens/AdminScreens/Bookings";
+import SelectedCar from "../screens/UserScreens/SelectedCar";
 const drawerWidth = 240;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
@@ -110,6 +112,11 @@ export default function AdminLayout(props) {
     {
       name: "user's Questions",
       route: "QuestionsRecieved",
+      ico: <MessageIcon />,
+    },
+    {
+      name: "Bookings",
+      route: "Bookings",
       ico: <MessageIcon />,
     },
   ]);
@@ -253,6 +260,8 @@ export default function AdminLayout(props) {
           <Route path="/Course" element={<SMcourse />} />
           <Route path="/coursefrom" element={<SMCoursefrom />} />
           <Route path="/CarsList" element={<CarsList />} />
+          <Route path="/Bookings" element={<Bookings />} />
+          <Route path="/SelectedCar" element={<SelectedCar />} />
           <Route path="/AddInstitutes" element={<AddInstitutes />} />
           <Route path="/SingleInstitute" element={<SingleInstitute />} />
           <Route path="/AddCars" element={<AddCars />} />

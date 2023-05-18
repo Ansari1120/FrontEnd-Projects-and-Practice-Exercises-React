@@ -27,7 +27,7 @@ const SingleCard = () => {
           </Card.Text>
           <Card.Text>
             <h5>Availability</h5>
-            {location.state.Availability.map((x) => (
+            {location.state.availability.map((x) => (
               <div
                 className=" d-flex justify-content-center"
                 style={{ gap: "2px" }}

@@ -6,7 +6,7 @@ import SMGrid from "../../components/SMGrid";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import MyIconbutton from "../../components/Iconbutton";
 import { useNavigate } from "react-router-dom";
-
+import { Button } from "react-bootstrap";
 
 const Profile = () => {
   const auth = getAuth();
@@ -14,6 +14,7 @@ const Profile = () => {
   const [UserName, setUserName] = useState("");
   const [BookingData, setBookingData] = useState([]);
   const [userDetails, setuserDetails] = useState([]);
+  
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
@@ -22,7 +23,21 @@ const Profile = () => {
       } else setUserName("");
     });
   }, []);
+
   let columns = [
+    {
+      displayName: "See Selected Car Details",
+      key: "",
+      displayField: (e) => (
+        <Button
+          onClick={() => Nav_to_Selected_car_details(e)}
+          variant="contained"
+        >
+          Details
+        </Button>
+      ),
+      searchAble: true,
+    },
     {
       displayName: "All Car Details",
       key: "AllCarDetails",
@@ -79,6 +94,9 @@ const Profile = () => {
     },
   ];
 
+  const Nav_to_Selected_car_details = (obj) => {
+    navigation("/SelectedCar", { state: obj });
+  };
   const getBookingStatus = () => {
     fbGet("UserRequirments")
       .then((res) => {

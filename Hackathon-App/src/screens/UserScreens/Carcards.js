@@ -275,18 +275,16 @@ const Carcards = () => {
   const [Cridentials, setCridentitals] = useState([]);
   const navigate = useNavigate();
 
-  // const sent = () => {
-  //   fbPost("AvailableCars", CarsList)
-  //     .then(() => {
-  //       console.log(
-  //         "data sent Successfully ! new institute list should be with active_inActive",
-  //         CarsList
-  //       );
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
+  const save = () => {
+    fbGet("AvailableCars")
+      .then((res) => {
+        console.log("Data retrieved SuccessFully !");
+        setCarsList([...res]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   let openDetail = (obj) => {
     navigate("/SingleCard", { state: obj });
@@ -336,18 +334,18 @@ const Carcards = () => {
       });
   };
 
-  const save = () => {
-    // fbGet("ListedInstitutes")
-    //   .then((res) => {
-    //     console.log("Data retrieved SuccessFully !");
-    //     setCarsList([...res]);
-    //     console.log(res);
-    //     console.log(CarsList);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-  };
+  // const save = () => {
+  //   // fbGet("ListedInstitutes")
+  //   //   .then((res) => {
+  //   //     console.log("Data retrieved SuccessFully !");
+  //   //     setCarsList([...res]);
+  //   //     console.log(res);
+  //   //     console.log(CarsList);
+  //   //   })
+  //   //   .catch((err) => {
+  //   //     console.log(err);
+  //   //   });
+  // };
   const Navigate_to_Login = (obj) => {
     navigate("/BookNow", { state: obj });
   };
@@ -395,6 +393,10 @@ const Carcards = () => {
   const NavToProfile = () => {
     navigate("/Profile");
   };
+
+  useEffect(() => {
+    save();
+  }, []);
   return (
     <>
       <ScreenHeader
