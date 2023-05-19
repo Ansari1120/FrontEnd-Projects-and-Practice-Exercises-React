@@ -8,8 +8,6 @@ import { Usersignup, fbPost, storage } from "../../config/firebasemethods";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import MultipleSelect from "../../components/MultiSelect";
 import SmModal from "../../components/SmModal";
 import SaveIcon from "@mui/icons-material/Save";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
@@ -120,18 +118,18 @@ const AddCars = () => {
   const handleReviewsAndRatingsChange = (index, field, value) => {
     setData((prevData) => {
       const updatedData = { ...prevData };
-      const updatedFeatures = [...updatedData.ReviewsAndRatings];
-      updatedFeatures[index][field] = value;
-      updatedData.Features = updatedFeatures;
+      const updatedReviewsAndRatings = [...updatedData.ReviewsAndRatings];
+      updatedReviewsAndRatings[index][field] = value;
+      updatedData.ReviewsAndRatings = updatedReviewsAndRatings;
       return updatedData;
     });
   };
   const handleavailabilityChange = (index, field, value) => {
     setData((prevData) => {
       const updatedData = { ...prevData };
-      const updatedFeatures = [...updatedData.availability];
-      updatedFeatures[index][field] = value;
-      updatedData.Features = updatedFeatures;
+      const updatedavailability = [...updatedData.availability];
+      updatedavailability[index][field] = value;
+      updatedData.availability = updatedavailability;
       return updatedData;
     });
   };
@@ -173,11 +171,7 @@ const AddCars = () => {
             displayField: (
               <MyButton
                 label="Save"
-                // onClick={{()=>save();
-                //   addCridentials();}}
                 onClick={() => {
-                  //addCridentials();
-
                   save();
                 }}
                 startIcon={<SaveIcon />}
@@ -224,14 +218,6 @@ const AddCars = () => {
               }
             />
           </Grid>
-          {/* <Grid item className="p-2" md={4}>
-            <TextField
-              label="Car Price"
-              type="number"
-              value={Data.price}
-              onChange={(e) => setData({ ...Data, price: e.target.value })}
-            />
-          </Grid> */}
 
           <Grid item className="p-2" md={4}>
             <MyInput
@@ -243,15 +229,9 @@ const AddCars = () => {
           </Grid>
           <Grid item className="p-2" md={4}>
             <Typography>Upload Car's Picture</Typography>
-            <TextField
-              type={"file"}
-              // value={Data.carImg}
-              onChange={(e) => handleFileChange(e)}
-            />
+            <TextField type={"file"} onChange={(e) => handleFileChange(e)} />
             <MyButton
               label="Save Upload"
-              // onClick={{()=>save();
-              //   addCridentials();}}
               onClick={() => {
                 handleUpload();
               }}
@@ -270,7 +250,6 @@ const AddCars = () => {
                     <div key={index}>
                       <TextField
                         label="Feature One"
-                        // value={feature.featureOne}
                         onChange={(event) =>
                           handleFeatureChange(
                             index,
@@ -281,7 +260,6 @@ const AddCars = () => {
                       />
                       <TextField
                         label="Feature Two"
-                        //value={feature.featureOne}
                         onChange={(event) =>
                           handleFeatureChange(
                             index,
@@ -292,7 +270,6 @@ const AddCars = () => {
                       />
                       <TextField
                         label="Feature Three"
-                        //value={feature.featureThree}
                         onChange={(event) =>
                           handleFeatureChange(
                             index,
@@ -303,7 +280,6 @@ const AddCars = () => {
                       />
                       <TextField
                         label="Feature Four"
-                        //   value={feature.featureFour}
                         onChange={(event) =>
                           handleFeatureChange(
                             index,
@@ -323,7 +299,6 @@ const AddCars = () => {
                     variant="contained"
                     onClick={() => saveFeed()}
                     loadingPosition="start"
-                    //loading={loader}
                     startIcon={<SaveIcon />}
                   />
                 </Box>
@@ -352,7 +327,6 @@ const AddCars = () => {
                     <div key={index}>
                       <TextField
                         label="User Name"
-                        //value={rating.UserName}
                         onChange={(event) =>
                           handleReviewsAndRatingsChange(
                             index,
@@ -363,7 +337,6 @@ const AddCars = () => {
                       />
                       <TextField
                         label="Star Rating"
-                        // value={rating.StarRating}
                         onChange={(event) =>
                           handleReviewsAndRatingsChange(
                             index,
@@ -374,7 +347,6 @@ const AddCars = () => {
                       />
                       <TextField
                         label="Description"
-                        // value={rating.Description}
                         onChange={(event) =>
                           handleReviewsAndRatingsChange(
                             index,
@@ -394,7 +366,6 @@ const AddCars = () => {
                     variant="contained"
                     onClick={() => saveFeed()}
                     loadingPosition="start"
-                    // loading={loader}
                     startIcon={<SaveIcon />}
                   />
                 </Box>
@@ -423,7 +394,6 @@ const AddCars = () => {
                     <div key={index}>
                       <TextField
                         label="Days"
-                        // value={avail.Days}
                         onChange={(event) =>
                           handleavailabilityChange(
                             index,
@@ -454,13 +424,11 @@ const AddCars = () => {
                     variant="contained"
                     onClick={() => saveFeed()}
                     loadingPosition="start"
-                    //loading={loader}
                     startIcon={<SaveIcon />}
                   />
                 </Box>
               }
               open={Avopen}
-              //close is working in child to parent context
               close={(e) => setAvOpen(e)}
             />
             <Box>

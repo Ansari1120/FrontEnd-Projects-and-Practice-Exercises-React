@@ -6,7 +6,7 @@ import SMGrid from "../../components/SMGrid";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import MyIconbutton from "../../components/Iconbutton";
 import { useNavigate } from "react-router-dom";
-
+import { Button } from "react-bootstrap";
 
 const Profile = () => {
   const auth = getAuth();
@@ -14,15 +14,21 @@ const Profile = () => {
   const [UserName, setUserName] = useState("");
   const [BookingData, setBookingData] = useState([]);
   const [userDetails, setuserDetails] = useState([]);
-  useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        setUserName(user.displayName);
-        console.log(user.displayName);
-      } else setUserName("");
-    });
-  }, []);
+
   let columns = [
+    {
+      displayName: "See Selected Car Details",
+      key: "",
+      displayField: (e) => (
+        <Button
+          onClick={() => Nav_to_Selected_car_details(e)}
+          variant="contained"
+        >
+          Details
+        </Button>
+      ),
+      searchAble: true,
+    },
     {
       displayName: "All Car Details",
       key: "AllCarDetails",
@@ -54,6 +60,11 @@ const Profile = () => {
       key: "CancelationPolicy",
       searchAble: true,
     },
+    {
+      displayName: "Car Price",
+      key: "price",
+      searchAble: true,
+    },
   ];
 
   let columns2 = [
@@ -79,6 +90,9 @@ const Profile = () => {
     },
   ];
 
+  const Nav_to_Selected_car_details = (obj) => {
+    navigation("/SelectedCar", { state: obj });
+  };
   const getBookingStatus = () => {
     fbGet("UserRequirments")
       .then((res) => {
@@ -101,13 +115,22 @@ const Profile = () => {
       });
   };
 
+  const filteredUser = BookingData.filter((x) => x.UserName === UserName);
+
+  const FilterDetails = userDetails.filter((x) => x.userName === UserName);
+  
+  console.log("filtered User", filteredUser.available);
+
   useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUserName(user.displayName);
+        console.log(user.displayName);
+      } else setUserName("");
+    });
     getBookingStatus();
     getUserDetails();
   }, []);
-  const filteredUser = BookingData.filter((x) => x.UserName === UserName);
-  const FilterDetails = userDetails.filter((x) => x.userName === UserName);
-  console.log("filtered User", filteredUser);
   return (
     <>
       <ScreenHeader
@@ -120,15 +143,11 @@ const Profile = () => {
                   userSignOut()
                     .then(() => {
                       navigation("/");
-                      //   msgopen(true);
-                      //   setRes("Logged Out Successfully !");
-                      //   setCondition("success");
+                      
                     })
                     .catch((err) => {
                       console.log(err);
-                      //   msgopen(true);
-                      //   setRes(err);
-                      //   setCondition("error");
+                     
                     })
                 }
                 val={<ExitToAppIcon />}
@@ -148,6 +167,10 @@ const Profile = () => {
         columns={columns}
         datasource={filteredUser}
       />
+      <label>Status</label>
+      {filteredUser.map((x) => {
+        return x.available ? <div>Approved</div> : <div>Reject</div>;
+      })}
     </>
   );
 };

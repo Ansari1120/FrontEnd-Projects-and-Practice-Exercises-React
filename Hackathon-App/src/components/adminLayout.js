@@ -43,6 +43,8 @@ import QuestionsRecieved from "../screens/AdminScreens/QuestionsRecieved";
 import QuestionsResponse from "../screens/AdminScreens/QuestionsResponse";
 import CarsList from "../screens/AdminScreens/CarsList";
 import AddCars from "../screens/AdminScreens/AddCars";
+import Bookings from "../screens/AdminScreens/Bookings";
+import BookingForm from "../screens/AdminScreens/BookingForm";
 const drawerWidth = 240;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
@@ -98,18 +100,13 @@ export default function AdminLayout(props) {
   const [msgopen, setmsgOpen] = React.useState(false);
   const [menuList, setMenuList] = React.useState([
     {
-      name: "Course",
-      route: "Course",
-      ico: <MessageIcon />,
-    },
-    {
       name: "Cars List",
       route: "CarsList",
       ico: <MessageIcon />,
-    },
+    },  
     {
-      name: "user's Questions",
-      route: "QuestionsRecieved",
+      name: "Bookings",
+      route: "Bookings",
       ico: <MessageIcon />,
     },
   ]);
@@ -253,6 +250,8 @@ export default function AdminLayout(props) {
           <Route path="/Course" element={<SMcourse />} />
           <Route path="/coursefrom" element={<SMCoursefrom />} />
           <Route path="/CarsList" element={<CarsList />} />
+          <Route path="/Bookings" element={<Bookings />} />
+          <Route path="/BookingForm" element={<BookingForm />} />
           <Route path="/AddInstitutes" element={<AddInstitutes />} />
           <Route path="/SingleInstitute" element={<SingleInstitute />} />
           <Route path="/AddCars" element={<AddCars />} />

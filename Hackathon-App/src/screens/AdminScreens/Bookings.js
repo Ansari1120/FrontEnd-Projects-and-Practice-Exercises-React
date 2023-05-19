@@ -10,8 +10,8 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { fbDelete, fbGet, fbPost } from "../../config/firebasemethods";
 import MySwitch from "../../components/Switch";
 
-const CarsList = () => {
-  const [CarsList, setCarsList] = useState([]);
+const Bookings = () => {
+  const [BookingList, setBookingList] = useState([]);
   const [singleObj, setSingleObj] = useState({});
 
   const [Cridentials, setCridentitals] = useState([]);
@@ -25,13 +25,13 @@ const CarsList = () => {
     navigate("/admin/AddCars", { state: obj });
   };
 
-  let openForm = () => {
-    navigate("/admin/AddCars");
+  let openForm = (obj) => {
+    navigate("/admin/BookingForm", { state: obj });
   };
 
   let DeleteItem = (obj) => {
     console.log(obj);
-    fbDelete("AvailableCars", obj.id)
+    fbDelete("UserRequirments", obj.id)
       .then(() => {
         console.log("data Deleted Successfully");
       })
@@ -51,7 +51,7 @@ const CarsList = () => {
       });
   };
   let DeleteCridentials = (obj) => {
-    //run a map on CarsList and match cridentials instname and instiutelist instname when matched delete cridentitals instname's id
+    //run a map on BookingList and match cridentials instname and instiutelist instname when matched delete cridentitals instname's id
     const obj1 = Cridentials.filter((x) => {
       return x.password === obj.password;
     });
@@ -66,10 +66,10 @@ const CarsList = () => {
   };
 
   const save = () => {
-    fbGet("AvailableCars")
+    fbGet("UserRequirments")
       .then((res) => {
         console.log("Data retrieved SuccessFully !");
-        setCarsList([...res]);
+        setBookingList([...res]);
       })
       .catch((err) => {
         console.log(err);
@@ -92,55 +92,25 @@ const CarsList = () => {
   //Below useEffects are applied for different purposes and for different scenarios instead of using one useEffect
   useEffect(() => {
     save();
-    // getCridentitals();
   }, []);
-  console.log("List : ", CarsList);
-
-  // useEffect(() => {
-  //   CarsList.forEach((inst) => {
-  //     fbPost("ListedCarsList", inst, inst.id)
-  //       .then(() => {
-  //         console.log(
-  //           "data sent Successfully ! new institute list should be with active_inActive",
-  //           inst
-  //         );
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   });
-  // }, [CarsList]);
+  console.log("List : ", BookingList);
 
   const handleActiveInactiveToggle = (index) => {
-    const updatedCarsList = CarsList.map((inst, i) =>
+    const updatedBookingList = BookingList.map((inst, i) =>
       i === index ? { ...inst, available: !inst.available } : inst
     );
-    setCarsList(updatedCarsList);
+    setBookingList(updatedBookingList);
   };
-  console.log(CarsList);
   return (
     <>
-      <ScreenHeader
-        title="CarsList List"
-        buttonsList={[
-          {
-            displayField: (
-              <MyIconbutton
-                onClick={() => openForm()}
-                val={<AddCircleOutlineIcon />}
-                variant="contained"
-              />
-            ),
-          },
-        ]}
-      />
+      <ScreenHeader title="BookingList List" />
       <Box className="d-flex row mt-4 justify-content-between p-3 align-items-center">
-        {CarsList && Array.isArray(CarsList) && CarsList.length > 0
-          ? CarsList.map((x, i) => (
+        {BookingList && Array.isArray(BookingList) && BookingList.length > 0
+          ? BookingList.map((x, i) => (
               <Paper
                 key={i}
                 className="p-2 my-2 border"
-                onClick={() => openDetail(x)}
+                onClick={() => openForm(x)}
               >
                 <Grid container>
                   <Grid item md={2}>
@@ -161,7 +131,7 @@ const CarsList = () => {
                       >
                         Car Name
                       </Typography>
-                      <Typography>{x.car}</Typography>
+                      <Typography>{x.Car}</Typography>
                     </Box>
                   </Grid>
                   <Grid item md={2} variant="h5">
@@ -202,7 +172,7 @@ const CarsList = () => {
                       </Typography>
 
                       <MySwitch
-                        checked={CarsList.availibility}
+                        checked={BookingList.availibility}
                         handleChangeonClick={(e) => {
                           e.stopPropagation();
                           handleActiveInactiveToggle(i);
@@ -218,7 +188,6 @@ const CarsList = () => {
                         onClick={(e) => {
                           e.stopPropagation();
                           DeleteItem(x);
-                          // DeleteCridentials(x);
                         }}
                       />
                     </Box>
@@ -243,4 +212,4 @@ const CarsList = () => {
   );
 };
 
-export default CarsList;
+export default Bookings;

@@ -17,6 +17,7 @@ import Carcards from "../screens/UserScreens/Carcards";
 import SingleCard from "../screens/UserScreens/SingleCard";
 import BookNow from "../screens/UserScreens/BookNow";
 import Profile from "../screens/UserScreens/Profile";
+import SelectedCar from "../screens/UserScreens/SelectedCar";
 
 export default function AppRouter() {
   return (
@@ -27,6 +28,7 @@ export default function AppRouter() {
           <Route path="/" element={<PublicPage />} /> */}
           <Route path="/" element={<Carcards />} />
           <Route path="/SingleCard" element={<SingleCard />} />
+          <Route path="/SelectedCar" element={<SelectedCar />} />
           <Route
             path="/BookNow"
             element={<ProtectedRoute Component={BookNow} />}

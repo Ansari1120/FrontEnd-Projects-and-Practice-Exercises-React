@@ -1,7 +1,5 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import MyCheckBox from "../../components/CheckBox";
-import SMGrid from "../../components/SMGrid";
 import MyTable from "../../components/Table";
 import { Get } from "../../config/apibasemethods";
 
