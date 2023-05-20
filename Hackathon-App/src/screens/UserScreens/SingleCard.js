@@ -8,7 +8,6 @@ const SingleCard = () => {
   const location = useLocation();
   console.log(SingleCar);
 
-
   useEffect(() => {
     setSingleCar(location.state);
   }, []);

@@ -254,12 +254,13 @@ const Carcards = () => {
 
   let columns = [
     {
-      displayName: "Car Image",
-      key: "carImg",
-    },
-    {
       displayName: "CarName",
       key: "car",
+      searchAble: true,
+    },
+    {
+      displayName: "Car model",
+      key: "car_model",
       searchAble: true,
     },
   ];
@@ -305,6 +306,10 @@ const Carcards = () => {
   useEffect(() => {
     save();
   }, []);
+<<<<<<< HEAD
+=======
+  console.log(carsFiltered);
+>>>>>>> recovery-branch
   return (
     <>
       <ScreenHeader

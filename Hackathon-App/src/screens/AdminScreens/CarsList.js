@@ -117,6 +117,7 @@ const CarsList = () => {
     );
     setCarsList(updatedCarsList);
   };
+  console.log(CarsList);
   return (
     <>
       <ScreenHeader

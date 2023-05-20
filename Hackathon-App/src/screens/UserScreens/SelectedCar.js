@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Card from "react-bootstrap/Card";
+<<<<<<< HEAD
 import { fbPost } from "../../config/firebasemethods";
+=======
+>>>>>>> recovery-branch
 
 const SelectedCar = () => {
   const [SingleCar, setSingleCar] = useState({});
