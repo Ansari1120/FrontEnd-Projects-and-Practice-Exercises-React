@@ -1,4 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import SinglePost from "../screens/singlepost";
+import CommentsForm from "../screens/commentsform";
+import Dashboard from "../screens/dashboard";
 import UserLoginSignin from "../screens/UserLoginSignin";
 import ProtectedRoute from "./ProtectedRoute";
 import Admin from "../screens/AdminScreens/admin";

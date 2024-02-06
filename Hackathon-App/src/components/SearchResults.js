@@ -1,5 +1,5 @@
 import { Box, TextField, MenuItem, Select, FormControl } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 const SearchResults = ({ columns, CarsList, setCarsFiltered }) => {
   let searchList = columns.filter((x) => x.searchAble);
 
@@ -17,7 +17,7 @@ const SearchResults = ({ columns, CarsList, setCarsFiltered }) => {
   const handleInput = (e) => {
     if (e.target.value) {
       const matchQuery = CarsList.filter((comment) =>
-        comment.car.toLowerCase().includes(e.target.value)
+        comment[keySelect].toLowerCase().includes(e.target.value)
       );
       setCarsFiltered(matchQuery);
     } else {
@@ -25,9 +25,6 @@ const SearchResults = ({ columns, CarsList, setCarsFiltered }) => {
     }
   };
 
-  useEffect(() => {
-    setCarsFiltered(CarsList);
-  }, []);
   return (
     <>
       <FormControl onSubmit={handleSubmit}>
@@ -36,10 +33,27 @@ const SearchResults = ({ columns, CarsList, setCarsFiltered }) => {
             <TextField
               required
               id="outlined-required"
-              label={"Car"}
+              label={keySelect}
               placeholder="Search here .."
               onChange={handleInput}
             />
+          </Box>
+          <Box>
+            <Select
+              id="filled-select-type"
+              select
+              label="Select"
+              defaultValue="email"
+              helperText="Please select  "
+              variant="filled"
+              onChange={handleChange}
+            >
+              {searchList.map((option) => (
+                <MenuItem key={option.key} value={option.key}>
+                  {option.displayName}
+                </MenuItem>
+              ))}
+            </Select>
           </Box>
         </Box>
       </FormControl>

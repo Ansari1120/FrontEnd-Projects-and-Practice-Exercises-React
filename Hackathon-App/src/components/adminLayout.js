@@ -21,13 +21,13 @@ import MessageIcon from "@mui/icons-material/Message";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { userSignOut } from "../config/firebasemethods";
 import MySnackBarMessage from "./ShowMessage";
+import AddInstitutes from "../screens/AdminScreens/AddInstitutes";
+import SingleInstitute from "../screens/AdminScreens/SingleInstitute";
+import QuestionsRecieved from "../screens/AdminScreens/QuestionsRecieved";
+import QuestionsResponse from "../screens/AdminScreens/QuestionsResponse";
 import CarsList from "../screens/AdminScreens/CarsList";
 import AddCars from "../screens/AdminScreens/AddCars";
 import Bookings from "../screens/AdminScreens/Bookings";
-<<<<<<< HEAD
-import SelectedCar from "../screens/UserScreens/SelectedCar";
-=======
->>>>>>> recovery-branch
 import BookingForm from "../screens/AdminScreens/BookingForm";
 const drawerWidth = 240;
 
@@ -86,11 +86,6 @@ export default function AdminLayout(props) {
     {
       name: "Cars List",
       route: "CarsList",
-      ico: <MessageIcon />,
-    },  
-    {
-      name: "Bookings",
-      route: "Bookings",
       ico: <MessageIcon />,
     },
     {
@@ -238,15 +233,13 @@ export default function AdminLayout(props) {
         <Routes>
           <Route path="/CarsList" element={<CarsList />} />
           <Route path="/Bookings" element={<Bookings />} />
-<<<<<<< HEAD
-          <Route path="/SelectedCar" element={<SelectedCar />} />
-          <Route path="/BookingForm" element={<BookingForm />} />
-=======
           <Route path="/BookingForm" element={<BookingForm />} />
           <Route path="/AddInstitutes" element={<AddInstitutes />} />
           <Route path="/SingleInstitute" element={<SingleInstitute />} />
->>>>>>> recovery-branch
           <Route path="/AddCars" element={<AddCars />} />
+          <Route path="/AddInstitutes" element={<AddInstitutes />} />
+          <Route path="QuestionsRecieved" element={<QuestionsRecieved />} />
+          <Route path="QuestionsResponse/:id" element={<QuestionsResponse />} />
         </Routes>
         <MySnackBarMessage
           variant="outlined"

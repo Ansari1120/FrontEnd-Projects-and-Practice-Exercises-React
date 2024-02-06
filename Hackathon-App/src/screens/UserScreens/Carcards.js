@@ -306,10 +306,7 @@ const Carcards = () => {
   useEffect(() => {
     save();
   }, []);
-<<<<<<< HEAD
-=======
   console.log(carsFiltered);
->>>>>>> recovery-branch
   return (
     <>
       <ScreenHeader
