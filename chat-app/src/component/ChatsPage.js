@@ -1,7 +1,14 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { ChatState } from "../context/chatProvider";
+import { Box } from "@chakra-ui/react";
+import SideDrawer from "./SideDrawer";
+import MyChats from "./MyChats";
+import ChatBox from "./ChatBox";
 
 const ChatsPage = () => {
+  const { userData } = ChatState();
+  console.log("user", userData);
   const [chats, setChats] = useState([]);
   const fetchChats = async () => {
     await axios
@@ -25,10 +32,15 @@ const ChatsPage = () => {
   }, []);
 
   return (
-    <div>
+    <div style={{ width: "100%" }}>
+      {userData && <SideDrawer />}
       {chats.map((data, index) => (
         <div key={index}>{data.chatName}</div>
       ))}
+      <Box>
+        {userData && <MyChats />}
+        {userData && <ChatBox />}
+      </Box>
     </div>
   );
 };

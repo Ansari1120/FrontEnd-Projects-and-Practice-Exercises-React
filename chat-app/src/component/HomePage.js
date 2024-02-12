@@ -9,11 +9,21 @@ import {
   TabPanels,
   TabPanel,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect } from "react";
 import Login from "./Login";
 import Register from "./Register";
+import { useHistory } from "react-router-dom/cjs/react-router-dom";
 
 const HomePage = () => {
+  const history = useHistory();
+
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem("userInfo"));
+
+    if (data) {
+      history.push("/chats");
+    }
+  }, [history]);
   return (
     <Container maxW="xl" centerContent>
       <Box
@@ -32,7 +42,7 @@ const HomePage = () => {
           color="black"
           textAlign="center"
         >
-          Full-Stack-Chat-App
+          Truss-Chat-App
         </Text>
       </Box>
       <Box bg="white" w="100%" p={4} borderRadius="lg" borderWidth="1px">
