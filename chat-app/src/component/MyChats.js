@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { ChatState } from "../context/chatProvider";
 import { Box, Button, Stack, Text, useToast } from "@chakra-ui/react";
 import axios from "axios";
 import { AddIcon } from "@chakra-ui/icons";
 import ChatLoading from "./ChatLoading";
 import { getSender } from "../config/constants";
+import GroupChatModal from "./GroupChatModal";
 
-const MyChats = () => {
+const MyChats = ({ fetchAgain }) => {
   const [loggedUser, setLoggedUser] = useState();
+  const [loading, setLoading] = useState();
   const { userData, setSelectedChat, selectedChat, chats, setChats } =
     ChatState();
   const toast = useToast();
@@ -23,7 +25,9 @@ const MyChats = () => {
         config
       );
 
-      if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
+      if (!chats.find((c) => c._id === data.data._id)) {
+        return setChats([data.data, ...chats]);
+      }
 
       // setLoadingChat(false);
       console.log(data);
@@ -45,18 +49,20 @@ const MyChats = () => {
   useEffect(() => {
     setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
     handleFetchChats();
-  }, [chats, userData]);
+  }, [fetchAgain, userData]);
 
   return (
     <Box
       display={{ base: selectedChat ? "none" : "flex", md: "flex" }}
       flexDirection={"column"}
       alignItems={"center"}
-      p={3}
+      padding={3}
+      margin={"10px"}
       bg="white"
-      w={{ base: "100%", md: "31%" }}
+      width={{ base: "100%", md: "31%" }}
       borderRadius="lg"
       borderWidth={"1px"}
+      height={"85vh"}
     >
       <Box
         pb={3}
@@ -70,24 +76,26 @@ const MyChats = () => {
         <Text fontSize={{ base: "28px", md: "19px" }} fontFamily={"Work sans"}>
           My Chats
         </Text>
-        <Button
-          display={"flex"}
-          fontSize={{ base: "17px", md: "12px", lg: "17px" }}
-          rightIcon={<AddIcon />}
-        >
-          New Group Chat
-        </Button>
+        <GroupChatModal>
+          <Button
+            display={"flex"}
+            fontSize={{ base: "17px", md: "12px", lg: "17px" }}
+            rightIcon={<AddIcon />}
+          >
+            New Group Chat
+          </Button>
+        </GroupChatModal>
       </Box>
 
       <Box
         display={"flex"}
         flexDirection={"row"}
         p={3}
-        bg="#F8F8F8"
+        // bg="#F8F8F8"
         w="100%"
-        h="100%"
         borderRadius={"lg"}
         overflowY={"hidden"}
+        height={"100%"}
       >
         {chats ? (
           <Stack overflowY={"scroll"} width={"100%"}>
@@ -100,7 +108,7 @@ const MyChats = () => {
                 px={3}
                 py={2}
                 borderRadius={"lg"}
-                key={chat._id}
+                // key={chat._id}
               >
                 <Text>
                   {/* {!chat.isGroupChat
