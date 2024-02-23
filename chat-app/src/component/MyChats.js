@@ -6,10 +6,12 @@ import { AddIcon } from "@chakra-ui/icons";
 import ChatLoading from "./ChatLoading";
 import { getSender } from "../config/constants";
 import GroupChatModal from "./GroupChatModal";
+import { useHistory } from "react-router-dom/cjs/react-router-dom";
 
 const MyChats = ({ fetchAgain }) => {
   const [loggedUser, setLoggedUser] = useState();
   const [loading, setLoading] = useState();
+  const history = useHistory();
   const { userData, setSelectedChat, selectedChat, chats, setChats } =
     ChatState();
   const toast = useToast();
@@ -43,13 +45,17 @@ const MyChats = ({ fetchAgain }) => {
         isClosable: true,
         position: "bottom-left",
       });
+      if (error.response.status === 401) {
+        localStorage.removeItem("userInfo");
+        history.push("/");
+      }
     }
   };
 
   useEffect(() => {
     setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
     handleFetchChats();
-  }, [fetchAgain, userData]);
+  }, [selectedChat, userData]);
 
   return (
     <Box
@@ -99,7 +105,7 @@ const MyChats = ({ fetchAgain }) => {
       >
         {chats ? (
           <Stack overflowY={"scroll"} width={"100%"}>
-            {chats.map((chat) => (
+            {chats.map((chat, index) => (
               <Box
                 onClick={() => setSelectedChat(chat)}
                 cursor={"pointer"}
@@ -108,7 +114,7 @@ const MyChats = ({ fetchAgain }) => {
                 px={3}
                 py={2}
                 borderRadius={"lg"}
-                // key={chat._id}
+                // key={index}
               >
                 <Text>
                   {/* {!chat.isGroupChat

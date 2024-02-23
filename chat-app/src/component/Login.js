@@ -100,7 +100,7 @@ const Login = () => {
         onClick={HandlePostUser}
         isLoading={loading}
       >
-        Register
+        Login
       </Button>
       <Button
         colorScheme="red"
