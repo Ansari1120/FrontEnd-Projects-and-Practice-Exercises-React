@@ -24,7 +24,7 @@ import { ChatState } from "../context/chatProvider";
 import UsersBadge from "./UsersBadge";
 import UsersList from "./UsersList";
 import axios from "axios";
-const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
+const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { userData, setSelectedChat, selectedChat } = ChatState();
   const [search, setSearch] = useState("");
@@ -70,6 +70,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
       user._id === userData._id
         ? setSelectedChat()
         : setSelectedChat(data.data);
+      fetchMessages();
       setLoading(false);
       toast({
         title: "Success",

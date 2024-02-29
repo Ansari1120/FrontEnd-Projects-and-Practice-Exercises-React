@@ -114,13 +114,13 @@ const MyChats = ({ fetchAgain }) => {
                 px={3}
                 py={2}
                 borderRadius={"lg"}
-                // key={index}
+                key={index}
               >
                 <Text>
-                  {/* {!chat.isGroupChat
-                    ? getSender(loggedUser, chat.users)
-                    : chat.chatName} */}
-                  {chat.chatName}
+                  {!chat.isGroupChat
+                    ? getSender(userData._id, chat.users)
+                    : chat.chatName}
+                  {/* { chat.chatName} */}
                 </Text>
               </Box>
             ))}
