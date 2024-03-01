@@ -114,7 +114,7 @@ const MyChats = ({ fetchAgain }) => {
                 px={3}
                 py={2}
                 borderRadius={"lg"}
-                key={index}
+                // key={index}
               >
                 <Text>
                   {!chat.isGroupChat
