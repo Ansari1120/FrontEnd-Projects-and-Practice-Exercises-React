@@ -32,7 +32,7 @@ const MyChats = ({ fetchAgain }) => {
       }
 
       // setLoadingChat(false);
-      console.log(data);
+      console.log("chats", data);
       setChats(data.data);
     } catch (error) {
       // setLoading(false);

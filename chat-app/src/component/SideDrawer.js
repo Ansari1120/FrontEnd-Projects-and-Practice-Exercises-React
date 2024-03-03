@@ -1,6 +1,7 @@
 import { BellIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import {
   Avatar,
+  Badge,
   Box,
   Button,
   Drawer,
@@ -17,6 +18,7 @@ import {
   MenuList,
   Text,
   Tooltip,
+  filter,
   useToast,
 } from "@chakra-ui/react";
 import { Spinner } from "@chakra-ui/spinner";
@@ -28,9 +30,17 @@ import { useDisclosure } from "@chakra-ui/hooks";
 import axios from "axios";
 import ChatLoading from "./ChatLoading";
 import UsersList from "./UsersList";
+import { getSender } from "../config/constants";
 
 const SideDrawer = () => {
-  const { userData, setSelectedChat, chats, setChats } = ChatState();
+  const {
+    userData,
+    setSelectedChat,
+    chats,
+    setChats,
+    notifications,
+    setNotifications,
+  } = ChatState();
   const history = useHistory();
   console.log("user", userData);
   const [search, setSearch] = useState("");
@@ -139,11 +149,47 @@ const SideDrawer = () => {
         <Text fontSize="2xl" fontFamily="Work Sans" ml="4">
           Truss
         </Text>
-        <div>
+        <Box>
           <Menu>
             <MenuButton p={1}>
               <BellIcon fontSize="2xl" m={1} />
+              <Badge
+                position={"absolute"}
+                right={{ xl: "8%", md: "11%", sm: "22%", base: "23%" }}
+                colorScheme="red"
+                textAlign={"center"}
+                rounded={100}
+              >
+                {notifications.length}
+              </Badge>
             </MenuButton>
+
+            <MenuList>
+              {!notifications.length && "no new messages"}
+              {notifications.map((notify) => (
+                <MenuItem
+                  key={notify._id}
+                  onClick={() => {
+                    console.log("clickedddd...");
+                    setSelectedChat(notify.chat);
+                    // setSelectedChat(data.data);
+                    // onClose();
+                    //filter out opened notif above one.
+                    const filtered = notifications.filter((n) => n !== notify);
+
+                    setNotifications([...filtered]);
+                  }}
+                >
+                  {notify.chat.isGroupChat
+                    ? `A new message in group chat of ${notify.chat.chatName}`
+                    : `A new message in chat of ${getSender(
+                        userData._id,
+                        notify.chat.users
+                      )}`}
+                </MenuItem>
+              ))}
+              <MenuItem>yooo</MenuItem>
+            </MenuList>
           </Menu>
           <Menu>
             <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
@@ -163,7 +209,7 @@ const SideDrawer = () => {
               <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </MenuList>
           </Menu>
-        </div>
+        </Box>
       </Flex>
       <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay />

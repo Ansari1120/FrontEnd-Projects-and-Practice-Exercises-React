@@ -29,7 +29,13 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [typing, setTyping] = useState(false);
   const [istyping, setIsTyping] = useState(false);
   const [newMessage, setNewMessage] = useState();
-  const { userData, setSelectedChat, selectedChat } = ChatState();
+  const {
+    userData,
+    setSelectedChat,
+    selectedChat,
+    notifications,
+    setNotifications,
+  } = ChatState();
   const toast = useToast();
   console.log(selectedChat);
   const defaultOptions = {
@@ -149,6 +155,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     fetchMessages();
     selectedChatCompare = selectedChat;
   }, [selectedChat]);
+        console.log("notifications", notifications);
 
   useEffect(() => {
     socket.on("message recieved", (newMessageRecieved) => {
@@ -158,6 +165,11 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       ) {
         //show notificaiton. if there is not chat open or rest of a chat got the message instead
         //of openend chat.
+
+        if (!notifications.includes(newMessageRecieved)) {
+          setNotifications([...notifications, newMessageRecieved]);
+          setFetchAgain(!fetchAgain);
+        }
       } else {
         setMessages([...messages, newMessageRecieved]);
       }
@@ -241,8 +253,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                   width="70"
                   style={{ marginLeft: 5, marginBottom: 10 }}
                 />
-                // <div>typing</div>
-              ) : null}
+              ) : // <div>typing</div>
+              null}
               <Input
                 // margin={50}
                 variant={"filled"}
