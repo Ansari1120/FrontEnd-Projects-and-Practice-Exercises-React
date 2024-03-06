@@ -25,7 +25,7 @@ import { Spinner } from "@chakra-ui/spinner";
 import React, { useState } from "react";
 import { ChatState } from "../context/chatProvider";
 import MyModal from "./MyModal";
-import { useHistory } from "react-router-dom/cjs/react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDisclosure } from "@chakra-ui/hooks";
 import axios from "axios";
 import ChatLoading from "./ChatLoading";
@@ -41,7 +41,7 @@ const SideDrawer = () => {
     notifications,
     setNotifications,
   } = ChatState();
-  const history = useHistory();
+  const history = useNavigate();
   console.log("user", userData);
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -51,7 +51,7 @@ const SideDrawer = () => {
   const toast = useToast();
   const handleLogout = async () => {
     localStorage.removeItem("userInfo");
-    history.push("/");
+    history("/");
   };
 
   const handleSearch = async () => {
@@ -218,6 +218,8 @@ const SideDrawer = () => {
           <DrawerBody>
             <Flex pb={2} d="flex">
               <Input
+                id="email"
+                class="chakra-input css-1cjy4zv"
                 placeholder="Search by name or email"
                 mr={2}
                 value={search}

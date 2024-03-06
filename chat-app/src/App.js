@@ -1,14 +1,16 @@
-// import logo from "./logo.svg";
+import React from "react";
 import "./App.css";
-import { Route } from "react-router-dom/cjs/react-router-dom";
 import HomePage from "./component/HomePage";
 import ChatsPage from "./component/ChatsPage";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div className="App">
-      <Route path="/" component={HomePage} exact />
-      <Route path="/chats" component={ChatsPage} />
+    <div class="App">
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/chats" element={<ChatsPage />} />
+      </Routes>
     </div>
   );
 }

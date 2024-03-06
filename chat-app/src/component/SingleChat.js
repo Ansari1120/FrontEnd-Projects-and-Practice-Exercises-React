@@ -155,7 +155,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     fetchMessages();
     selectedChatCompare = selectedChat;
   }, [selectedChat]);
-        console.log("notifications", notifications);
+  console.log("notifications", notifications);
 
   useEffect(() => {
     socket.on("message recieved", (newMessageRecieved) => {
@@ -256,6 +256,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
               ) : // <div>typing</div>
               null}
               <Input
+                id="message"
+                class="chakra-input css-1cjy4zv"
                 // margin={50}
                 variant={"filled"}
                 bg="#E0E0E0"

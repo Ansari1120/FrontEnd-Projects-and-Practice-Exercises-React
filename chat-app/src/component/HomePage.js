@@ -12,16 +12,16 @@ import {
 import React, { useEffect } from "react";
 import Login from "./Login";
 import Register from "./Register";
-import { useHistory } from "react-router-dom/cjs/react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
-  const history = useHistory();
+  const history = useNavigate();
 
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem("userInfo"));
 
     if (data) {
-      history.push("/chats");
+      history("/chats");
     }
   }, [history]);
   return (

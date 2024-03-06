@@ -1,10 +1,10 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { useHistory } from "react-router-dom/cjs/react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Context = createContext();
 
 const ChatProvider = ({ children }) => {
-  const history = useHistory();
+  const history = useNavigate();
   const [userData, setuserData] = useState();
   const [selectedChat, setSelectedChat] = useState();
   const [chats, setChats] = useState([]);
@@ -15,7 +15,7 @@ const ChatProvider = ({ children }) => {
     setuserData(data);
 
     if (!data) {
-      history.push("/");
+      history("/");
     }
   }, [history]);
 

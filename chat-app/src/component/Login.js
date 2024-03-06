@@ -10,10 +10,10 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom/cjs/react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const history = useHistory();
+  const history = useNavigate();
   const [userData, setUserData] = useState({});
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -49,7 +49,7 @@ const Login = () => {
       });
       localStorage.setItem("userInfo", JSON.stringify(data.data));
       setLoading(false);
-      history.push("/chats");
+      history("/chats");
     } catch (error) {
       setLoading(false);
       toast({
@@ -68,6 +68,8 @@ const Login = () => {
       <FormControl id="email" isRequired>
         <FormLabel>E-mail</FormLabel>
         <Input
+          id="my-email"
+          class="chakra-input css-1cjy4zv"
           value={userData.email}
           placeholder="enter your email"
           onChange={(e) => handleUserData("email", e.target.value)}
@@ -77,6 +79,8 @@ const Login = () => {
         <FormLabel>Password</FormLabel>
         <InputGroup size="md">
           <Input
+            id="my-password"
+            class="chakra-input css-1cjy5zv"
             value={userData.password}
             type={showPassword ? "text" : "password"}
             placeholder="enter your password"

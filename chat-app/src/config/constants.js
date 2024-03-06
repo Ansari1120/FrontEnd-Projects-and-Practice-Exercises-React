@@ -1,22 +1,22 @@
 export const getSender = (loggedUser, users) => {
-  console.log("loggedUser:", loggedUser);
-  console.log("users:", users);
+  // console.log("loggedUser:", loggedUser);
+  // console.log("users:", users);
 
   // Check if users array is defined and has at least two elements
   if (!Array.isArray(users) || users.length < 2) {
-    console.error("Invalid users array:", users);
+    // console.error("Invalid users array:", users);
     return null; // Or handle the error in some appropriate way
   }
 
   // Check if _id property is defined for the users
   if (!users[0]._id || !users[1]._id) {
-    console.error("Missing _id property for users:", users);
+    // console.error("Missing _id property for users:", users);
     return null; // Or handle the error in some appropriate way
   }
 
   // Check if loggedUser is defined
   if (!loggedUser) {
-    console.error("loggedUser is undefined");
+    // console.error("loggedUser is undefined");
     return null; // Or handle the error in some appropriate way
   }
 
@@ -30,19 +30,19 @@ export const getFullSender = (loggedUser, users) => {
 
   // Check if users array is defined and has at least two elements
   if (!Array.isArray(users) || users.length < 2) {
-    console.error("Invalid users array:", users);
+    // console.error("Invalid users array:", users);
     return null; // Or handle the error in some appropriate way
   }
 
   // Check if _id property is defined for the users
   if (!users[0]._id || !users[1]._id) {
-    console.error("Missing _id property for users:", users);
+    // console.error("Missing _id property for users:", users);
     return null; // Or handle the error in some appropriate way
   }
 
   // Check if loggedUser is defined
   if (!loggedUser) {
-    console.error("loggedUser is undefined");
+    // console.error("loggedUser is undefined");
     return null; // Or handle the error in some appropriate way
   }
 
